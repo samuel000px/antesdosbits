@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tear de Jacquard</title>
+    <link rel="stylesheet" href="style_jacquard.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Máquina de Jacquard</h1>
+
+        <p class="subtitle">
+            Perfure o cartão e veja a máquina interpretar as instruções.
+        </p>
+
+        <!-- ILUSTRAÇÃO -->
+        <div class="machine">
+            <img src="assets/machine.png" alt="Máquina Jacquard">
+        </div>
+
+        <!-- CARTÃO -->
+        <h2>Cartão Perfurado</h2>
+
+        <div id="card">
+
+            <!-- 5 colunas -->
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+
+        </div>
+
+        <button id="runBtn">Executar cartão</button>
+
+        <!-- OUTPUT -->
+        <div class="output">
+
+            <h3>Execução da Máquina</h3>
+
+            <p id="log">Aguardando instruções...</p>
+
+        </div>
+
+        <a href="../index.html">Voltar</a>
+
+    </div>
+
+    <script src="jacquard.js"></script>
+
+</body>
+</html>
