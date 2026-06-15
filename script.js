@@ -1,3 +1,40 @@
+async function carregarRanking() {
+
+    const { data, error } =
+    await supabase
+    .from("ranking")
+    .select("*")
+    .order("pontos", {
+        ascending: false
+    })
+    .limit(10);
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    const lista =
+    document.getElementById("rankingList");
+
+    lista.innerHTML = "";
+
+    data.forEach((player, index) => {
+
+        const li =
+        document.createElement("li");
+
+        li.textContent =
+            `${index + 1}º - ${player.nome} (${player.pontos} pts)`;
+
+        lista.appendChild(li);
+
+    });
+
+}
+
+carregarRanking();
+
 const phases = document.querySelectorAll(".phase");
 
 const title = document.getElementById("detailTitle");

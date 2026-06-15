@@ -1,3 +1,18 @@
+
+async function salvarRanking(nome, pontos){
+
+    await supabase
+    .from("ranking")
+    .insert([
+        {
+            nome: nome,
+            pontos: pontos
+        }
+    ]);
+
+}
+
+
 let fabricMatrix = [];
 
 const orders = [
@@ -304,4 +319,10 @@ document
     "click",
     finishOrder
 );
+
+salvarRanking(
+    "Samuel",
+    totalScore
+);
+
 
