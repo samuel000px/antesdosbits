@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Antes dos Bits</title>
+    <style>
+        /* Importando uma fonte moderna e limpa similar à da imagem */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #E6DBC9; /* O tom de bege de fundo da imagem */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #2E251B; /* Marrom escuro para os textos */
+        }
+
+        .login-container {
+            display: flex;
+            width: 850px;
+            height: 520px;
+            background-color: #F7F2E8; /* O bege mais claro dos cards */
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Lado Esquerdo - Painel de Boas-Vindas */
+        .sidebar {
+            width: 40%;
+            background-color: #DBCFBA; /* Tom intermediário da divisão lateral */
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #2E251B;
+        }
+
+        .sidebar p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #5C4D3C;
+            margin-top: 15px;
+        }
+
+        .sidebar .footer-text {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Lado Direito - Formulário de Login */
+        .form-container {
+            width: 60%;
+            padding: 45px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-container h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #5C4D3C;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E6DBC9;
+            background-color: transparent;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #2E251B;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #8C6A46;
+            background-color: #FFFFFF;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            accent-color: #8C6A46;
+        }
+
+        .forgot-pass {
+            color: #8C6A46;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-pass:hover {
+            text-decoration: underline;
+        }
+
+        /* Botão principal (Entrar) */
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background-color: #8C6A46; /* Marrom médio sofisticado */
+            color: #FFF;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-bottom: 20px;
+        }
+
+        .btn-login:hover {
+            background-color: #735537;
+        }
+
+        /* Área de Cadastro - Link elegante abaixo do botão */
+        .signup-prompt {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #5C4D3C;
+        }
+
+        .btn-signup {
+            color: #8C6A46;
+            text-decoration: none;
+            font-weight: 700;
+            margin-left: 5px;
+            transition: color 0.2s ease;
+        }
+
+        .btn-signup:hover {
+            color: #2E251B;
+            text-decoration: underline;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                width: 90%;
+                height: auto;
+            }
+            .sidebar {
+                width: 100%;
+                height: 160px;
+                justify-content: center;
+                padding: 30px;
+            }
+            .sidebar .footer-text {
+                display: none;
+            }
+            .form-container {
+                width: 100%;
+                padding: 40px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="sidebar">
+            <div>
+                <h1>Antes dos<br>Bits</h1>
+                <p>Viaje pela história da computação e acesse sua conta para continuar a jornada.</p>
+            </div>
+            <div class="footer-text">
+                História da Computação © 2026
+            </div>
+        </div>
+
+        <div class="form-container">
+            <h2>Acessar Conta</h2>
+            
+            <form action="#">
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="actions">
+                    <label class="remember-me">
+                        <input type="checkbox"> Lembrar de mim
+                    </label>
+                    <a href="#" class="forgot-pass">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" class="btn-login">Entrar</button>
+
+                <div class="signup-prompt">
+                    Não tem uma conta? <a href="cadastro.html" class="btn-signup">Cadastre-se</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script> 
+    <script src="supabase.js"></script>
+    <script src="login.js"></script>
+
+
+</body>
+</html>

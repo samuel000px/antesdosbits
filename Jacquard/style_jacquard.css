@@ -1,71 +1,212 @@
-body{
+*{
     margin:0;
-    font-family:Inter, sans-serif;
-    background:#e8dcc4;
-    color:#2f2419;
-    text-align:center;
+    padding:0;
+    box-sizing:border-box;
 }
+.hole.highlight{
 
-.container{
-    padding:40px;
+    outline:4px solid gold;
+
+    transform:scale(1.1);
+
+}
+body{
+    font-family:Arial,sans-serif;
+    background:#e5d4b1;
+    min-height:100vh;
+    padding:30px;
 }
 
 h1{
-    font-size:3rem;
+    text-align:center;
+    margin-bottom:15px;
 }
 
 .subtitle{
-    margin-bottom:30px;
-    color:#5b4a37;
+    text-align:center;
+    margin-bottom:40px;
 }
 
-/* máquina */
-.machine img{
-    width:300px;
+.game{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:30px;
+}
+
+.panel{
+    background:#f5ead2;
+    border:3px solid #9b7c4a;
+    border-radius:15px;
+    padding:20px;
+}
+
+.panel h2{
+    text-align:center;
     margin-bottom:20px;
 }
 
-/* cartão */
-#card{
+/* CARTÃO */
+
+#cardContainer{
     display:flex;
     justify-content:center;
+}
+
+#card{
+    background:#d6b37b;
+    padding:15px;
+    border-radius:10px;
+    display:grid;
+    grid-template-columns:repeat(5,50px);
     gap:10px;
-    margin:20px 0;
+    position:relative;
 }
 
-.col{
+.hole{
     width:50px;
-    height:120px;
-    background:#f5ecd9;
-    border:2px solid #8a6a42;
+    height:50px;
+    border-radius:50%;
+    background:#f6ebd3;
+    border:3px solid #7a5d34;
     cursor:pointer;
-    transition:.2s;
 }
 
-.col.active{
-    background:#2f2419;
+.hole.active{
+    background:#2e2112;
 }
 
-/* botão */
-button{
-    padding:15px 30px;
-    background:#8a6a42;
-    border:none;
-    color:white;
-    font-size:1rem;
-    cursor:pointer;
+#executeBtn{
     margin-top:20px;
+    width:100%;
+    padding:15px;
+    border:none;
+    background:#8a6a42;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
 }
 
-button:hover{
-    background:#6d5131;
+#executeBtn:hover{
+    background:#6f512f;
 }
 
-/* log */
-.output{
-    margin-top:30px;
-    padding:20px;
-    background:#fff5e2;
-    display:inline-block;
-    border:2px solid #8a6a42;
+/* TEAR */
+
+#loom{
+    height:300px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:20px;
+}
+
+.thread{
+    width:18px;
+    height:180px;
+    background:#6a4e2c;
+    transition:0.5s;
+}
+
+.thread.up{
+    transform:translateY(-70px);
+}
+
+/* TECIDO */
+
+#fabric{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    min-height:250px;
+}
+
+.fabricRow{
+    display:flex;
+    gap:2px;
+}
+
+.fabricCell{
+    width:28px;
+    height:28px;
+    border:1px solid #999;
+}
+
+.upCell{
+    background:#3f2c17;
+}
+
+.downCell{
+    background:#e8d4ab;
+}
+
+/* ANIMAÇÃO */
+
+.reading{
+    animation:feedCard 1.5s ease forwards;
+}
+
+@keyframes feedCard{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(220px);
+    }
+
+}
+
+#message{
+    margin-top:20px;
+    text-align:center;
+    font-weight:bold;
+}
+
+@media(max-width:900px){
+
+    .game{
+        grid-template-columns:1fr;
+    }
+
+}
+#orderBox{
+
+    background:#fff4dc;
+
+    border:2px solid #b48b4d;
+
+    padding:15px;
+
+    margin-bottom:20px;
+
+    border-radius:10px;
+
+}
+#topBar{
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    background: #f5e6c8;
+
+    border-bottom: 2px solid #b48b4d;
+
+    padding: 15px;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+}
+
+#coinsDisplay{
+
+    font-size: 1.2rem;
+
+    font-weight: bold;
+
 }
