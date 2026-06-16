@@ -1,39 +1,34 @@
-document
-.querySelector("form")
-.addEventListener("submit", async (e) => {
+document.addEventListener("DOMContentLoaded", () => {
+    const formLogin = document.querySelector("form");
 
-    e.preventDefault();
-
-    const email =
-    document.getElementById("email").value;
-
-    const password =
-    document.getElementById("password").value;
-
-    const { data, error } =
-    await supabase.auth.signInWithPassword({
-
-        email,
-        password
-
-    });
-
-    if (error) {
-
-        alert("Erro: " + error.message);
-
+    if (!formLogin) {
+        console.error("Formulario de login nao encontrado.");
         return;
     }
 
-    alert("Login realizado com sucesso!");
+    formLogin.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-    // salva sessão local (opcional mas útil)
-    localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-    );
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
-    // vai para o jogo
-    window.location.href = "index.html";
+        const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        if (error) {
+            alert("Erro: " + error.message);
+            return;
+        }
+
+        const nome = data.user.user_metadata?.name || data.user.user_metadata?.nome || email;
+
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("playerName", nome);
+
+        alert("Login realizado com sucesso!");
+        window.location.href = "index.html";
+    });
 });
 

@@ -1,53 +1,51 @@
+// --- Supabase ranking ---
+async function salvarRanking(nome, pontos, userId) {
+    try {
+        if (userId) {
+            const { error } = await window.supabaseClient
+                .from("ranking")
+                .upsert(
+                    { user_id: userId, nome, pontos },
+                    { onConflict: "user_id" }
+                );
 
-async function salvarRanking(nome, pontos){
-
-    await supabase
-    .from("ranking")
-    .insert([
-        {
-            nome: nome,
-            pontos: pontos
+            if (!error) {
+                return;
+            }
         }
-    ]);
 
+        await window.supabaseClient.from("ranking").insert([{ nome, pontos }]);
+    } catch (e) {
+        console.error("Erro ao salvar ranking:", e);
+    }
 }
 
-
+// --- Estado do jogo ---
 let fabricMatrix = [];
+let isRunning = false;
+let stopRequested = false;
 
 const orders = [
-    { client: "Alfaiate Local", minQuality: 30, maxCost: 50, minSize: 6, reward: 100 },
-    { client: "Mercador de Seda", minQuality: 50, maxCost: 45, minSize: 10, reward: 180 },
-    { client: "Nobre da Corte", minQuality: 80, maxCost: 70, minSize: 15, reward: 300 },
-    { client: "Comerciante Árabe", minQuality: 40, maxCost: 55, minSize: 8, reward: 140 },
-    { client: "Rei da França", minQuality: 90, maxCost: 80, minSize: 20, reward: 400 }
+    { client: "Alfaiate Local",    minQuality: 30, maxCost: 50, minSize: 6,  reward: 100 },
+    { client: "Mercador de Seda",  minQuality: 50, maxCost: 45, minSize: 10, reward: 180 },
+    { client: "Nobre da Corte",    minQuality: 80, maxCost: 70, minSize: 15, reward: 300 },
+    { client: "Comerciante Árabe", minQuality: 40, maxCost: 55, minSize: 8,  reward: 140 },
+    { client: "Rei da França",     minQuality: 90, maxCost: 80, minSize: 20, reward: 400 }
 ];
 
 function getRandomOrder() {
-    return orders[
-        Math.floor(Math.random() * orders.length)
-    ];
+    return orders[Math.floor(Math.random() * orders.length)];
 }
 
-let order =
-JSON.parse(localStorage.getItem("currentOrder"));
+let order = JSON.parse(localStorage.getItem("currentOrder")) || getRandomOrder();
+localStorage.setItem("currentOrder", JSON.stringify(order));
 
-if (!order) {
-
-    order = getRandomOrder();
-
-    localStorage.setItem(
-        "currentOrder",
-        JSON.stringify(order)
-    );
-
-}
 let completedOrders = Number(localStorage.getItem("completedOrders")) || 0;
 let coins = Number(localStorage.getItem("coins")) || 0;
 
+// --- Cria buracos do cartão ---
 const card = document.getElementById("card");
 
-// Cria os 15 buracos
 for (let i = 0; i < 15; i++) {
     const hole = document.createElement("div");
     hole.classList.add("hole");
@@ -58,66 +56,42 @@ for (let i = 0; i < 15; i++) {
     card.appendChild(hole);
 }
 
-// Restaura estado do cartão — FORA do loop
-const savedCard = JSON.parse(localStorage.getItem("cardState"));
-if (savedCard) {
-    const holes = document.querySelectorAll(".hole");
-    holes.forEach((hole, index) => {
-        if (savedCard[index]) hole.classList.add("active");
-    });
-}
+// Cartão sempre começa limpo ao abrir a página
+localStorage.removeItem("cardState");
 
-const savedFabric =
-localStorage.getItem("fabricMatrix");
-
+// Restaura tecido salvo
+const savedFabric = localStorage.getItem("fabricMatrix");
 if (savedFabric) {
-
     fabricMatrix = JSON.parse(savedFabric);
-
-    const fabric =
-    document.getElementById("fabric");
-
-    fabric.innerHTML = "";
-
-    fabricMatrix.forEach(rowData => {
-
-        const row =
-        document.createElement("div");
-
-        row.classList.add("fabricRow");
-
-        rowData.forEach(bit => {
-
-            const cell =
-            document.createElement("div");
-
-            cell.classList.add("fabricCell");
-            cell.classList.add(
-                bit ? "upCell" : "downCell"
-            );
-
-            row.appendChild(cell);
-
-        });
-
-        fabric.appendChild(row);
-
-    });
-
-    updateStats();
-
+    redrawFabric();
 }
 
+updateStats();
+updateCoins();
+renderOrder();
+
+// --- Sleep helper ---
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// --- Executar cartão (loop contínuo até 100 linhas) ---
 document.getElementById("executeBtn").addEventListener("click", async () => {
-    
+    if (isRunning) return;
+
+    if (fabricMatrix.length >= 100) {
+        document.getElementById("resultBox").textContent = "⚠️ Tecido cheio (100 linhas). Finalize o pedido.";
+        return;
+    }
+
+    isRunning = true;
+    stopRequested = false;
+    document.getElementById("executeBtn").disabled = true;
+    document.getElementById("resultBox").textContent = "";
 
     const holes = document.querySelectorAll(".hole");
 
-    // Monta as 3 linhas do cartão
+    // Lê o cartão (3 linhas × 5 colunas)
     const patterns = [];
     for (let row = 0; row < 3; row++) {
         const line = [];
@@ -127,102 +101,48 @@ document.getElementById("executeBtn").addEventListener("click", async () => {
         patterns.push(line);
     }
 
-    // Animação de leitura
+    // Animação de leitura do cartão
     card.classList.add("reading");
-    await sleep(1500);
+    await sleep(1000);
     card.classList.remove("reading");
 
-    // Processa cada linha do cartão, uma por vez
-    for (let rowIndex = 0; rowIndex < patterns.length; rowIndex++) {
-        // Remove highlight anterior
-        holes.forEach(h => h.classList.remove("highlight"));
+    // Loop contínuo: repete o cartão até 100 linhas ou parar
+        for (let rowIndex = 0; rowIndex < patterns.length; rowIndex++) {
+            if (fabricMatrix.length >= 100 || stopRequested) break;
 
-        // Destaca linha atual no cartão
-        for (let col = 0; col < 5; col++) {
-            holes[rowIndex * 5 + col].classList.add("highlight");
+            // Destaca linha atual no cartão
+            holes.forEach(h => h.classList.remove("highlight"));
+            for (let col = 0; col < 5; col++) {
+                holes[rowIndex * 5 + col].classList.add("highlight");
+            }
+
+            // Anima os fios
+            const pattern = patterns[rowIndex];
+            document.querySelectorAll(".thread").forEach((thread, i) => {
+                thread.classList.toggle("up", !!pattern[i]);
+            });
+
+            createFabricRow(pattern);
+            await sleep(400);
         }
 
-        // Anima os fios
-        const pattern = patterns[rowIndex];
-        const threads = document.querySelectorAll(".thread");
-        threads.forEach((thread, i) => {
-            if (pattern[i]) {
-                thread.classList.add("up");
-            } else {
-                thread.classList.remove("up");
-            }
-        });
-
-        // Cria linha no tecido
-        createFabricRow(pattern);
-
-        // Espera antes da próxima linha
-        await sleep(1200);
-    }
-
-    // Remove highlight ao final
+    // Limpeza
     holes.forEach(h => h.classList.remove("highlight"));
+    document.querySelectorAll(".thread").forEach(t => t.classList.remove("up"));
+    isRunning = false;
+    stopRequested = false;
+    document.getElementById("executeBtn").disabled = false;
+
+    if (fabricMatrix.length >= 100) {
+        document.getElementById("resultBox").textContent = "🧵 Tecido completo (100 linhas)! Finalize o pedido.";
+    }
 });
 
-function createFabricRow(pattern) {
-    fabricMatrix.push(pattern.map(bit => bit ? 1 : 0));
-    localStorage.setItem("fabricMatrix", JSON.stringify(fabricMatrix));
+// --- Finalizar pedido ---
+document.getElementById("finishBtn").addEventListener("click", () => {
+    // Para o loop se estiver rodando
+    stopRequested = true;
 
-    const fabric = document.getElementById("fabric");
-    const row = document.createElement("div");
-    row.classList.add("fabricRow");
-
-    pattern.forEach(bit => {
-        const cell = document.createElement("div");
-        cell.classList.add("fabricCell");
-        cell.classList.add(bit ? "upCell" : "downCell");
-        row.appendChild(cell);
-    });
-
-    fabric.appendChild(row);
-    updateStats();
-}
-
-function getComplexity(fabric) {
-    let complexity = 0;
-    fabric.forEach(row => {
-        for (let i = 1; i < row.length; i++) {
-            if (row[i] !== row[i - 1]) complexity++;
-        }
-    });
-    return complexity;
-}
-
-function getSymmetry(fabric) {
-    let symmetry = 0;
-    fabric.forEach(row => {
-        const mirrored = [...row].reverse();
-        if (JSON.stringify(row) === JSON.stringify(mirrored)) symmetry += 10;
-    });
-    return symmetry;
-}
-
-function getQuality(fabric) { return getComplexity(fabric) + getSymmetry(fabric); }
-function getCost(fabric)    { return getComplexity(fabric) + getSize(fabric) * 3; }
-function getSize(fabric)    { return fabric.length; }
-
-function getScore(fabric) {
-    return Math.max(getQuality(fabric) * 10 - getCost(fabric) * 2, 0);
-}
-
-function updateStats() {
-    document.getElementById("qualityValue").textContent = "Qualidade: " + getQuality(fabricMatrix);
-    document.getElementById("costValue").textContent    = "Custo: "     + getCost(fabricMatrix);
-    document.getElementById("sizeValue").textContent   = "Tamanho: "   + getSize(fabricMatrix);
-}
-
-function saveCard() {
-    const holes = document.querySelectorAll(".hole");
-    const state = [...holes].map(h => h.classList.contains("active"));
-    localStorage.setItem("cardState", JSON.stringify(state));
-}
-
-function finishOrder() {
     const quality = getQuality(fabricMatrix);
     const cost    = getCost(fabricMatrix);
     const size    = getSize(fabricMatrix);
@@ -253,25 +173,147 @@ function finishOrder() {
             "<p>Tamanho: "   + size    + " / " + order.minSize    + "</p>" +
             "<p>Moedas recebidas: " + reward + "</p>";
 
-        order = getRandomOrder();
-        renderOrder();
+        // Salva no ranking
+        const user = JSON.parse(localStorage.getItem("user"));
+        const nome =
+            user?.user_metadata?.name ||
+            user?.user_metadata?.nome ||
+            localStorage.getItem("playerName") ||
+            user?.email ||
+            "Anônimo";
 
-        currentOrderIndex++;
-        if (currentOrderIndex < orders.length) {
-            order = orders[currentOrderIndex];
-            renderOrder();
-        }
+        salvarRanking(nome, coins, user?.id);
+
     } else {
-        resultBox.innerHTML = "❌ Pedido recusado";
+        resultBox.innerHTML =
+            "❌ Pedido recusado<br>" +
+            "<small>Qualidade: " + quality + " / " + order.minQuality + " | " +
+            "Custo: " + cost + " / " + order.maxCost + " | " +
+            "Tamanho: " + size + " / " + order.minSize + "</small>";
     }
+
+    // Próximo pedido e reset do tecido/cartão
     order = getRandomOrder();
-
-    localStorage.setItem(
-        "currentOrder",
-        JSON.stringify(order)
-    );
-
+    localStorage.setItem("currentOrder", JSON.stringify(order));
     renderOrder();
+    resetFabric();
+    resetCard();
+    document.getElementById("executeBtn").disabled = false;
+    isRunning = false;
+    stopRequested = false;
+});
+
+// --- Recomeçar jogo ---
+document.getElementById("restartBtn").addEventListener("click", () => {
+    if (!confirm("Recomeçar o jogo? Moedas e progresso serão perdidos.")) return;
+
+    stopRequested = true;
+    isRunning = false;
+
+    localStorage.removeItem("currentOrder");
+    localStorage.removeItem("completedOrders");
+    localStorage.removeItem("coins");
+    localStorage.removeItem("fabricMatrix");
+    localStorage.removeItem("cardState");
+
+    fabricMatrix = [];
+    coins = 0;
+    completedOrders = 0;
+    order = getRandomOrder();
+    localStorage.setItem("currentOrder", JSON.stringify(order));
+
+    resetFabric();
+    resetCard();
+    updateStats();
+    updateCoins();
+    renderOrder();
+    document.getElementById("resultBox").textContent = "";
+    document.getElementById("executeBtn").disabled = false;
+});
+
+// --- Funções auxiliares ---
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function resetFabric() {
+    fabricMatrix = [];
+    localStorage.removeItem("fabricMatrix");
+    document.getElementById("fabric").innerHTML = "";
+    updateStats();
+}
+
+function resetCard() {
+    document.querySelectorAll(".hole").forEach(h => h.classList.remove("active"));
+    localStorage.removeItem("cardState");
+}
+
+function redrawFabric() {
+    const fabric = document.getElementById("fabric");
+    fabric.innerHTML = "";
+    fabricMatrix.forEach(rowData => {
+        const row = document.createElement("div");
+        row.classList.add("fabricRow");
+        rowData.forEach(bit => {
+            const cell = document.createElement("div");
+            cell.classList.add("fabricCell", bit ? "upCell" : "downCell");
+            row.appendChild(cell);
+        });
+        fabric.appendChild(row);
+    });
+    fabric.scrollTop = fabric.scrollHeight;
+}
+
+function createFabricRow(pattern) {
+    fabricMatrix.push(pattern.map(bit => bit ? 1 : 0));
+    localStorage.setItem("fabricMatrix", JSON.stringify(fabricMatrix));
+
+    const fabric = document.getElementById("fabric");
+    const row = document.createElement("div");
+    row.classList.add("fabricRow");
+    pattern.forEach(bit => {
+        const cell = document.createElement("div");
+        cell.classList.add("fabricCell", bit ? "upCell" : "downCell");
+        row.appendChild(cell);
+    });
+    fabric.appendChild(row);
+    fabric.scrollTop = fabric.scrollHeight;
+    updateStats();
+}
+
+function getComplexity(fabric) {
+    let n = 0;
+    fabric.forEach(row => {
+        for (let i = 1; i < row.length; i++) {
+            if (row[i] !== row[i - 1]) n++;
+        }
+    });
+    return n;
+}
+
+function getSymmetry(fabric) {
+    let n = 0;
+    fabric.forEach(row => {
+        if (JSON.stringify(row) === JSON.stringify([...row].reverse())) n += 10;
+    });
+    return n;
+}
+
+function getQuality(fabric) { return getComplexity(fabric) + getSymmetry(fabric); }
+function getCost(fabric)    { return getComplexity(fabric) + getSize(fabric) * 3; }
+function getSize(fabric)    { return fabric.length; }
+
+function updateStats() {
+    document.getElementById("qualityValue").textContent = "Qualidade: " + getQuality(fabricMatrix);
+    document.getElementById("costValue").textContent    = "Custo: "     + getCost(fabricMatrix);
+    document.getElementById("sizeValue").textContent   = "Tamanho: "   + getSize(fabricMatrix) + " / 100";
+}
+
+function saveCard() {
+    const holes = document.querySelectorAll(".hole");
+    const state = [...holes].map(h => h.classList.contains("active"));
+    localStorage.setItem("cardState", JSON.stringify(state));
 }
 
 function renderOrder() {
@@ -284,45 +326,5 @@ function renderOrder() {
 function updateCoins() {
     document.getElementById("coinsDisplay").textContent = "💰 " + coins + " moedas";
 }
-
-renderOrder();
-updateCoins();
-
-document.getElementById("restartBtn")
-.addEventListener("click", () => {
-
-    if (confirm("Recomeçar o jogo?")) {
-
-        // Mantém as moedas
-        const savedCoins =
-        localStorage.getItem("coins");
-
-        // Apaga todo o resto
-        localStorage.clear();
-
-        // Restaura as moedas
-        if (savedCoins !== null) {
-            localStorage.setItem(
-                "coins",
-                savedCoins
-            );
-        }
-
-        location.reload();
-    }
-
-});
-
-document
-.getElementById("finishBtn")
-.addEventListener(
-    "click",
-    finishOrder
-);
-
-salvarRanking(
-    "Samuel",
-    totalScore
-);
 
 

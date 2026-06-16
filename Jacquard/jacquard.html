@@ -16,113 +16,58 @@
     <div class="game">
 
         <div class="panel">
-
             <h2>Cartão Perfurado</h2>
-
             <div id="cardContainer">
-
                 <div id="card"></div>
-
             </div>
-
-            <button id="executeBtn">
-                Executar Cartão
-            </button>
-
+            <button id="executeBtn">Executar Cartão</button>
         </div>
 
         <div class="panel">
-
             <h2>Tear</h2>
-
             <div id="loom">
-
                 <div class="thread"></div>
                 <div class="thread"></div>
                 <div class="thread"></div>
                 <div class="thread"></div>
                 <div class="thread"></div>
-
             </div>
-
         </div>
 
-
-    <div class="panel">
-
+        <div class="panel">
             <h2>Tecido Produzido</h2>
-
             <div id="fabric"></div>
-
         </div>
 
     </div>
 
+    <div id="orderBox">
+        <h3 id="clientName"></h3>
+        <p id="orderQuality"></p>
+        <p id="orderCost"></p>
+        <p id="orderSize"></p>
 
-        <div id="orderBox">
+        <div id="statsBox">
+            <br>
+            <h3>Seu Tecido</h3>
+            <p id="qualityValue">Qualidade: 0</p>
+            <p id="costValue">Custo: 0</p>
+            <p id="sizeValue">Tamanho: 0 / 100</p>
+        </div>
+    </div>
 
-    <h3 id="clientName"></h3>
-
-    <p id="orderQuality"></p>
-
-    <p id="orderCost"></p>
-
-    <p id="orderSize"></p>
-
-            <div id="statsBox">
-
-    <br>
-
-
-    <h3>Seu Tecido</h3>
-
-    <p id="qualityValue">
-        Qualidade: 0
-    </p>
-
-    <p id="costValue">
-        Custo: 0
-    </p>
-
-    <p id="sizeValue">
-        Tamanho: 0
-    </p>
-
-
-
-</div>
-
-
-</div>
-
-
-    <button id="finishBtn">
-
-    Finalizar Pedido
-
-    </button>
+    <button id="finishBtn">Finalizar Pedido</button>
+    <button id="restartBtn">🔄 Recomeçar Jogo</button>
 
     <div id="resultBox"></div>
 
-
     <div id="topBar">
-
-    <div id="coinsDisplay">
-        💰 0 moedas
+        <div id="coinsDisplay">💰 0 moedas</div>
     </div>
 
-</div>
-
-<button id="restartBtn">
-    🔄 Recomeçar Jogo
-</button>
-
-    <script src = "https://tviotzwwneejncusoxkt.supabase.co/rest/v1/"></script>
-    <script src="supabase.js"></script>
+    <!-- SDK correto do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../db.js"></script>
     <script src="jacquard.js"></script>
-
-
-
-
 </body>
 </html>

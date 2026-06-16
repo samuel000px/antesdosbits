@@ -1,7 +1,7 @@
 async function carregarRanking() {
 
     const { data, error } =
-    await supabase
+    await window.supabaseClient
     .from("ranking")
     .select("*")
     .order("pontos", {
@@ -11,6 +11,8 @@ async function carregarRanking() {
 
     if(error){
         console.error(error);
+        document.getElementById("rankingList").innerHTML =
+            "<li>Nao foi possivel carregar o ranking.</li>";
         return;
     }
 
@@ -18,6 +20,11 @@ async function carregarRanking() {
     document.getElementById("rankingList");
 
     lista.innerHTML = "";
+
+    if (!data.length) {
+        lista.innerHTML = "<li>Nenhum jogador no ranking ainda.</li>";
+        return;
+    }
 
     data.forEach((player, index) => {
 
@@ -33,7 +40,49 @@ async function carregarRanking() {
 
 }
 
+async function atualizarAreaLogin() {
+    const authArea = document.getElementById("authArea");
+
+    if (!authArea) {
+        return;
+    }
+
+    const { data } = await window.supabaseClient.auth.getUser();
+    const user = data.user;
+
+    if (!user) {
+        authArea.innerHTML = `
+            <a href="login.html">Entrar</a>
+            <a href="cadastro.html">Cadastrar</a>
+        `;
+        localStorage.removeItem("user");
+        return;
+    }
+
+    const nome =
+        user.user_metadata?.name ||
+        user.user_metadata?.nome ||
+        localStorage.getItem("playerName") ||
+        user.email;
+
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("playerName", nome);
+
+    authArea.innerHTML = `
+        <span>Ola, ${nome}</span>
+        <button type="button" id="logoutButton">Sair</button>
+    `;
+
+    document.getElementById("logoutButton").addEventListener("click", async () => {
+        await window.supabaseClient.auth.signOut();
+        localStorage.removeItem("user");
+        localStorage.removeItem("playerName");
+        window.location.reload();
+    });
+}
+
 carregarRanking();
+atualizarAreaLogin();
 
 const phases = document.querySelectorAll(".phase");
 
@@ -49,7 +98,7 @@ phases.forEach(phase => {
         title.textContent = phase.dataset.title;
         description.textContent = phase.dataset.desc;
 
-        currentPage = phase.dataset.page;
+        currentPage = phase.dataset.page || currentPage;
     }
 
     phase.addEventListener("mouseenter", updateDetails);
