@@ -1,63 +1,83 @@
-document
-.querySelector("form")
-.addEventListener("submit", async (e) => {
 
-    e.preventDefault();
 
-    const name =
-    document.getElementById("name").value;
+document.addEventListener("DOMContentLoaded", () => {
+    const formCadastro = document.querySelector("#formCadastro");
 
-    const email =
-    document.getElementById("email").value;
-
-    const password =
-    document.getElementById("password").value;
-
-    const confirmPassword =
-    document.getElementById("confirm-password").value;
-
-    // validação básica
-    if (password !== confirmPassword) {
-
-        alert("As senhas não coincidem!");
+    if (!formCadastro) {
+        console.error("Formulario de cadastro nao encontrado.");
         return;
     }
 
-    if (password.length < 6) {
+    formCadastro.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-        alert("A senha precisa ter pelo menos 6 caracteres!");
-        return;
-    }
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm-password").value;
 
-    // cria conta no Supabase
-    const { data, error } =
-    await supabase.auth.signUp({
-
-        email,
-        password,
-
-        options: {
-            data: {
-                name: name
-            }
+        if (password !== confirmPassword) {
+            alert("As senhas nao coincidem!");
+            return;
         }
 
+        if (password.length < 6) {
+            alert("A senha precisa ter pelo menos 6 caracteres!");
+            return;
+        }
+
+        const { data, error } = await window.supabaseClient.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    name,
+                    nome: name
+                }
+            }
+        });
+
+        if (error) {
+            alert("Erro: " + error.message);
+            return;
+        }
+
+        if (data.user) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("playerName", name);
+            await criarEntradaInicialRanking(data.user.id, name);
+        }
+
+        alert("Conta criada com sucesso!");
+        window.location.href = "login.html";
     });
+});
 
-    if (error) {
+async function criarEntradaInicialRanking(userId, nome) {
+    const registroComUsuario = {
+        user_id: userId,
+        nome,
+        pontos: 0
+    };
 
-        alert("Erro: " + error.message);
+    const { error } = await window.supabaseClient
+        .from("ranking")
+        .upsert(registroComUsuario, {
+            onConflict: "user_id"
+        });
+
+    if (!error) {
         return;
     }
 
-    alert("Conta criada com sucesso!");
+    const { error: fallbackError } = await window.supabaseClient
+        .from("ranking")
+        .insert({
+            nome,
+            pontos: 0
+        });
 
-    // opcional: já salva usuário local
-    localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-    );
-
-    // vai para login
-    window.location.href = "login.html";
-});
+    if (fallbackError) {
+        console.warn("Nao foi possivel criar entrada inicial no ranking:", fallbackError.message);
+    }
+}

@@ -11,9 +11,54 @@ body{
     min-height:100vh;
 }
 
+.topbar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:10;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    padding:14px 28px;
+    background:rgba(245,236,217,.95);
+    border-bottom:2px solid #b99a6b;
+}
+
+.auth-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:.95rem;
+}
+
+.auth-area a,
+.auth-area button{
+    border:0;
+    border-radius:10px;
+    background:#8a6a42;
+    color:white;
+    cursor:pointer;
+    font:inherit;
+    padding:10px 14px;
+    text-decoration:none;
+}
+
+.auth-area a:hover,
+.auth-area button:hover{
+    background:#6d5131;
+}
+
+.auth-area span{
+    color:#4a3b2c;
+    font-weight:600;
+}
+
 .menu{
     display:flex;
     min-height:100vh;
+    padding-top:58px;
 }
 
 .left-panel{
