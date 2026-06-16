@@ -1,23 +1,56 @@
 // --- Supabase ranking ---
 async function salvarRanking(nome, pontos, userId) {
-    try {
-        if (userId) {
-            const { error } = await window.supabaseClient
+    if (!window.supabaseClient) {
+        return {
+            ok: false,
+            message: "Conexao com o Supabase nao carregou."
+        };
+    }
+
+    const tentativas = [];
+
+    if (userId) {
+        tentativas.push(() =>
+            window.supabaseClient
                 .from("ranking")
                 .upsert(
                     { user_id: userId, nome, pontos },
                     { onConflict: "user_id" }
-                );
+                )
+        );
 
-            if (!error) {
-                return;
-            }
+        tentativas.push(() =>
+            window.supabaseClient
+                .from("ranking")
+                .insert([{ user_id: userId, nome, pontos }])
+        );
+    }
+
+    tentativas.push(() =>
+        window.supabaseClient
+            .from("ranking")
+            .insert([{ nome, pontos }])
+    );
+
+    let ultimoErro = null;
+
+    for (const tentativa of tentativas) {
+        const { error } = await tentativa();
+
+        if (!error) {
+            return {
+                ok: true
+            };
         }
 
-        await window.supabaseClient.from("ranking").insert([{ nome, pontos }]);
-    } catch (e) {
-        console.error("Erro ao salvar ranking:", e);
+        ultimoErro = error;
+        console.warn("Tentativa de salvar ranking falhou:", error.message);
     }
+
+    return {
+        ok: false,
+        message: ultimoErro?.message || "Erro desconhecido ao salvar ranking."
+    };
 }
 
 // --- Estado do jogo ---
@@ -139,7 +172,7 @@ document.getElementById("executeBtn").addEventListener("click", async () => {
 });
 
 // --- Finalizar pedido ---
-document.getElementById("finishBtn").addEventListener("click", () => {
+document.getElementById("finishBtn").addEventListener("click", async () => {
     // Para o loop se estiver rodando
     stopRequested = true;
 
@@ -173,8 +206,11 @@ document.getElementById("finishBtn").addEventListener("click", () => {
             "<p>Tamanho: "   + size    + " / " + order.minSize    + "</p>" +
             "<p>Moedas recebidas: " + reward + "</p>";
 
-        // Salva no ranking
-        const user = JSON.parse(localStorage.getItem("user"));
+        const { data: authData } = await window.supabaseClient.auth.getUser();
+        const authUser = authData.user;
+        const localUser = JSON.parse(localStorage.getItem("user"));
+        const user = authUser || localUser;
+
         const nome =
             user?.user_metadata?.name ||
             user?.user_metadata?.nome ||
@@ -182,7 +218,16 @@ document.getElementById("finishBtn").addEventListener("click", () => {
             user?.email ||
             "Anônimo";
 
-        salvarRanking(nome, coins, user?.id);
+        const ranking = await salvarRanking(nome, coins, user?.id);
+
+        if (ranking.ok) {
+            resultBox.innerHTML += "<p>Ranking salvo com sucesso.</p>";
+        } else {
+            resultBox.innerHTML +=
+                "<p>As moedas foram ganhas, mas o ranking nao salvou: " +
+                ranking.message +
+                "</p>";
+        }
 
     } else {
         resultBox.innerHTML =

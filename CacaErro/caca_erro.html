@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça ao Erro</title>
+    <link rel="stylesheet" href="caca_erro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="game-topbar">
+        <a href="../index.html">Voltar</a>
+        <strong>Caça ao Erro</strong>
+        <span id="coinsDisplay">0 moedas</span>
+    </header>
+
+    <main class="debug-lab">
+        <section class="intro-panel">
+            <p class="era">1965 · Sala de cartões</p>
+            <h1>Encontre o besouro no lote de execução</h1>
+            <p>
+                Um cartão está sabotando o programa. Examine o baralho, leia as pistas do console
+                e capture o besouro antes que suas tentativas acabem.
+            </p>
+
+            <div class="mission-stats">
+                <div>
+                    <span>Tempo</span>
+                    <strong id="timer">60s</strong>
+                </div>
+                <div>
+                    <span>Tentativas</span>
+                    <strong id="attempts">6</strong>
+                </div>
+                <div>
+                    <span>Recompensa</span>
+                    <strong id="rewardPreview">120</strong>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="newRoundBtn" type="button">Novo lote</button>
+                <button id="hintBtn" type="button">Usar detector</button>
+            </div>
+        </section>
+
+        <section class="workbench">
+            <div class="console-panel">
+                <h2>Console de execução</h2>
+                <div id="consoleLog" class="console-log">
+                    Lote carregado. Procure leituras estranhas nos cartões.
+                </div>
+            </div>
+
+            <div id="cardGrid" class="card-grid" aria-label="Cartões perfurados"></div>
+        </section>
+    </main>
+
+    <div id="resultModal" class="result-modal" hidden>
+        <div class="result-card">
+            <h2 id="resultTitle"></h2>
+            <p id="resultText"></p>
+            <button id="playAgainBtn" type="button">Jogar novamente</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../db.js"></script>
+    <script src="caca_erro.js"></script>
+</body>
+</html>

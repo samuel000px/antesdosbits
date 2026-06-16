@@ -1,4 +1,11 @@
 async function carregarRanking() {
+    const lista =
+    document.getElementById("rankingList");
+
+    if (!window.supabaseClient) {
+        lista.innerHTML = "<li>Conexao com o Supabase nao carregou.</li>";
+        return;
+    }
 
     const { data, error } =
     await window.supabaseClient
@@ -11,13 +18,10 @@ async function carregarRanking() {
 
     if(error){
         console.error(error);
-        document.getElementById("rankingList").innerHTML =
-            "<li>Nao foi possivel carregar o ranking.</li>";
+        lista.innerHTML =
+            `<li>Nao foi possivel carregar o ranking: ${error.message}</li>`;
         return;
     }
-
-    const lista =
-    document.getElementById("rankingList");
 
     lista.innerHTML = "";
 
@@ -81,8 +85,59 @@ async function atualizarAreaLogin() {
     });
 }
 
-carregarRanking();
-atualizarAreaLogin();
+async function sincronizarRankingLocal() {
+    const moedas = Number(localStorage.getItem("coins")) || 0;
+
+    if (!moedas || !window.supabaseClient) {
+        return;
+    }
+
+    const { data } = await window.supabaseClient.auth.getUser();
+    const user = data.user;
+
+    if (!user) {
+        return;
+    }
+
+    const nome =
+        user.user_metadata?.name ||
+        user.user_metadata?.nome ||
+        localStorage.getItem("playerName") ||
+        user.email;
+
+    const tentativas = [
+        () => window.supabaseClient
+            .from("ranking")
+            .upsert(
+                { user_id: user.id, nome, pontos: moedas },
+                { onConflict: "user_id" }
+            ),
+        () => window.supabaseClient
+            .from("ranking")
+            .insert([{ user_id: user.id, nome, pontos: moedas }]),
+        () => window.supabaseClient
+            .from("ranking")
+            .insert([{ nome, pontos: moedas }])
+    ];
+
+    for (const tentativa of tentativas) {
+        const { error } = await tentativa();
+
+        if (!error) {
+            return;
+        }
+
+        console.warn("Nao foi possivel sincronizar ranking:", error.message);
+    }
+}
+
+async function iniciarIndex() {
+    await atualizarAreaLogin();
+    await sincronizarRankingLocal();
+    await carregarRanking();
+}
+
+iniciarIndex();
 
 const phases = document.querySelectorAll(".phase");
 
