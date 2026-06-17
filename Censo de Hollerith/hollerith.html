@@ -41,15 +41,15 @@
                 <div class="coluna-dados" data-categoria="idade">
                     <div class="legenda-coluna">IDADE</div>
                     <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="jovem">0</button>
+                        <button type="button" class="furo-circular" data-value="jovem"></button>
                         <span class="sub-legenda">jovem</span>
                     </div>
                     <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="adulto">1</button>
+                        <button type="button" class="furo-circular" data-value="adulto"></button>
                         <span class="sub-legenda">adulto</span>
                     </div>
                     <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="idoso">2</button>
+                        <button type="button" class="furo-circular" data-value="idoso"></button>
                         <span class="sub-legenda">idoso</span>
                     </div>
                 </div>
@@ -59,19 +59,19 @@
                 <div class="coluna-dados" data-categoria="profissao">
                     <div class="legenda-coluna">PROF</div>
                     <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="agricultura">0</button>
+                        <button type="button" class="furo-circular" data-value="agricultura"></button>
                         <span class="sub-legenda">agricultua</span>
                     </div>
                     <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="industria">1</button>
+                        <button type="button" class="furo-circular" data-value="industria"></button>
                         <span class="sub-legenda">operário</span>
                     </div>
                     <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="intelectual">2</button>
+                        <button type="button" class="furo-circular" data-value="intelectual"></button>
                         <span class="sub-legenda">intelectual</span>
                     </div>
                      <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="artes">3</button>
+                        <button type="button" class="furo-circular" data-value="artes"></button>
                         <span class="sub-legenda">artes</span>
                     </div>
                 </div>
@@ -81,12 +81,12 @@
                 <div class="coluna-dados" data-categoria="estadoCivil">
                     <div class="legenda-coluna">E.CIVIL</div>
                     <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="solteiro">0</button>
-                        <span class="sub-legenda">solt</span>
+                        <button type="button" class="furo-circular" data-value="solteiro"></button>
+                        <span class="sub-legenda">Solteiro</span>
                     </div>
                     <div class="furo-container">
-                        <button type="button" class="furo-circular" data-value="casado">1</button>
-                        <span class="sub-legenda">casd</span>
+                        <button type="button" class="furo-circular" data-value="casado"></button>
+                        <span class="sub-legenda">Casado</span>
                     </div>
                 </div>
                 <div class="divisor-cartao"></div>
@@ -121,8 +121,18 @@
         
 
         <button type="button" id="btn-Processar" class="btn-maquina">Acionar Alavanca</button>
-
         <div id="feedback" class="oculto"></div>
+        <button type="button" id="btn-Continuar" class="btn-maquina oculto" style="margin-top: 10px;">Continuar</button>
+
+        <div id="tela-final" class="card oculto" style="text-align: center; padding: 30px;">
+            <h2>Resultados da Triagem</h2>
+            <p id="resultado-moedas" style="font-size: 1.3rem; font-weight: bold; margin: 20px 0; color: #8a6a42;"></p>
+            
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button type="button" id="btn-Reiniciar" class="btn-maquina" style="margin-top: 0; max-width: 200px;">Tente Novamente</button>
+                <button type="button" id="btn-Sair" class="btn-maquina" style="margin-top: 0; max-width: 200px; background-color: #555;">Sair</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
