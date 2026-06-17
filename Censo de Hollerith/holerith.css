@@ -169,6 +169,6 @@ h1 {
     font-weight: bold;
 }
 
+.oculto {display: none !important;}
 .sucesso { color: #52be80; }
 .erro { color: #ec7063; }
-.oculto { display: none; }
