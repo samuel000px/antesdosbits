@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computação Moderna - Duelo de Cartões</title>
+    <title>Computação Moderna - Guerra de Protocolos</title>
     <link rel="stylesheet" href="moderna.css">
 </head>
 <body>
@@ -16,28 +16,23 @@
         <section class="control-panel">
             <div>
                 <p class="eyebrow">Computação moderna</p>
-                <h1>Duelo de Cartões Inteligentes</h1>
+                <h1>Guerra de Protocolos</h1>
             </div>
 
             <div class="setup-grid" id="setupPanel">
                 <label>
-                    Jogadores humanos
-                    <select id="humanCount">
-                        <option value="1">1 jogador</option>
-                        <option value="2">2 jogadores</option>
-                        <option value="3">3 jogadores</option>
-                        <option value="4">4 jogadores</option>
-                    </select>
+                    Nome
+                    <input id="playerName" maxlength="18" placeholder="Jogador">
                 </label>
 
+                <button type="button" id="createRoomBtn">Criar sala online</button>
+
                 <label>
-                    Bots de IA
-                    <select id="aiCount">
-                        <option value="1">1 IA</option>
-                        <option value="2" selected>2 IAs</option>
-                        <option value="3">3 IAs</option>
-                    </select>
+                    Código da sala
+                    <input id="roomCodeInput" maxlength="6" placeholder="ABC123">
                 </label>
+
+                <button type="button" id="joinRoomBtn">Entrar na sala</button>
 
                 <label>
                     Rodadas
@@ -48,17 +43,30 @@
                     </select>
                 </label>
 
-                <button type="button" id="startBtn">Iniciar partida</button>
+                <label>
+                    IAs na sala
+                    <select id="aiCount">
+                        <option value="0">0</option>
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                    </select>
+                </label>
+
+                <button type="button" id="startBtn" disabled>Iniciar partida</button>
             </div>
 
             <div class="match-status">
+                <div>
+                    <span>Sala</span>
+                    <strong id="roomDisplay">Sem sala</strong>
+                </div>
                 <div>
                     <span>Rodada</span>
                     <strong id="roundDisplay">0 / 5</strong>
                 </div>
                 <div>
-                    <span>Vez de</span>
-                    <strong id="turnDisplay">Configure a partida</strong>
+                    <span>Estado</span>
+                    <strong id="turnDisplay">Entre em uma sala</strong>
                 </div>
                 <div>
                     <span>Prêmio</span>
@@ -71,13 +79,16 @@
 
         <section class="game-board">
             <div class="card-lab">
-                <h2>Baralho</h2>
+                <div class="section-head">
+                    <h2>Sua mão</h2>
+                    <div id="energyDisplay">Energia: 0</div>
+                </div>
                 <div class="cards" id="cardChoices"></div>
             </div>
 
             <aside class="machine-panel">
-                <h2>Processador de Jogadas</h2>
-                <div class="terminal" id="roundLog">Aguardando nova partida.</div>
+                <h2>Rede da Partida</h2>
+                <div class="terminal" id="roundLog">Crie ou entre em uma sala para começar.</div>
                 <button type="button" id="nextRoundBtn" disabled>Próxima rodada</button>
             </aside>
         </section>

@@ -87,7 +87,7 @@ h2{
 
 .setup-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:12px;
     align-items:end;
 }
@@ -101,6 +101,7 @@ label{
 }
 
 select,
+input,
 button{
     min-height:44px;
     border:1px solid #a8844b;
@@ -108,7 +109,8 @@ button{
     font:inherit;
 }
 
-select{
+select,
+input{
     padding:0 12px;
     background:#fff8e8;
     color:#2c2013;
@@ -130,12 +132,13 @@ button:hover:not(:disabled){
 button:disabled{
     cursor:not-allowed;
     opacity:.52;
+    transform:none;
 }
 
 .match-status{
     grid-column:1 / -1;
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:12px;
 }
 
@@ -212,13 +215,30 @@ button:disabled{
     text-align:left;
 }
 
+.action-card.selected{
+    border-color:#a73f36;
+    background:
+        linear-gradient(180deg,rgba(255,241,210,.92),rgba(255,248,232,.98)),
+        repeating-linear-gradient(0deg,transparent 0 13px,rgba(167,63,54,.15) 14px 15px);
+}
+
 .action-card strong{
     font-size:1.1rem;
 }
 
-.action-card small{
+.action-card small,
+.action-card em{
     color:#5d4a31;
     line-height:1.45;
+}
+
+.action-card em{
+    display:block;
+    font-style:normal;
+    font-weight:900;
+    text-transform:uppercase;
+    font-size:.72rem;
+    color:#2f5f5a;
 }
 
 .action-card .power{
@@ -230,6 +250,36 @@ button:disabled{
     background:#2f5f5a;
     color:#fff8e8;
     font-weight:900;
+}
+
+.section-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:14px;
+}
+
+.section-head h2{
+    margin-bottom:0;
+}
+
+#energyDisplay{
+    padding:8px 10px;
+    border:1px solid #a8844b;
+    border-radius:8px;
+    background:#fff8e8;
+    color:#2f5f5a;
+    font-weight:900;
+}
+
+.empty-hand{
+    padding:18px;
+    border:1px dashed #a8844b;
+    border-radius:8px;
+    background:#fff8e8;
+    color:#5d4a31;
+    font-weight:800;
 }
 
 .machine-panel{
