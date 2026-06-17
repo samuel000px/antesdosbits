@@ -1,13 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Era IBM - Sala de Cartões</title>
     <link rel="stylesheet" href="ibm.css">
 </head>
 <body>
-    <h1>Página ainda em desenvolvimento</h1>
+    <header class="topbar">
+        <a href="../index.html">Antes dos Bits</a>
+        <div id="coinsDisplay">0 moedas</div>
+    </header>
+
+    <main class="factory">
+        <section class="mission">
+            <div>
+                <p class="eyebrow">1924 • Era IBM</p>
+                <h1>Sala de Máquinas de Cartões</h1>
+                <p id="missionText">Carregando ordem de serviço...</p>
+            </div>
+
+            <div class="mission-board">
+                <div>
+                    <span>Ordem</span>
+                    <strong id="missionCounter">1 / 3</strong>
+                </div>
+                <div>
+                    <span>Prêmio</span>
+                    <strong id="rewardDisplay">0 moedas</strong>
+                </div>
+                <div>
+                    <span>Status</span>
+                    <strong id="statusDisplay">Monte o fluxo</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="manual">
+            <article>
+                <strong>Verificadora</strong>
+                <span>Remove cartões com perfuração inválida antes de travar a linha.</span>
+            </article>
+            <article>
+                <strong>Classificadora</strong>
+                <span>Ordena por uma coluna: departamento, produto, cliente ou região.</span>
+            </article>
+            <article>
+                <strong>Coladora</strong>
+                <span>Combina o baralho principal com um arquivo mestre pelo mesmo código.</span>
+            </article>
+            <article>
+                <strong>Tabuladora</strong>
+                <span>Soma ou conta cartões agrupados. Exige baralho ordenado pelo grupo.</span>
+            </article>
+        </section>
+
+        <section class="workbench">
+            <div class="panel deck-panel">
+                <div class="section-head">
+                    <h2>Baralho de cartões</h2>
+                    <button type="button" id="shuffleBtn">Reembaralhar</button>
+                </div>
+                <div id="cardDeck" class="card-deck"></div>
+            </div>
+
+            <div class="panel machine-panel">
+                <h2>Painel de máquinas IBM</h2>
+                <div id="machineList" class="machine-list"></div>
+            </div>
+
+            <div class="panel flow-panel">
+                <div class="section-head">
+                    <h2>Fluxo montado</h2>
+                    <button type="button" id="clearFlowBtn">Limpar</button>
+                </div>
+                <ol id="workflow" class="workflow"></ol>
+                <button type="button" id="runBtn">Rodar lote</button>
+                <button type="button" id="nextMissionBtn" disabled>Próxima ordem</button>
+            </div>
+        </section>
+
+        <section class="reports">
+            <div class="panel">
+                <h2>Relatório esperado</h2>
+                <div id="expectedReport" class="report-box"></div>
+            </div>
+
+            <div class="panel">
+                <h2>Console da sala</h2>
+                <div id="consoleOutput" class="console">Escolha máquinas e rode o lote.</div>
+            </div>
+
+            <div class="panel">
+                <h2>Relatório impresso</h2>
+                <div id="printedReport" class="report-box"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../db.js"></script>
     <script src="ibm.js"></script>
 </body>
 </html>
