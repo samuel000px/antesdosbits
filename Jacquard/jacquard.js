@@ -327,4 +327,3 @@ function updateCoins() {
     document.getElementById("coinsDisplay").textContent = "💰 " + coins + " moedas";
 }
 
-
