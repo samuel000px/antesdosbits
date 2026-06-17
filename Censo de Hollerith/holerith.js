@@ -21,6 +21,8 @@ const personagens = [
     }
 ];
 
+let coins = Number(localStorage.getItem("coins")) || 0;
+let streak = 0;
 let personagemAtual = null;
 let escolhasJogador = {
     idade: null,
@@ -30,6 +32,40 @@ let escolhasJogador = {
     nacionalidade: null,
     alfabetizacao: null
 };
+
+function updateCoins() {
+    const display = document.getElementById("coinsDisplay");
+    if (display) {
+        display.textContent = coins + " moedas";
+    }
+}
+
+async function saveRanking() {
+    if (!window.supabaseClient || !coins) return;
+
+    try {
+        const { data } = await window.supabaseClient.auth.getUser();
+        const user = data.user || JSON.parse(localStorage.getItem("user") || "null");
+        const nome =
+            user?.user_metadata?.name ||
+            user?.user_metadata?.nome ||
+            localStorage.getItem("playerName") ||
+            user?.email ||
+            "Anonimo";
+
+        if (user?.id) {
+            const { error } = await window.supabaseClient
+                .from("ranking")
+                .upsert({ user_id: user.id, nome, pontos: coins }, { onConflict: "user_id" });
+
+            if (!error) return;
+        }
+
+        await window.supabaseClient.from("ranking").insert([{ nome, pontos: coins }]);
+    } catch (error) {
+        console.warn("Ranking nao salvo:", error);
+    }
+}
 
 function carregarNovoPersonagem() {
     const indiceAleatorio = Math.floor(Math.random() * personagens.length);
@@ -57,7 +93,7 @@ function configurarCliquesDoCartao() {
     });
 }
 
-function processarCartao() {
+async function processarCartao() {
     if (!escolhasJogador.idade || !escolhasJogador.profissao || !escolhasJogador.estadoCivil || !escolhasJogador.sexo || !escolhasJogador.nacionalidade || !escolhasJogador.alfabetizacao) {
         alert("O sistema mecânico travou! Certifique-se de realizar uma perfuração por coluna.");
         return;
@@ -73,16 +109,25 @@ function processarCartao() {
     const acertouAlfabetizacao = escolhasJogador.alfabetizacao === personagemAtual.respostasCorretas.alfabetizacao;
 
     if (acertouIdade && acertouProfissao && acertouEstadoCivil&& acertouSexo && acertouNacionalidade&&acertouAlfabetizacao) {
-        feedbackDiv.innerText = "Você acertou!";
+        streak++;
+        const reward = 35 + Math.min(streak, 5) * 5;
+        coins += reward;
+        localStorage.setItem("coins", coins);
+        updateCoins();
+        saveRanking();
+
+        feedbackDiv.innerText = "Você acertou! +" + reward + " moedas";
         feedbackDiv.className = "sucesso";
         setTimeout(carregarNovoPersonagem, 3000);
     } else {
+        streak = 0;
         feedbackDiv.innerText = "Erro. Tente novamente.";
         feedbackDiv.className = "erro";
     }
 }
 
 window.onload = function() {
+    updateCoins();
     configurarCliquesDoCartao();
     carregarNovoPersonagem();
     document.getElementById("btn-Processar").addEventListener("click", processarCartao);
