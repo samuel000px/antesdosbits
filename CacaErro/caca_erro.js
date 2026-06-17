@@ -176,30 +176,63 @@ async function saveRanking() {
         localStorage.getItem("playerName") ||
         user.email;
 
-    const attemptsToSave = [
-        () => window.supabaseClient
-            .from("ranking")
-            .upsert(
-                { user_id: user.id, nome, pontos: coins },
-                { onConflict: "user_id" }
-            ),
-        () => window.supabaseClient
-            .from("ranking")
-            .insert([{ user_id: user.id, nome, pontos: coins }]),
-        () => window.supabaseClient
-            .from("ranking")
-            .insert([{ nome, pontos: coins }])
-    ];
+    const buscaPorUsuario = await window.supabaseClient
+        .from("ranking")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("pontos", { ascending: false })
+        .limit(1);
 
-    for (const save of attemptsToSave) {
-        const { error } = await save();
+    if (!buscaPorUsuario.error && buscaPorUsuario.data.length) {
+        const registro = buscaPorUsuario.data[0];
+        const novaPontuacao = Math.max(Number(registro.pontos) || 0, coins);
 
-        if (!error) {
+        if (registro.id) {
+            const { error } = await window.supabaseClient
+                .from("ranking")
+                .update({ user_id: user.id, nome, pontos: novaPontuacao })
+                .eq("id", registro.id);
+
+            if (error) console.warn("Ranking nao salvo:", error.message);
             return;
         }
-
-        console.warn("Ranking nao salvo:", error.message);
     }
+
+    const buscaPorNome = await window.supabaseClient
+        .from("ranking")
+        .select("*")
+        .eq("nome", nome)
+        .order("pontos", { ascending: false })
+        .limit(1);
+
+    if (!buscaPorNome.error && buscaPorNome.data.length) {
+        const registro = buscaPorNome.data[0];
+        const novaPontuacao = Math.max(Number(registro.pontos) || 0, coins);
+
+        if (registro.id) {
+            const { error } = await window.supabaseClient
+                .from("ranking")
+                .update({ user_id: user.id, nome, pontos: novaPontuacao })
+                .eq("id", registro.id);
+
+            if (error) console.warn("Ranking nao salvo:", error.message);
+            return;
+        }
+    }
+
+    const insertComUsuario = await window.supabaseClient
+        .from("ranking")
+        .insert([{ user_id: user.id, nome, pontos: coins }]);
+
+    if (!insertComUsuario.error) {
+        return;
+    }
+
+    const { error } = await window.supabaseClient
+        .from("ranking")
+        .insert([{ nome, pontos: coins }]);
+
+    if (error) console.warn("Ranking nao salvo:", error.message);
 }
 
 async function inspectCard(index) {

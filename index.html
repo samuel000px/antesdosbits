@@ -31,6 +31,7 @@
 
         <section class="left-panel">
 
+            <p class="eyebrow">Museu jogável da computação</p>
             <h1>Antes dos Bits</h1>
 
             <p class="subtitle">
@@ -88,9 +89,9 @@
 
         <section class="right-panel">
 
-            <h2 id="detailTitle">
-                Tear de Jacquard
-            </h2>
+            <div class="detail-kicker">Fase selecionada</div>
+
+            <h2 id="detailTitle">Tear de Jacquard</h2>
 
             <p id="detailDescription">
                 Em 1804, Joseph Jacquard utilizou cartões perfurados para controlar automaticamente padrões de tecelagem. Essa foi uma das primeiras aplicações do conceito de programação.
@@ -103,11 +104,20 @@
         </section>
 
     </main>
-    <h2>🏆 Ranking Global</h2>
 
-    <ol id="rankingList">
-        <li>Carregando...</li>
-    </ol>
+    <section class="ranking-section">
+        <div class="ranking-header">
+            <div>
+                <p class="eyebrow">Placar conectado</p>
+                <h2>Ranking Global</h2>
+            </div>
+            <span>Top 10 jogadores</span>
+        </div>
+
+        <ol id="rankingList" class="ranking-list">
+            <li class="ranking-empty">Carregando...</li>
+        </ol>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="db.js"></script>
