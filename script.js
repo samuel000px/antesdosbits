@@ -237,3 +237,11 @@ document.getElementById("playButton")
     window.location.href = currentPage;
 
 });
+document.getElementById("tutorialButton")
+.addEventListener("click", () => {
+
+    console.log(currentPage);
+
+    window.location.href = currentPage;
+
+});

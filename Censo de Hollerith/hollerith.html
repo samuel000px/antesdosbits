@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Censo de Hollerith - Cartão Perfurado Realístico</title>
+    <link rel="stylesheet" href="holerith.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Estação de Triagem: Censo de Hollerith</h1>
+        
+        <div class="card ficha-cidadao">
+            <h2>Prontuário de Investigação</h2>
+            <p id="descricao-personagem">Carregando dados do arquivo...</p>
+        </div>
+
+        <div class="cartao-perfurado">
+            <div class="corte-cartao"></div>
+            <div class="titulo-cartao">THE HOLLERITH ELECTRIC TABULATING SYSTEM • CENSO 1890</div>
+            
+            <div class="grade-cartao">
+                <div class="coluna-dados" data-categoria="sexo">
+                    <div class="legenda-coluna">SEXO</div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="M"></button>
+                        <span class="sub-legenda">Masc</span>
+                    </div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="F"></button>
+                        <span class="sub-legenda">Femi</span>
+                    </div>
+                </div>
+
+                <div class="divisor-cartao"></div>
+                <div class="coluna-dados" data-categoria="idade">
+                    <div class="legenda-coluna">IDADE</div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="jovem">0</button>
+                        <span class="sub-legenda">jovem</span>
+                    </div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="adulto">1</button>
+                        <span class="sub-legenda">adulto</span>
+                    </div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="idoso">2</button>
+                        <span class="sub-legenda">idoso</span>
+                    </div>
+                </div>
+
+                <div class="divisor-cartao"></div>
+
+                <div class="coluna-dados" data-categoria="profissao">
+                    <div class="legenda-coluna">PROF</div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="agricultura">0</button>
+                        <span class="sub-legenda">agricultua</span>
+                    </div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="industria">1</button>
+                        <span class="sub-legenda">operário</span>
+                    </div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="intelectual">2</button>
+                        <span class="sub-legenda">intelectual</span>
+                    </div>
+                     <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="artes">3</button>
+                        <span class="sub-legenda">artes</span>
+                    </div>
+                </div>
+
+                <div class="divisor-cartao"></div>
+
+                <div class="coluna-dados" data-categoria="estadoCivil">
+                    <div class="legenda-coluna">E.CIVIL</div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="solteiro">0</button>
+                        <span class="sub-legenda">solt</span>
+                    </div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="casado">1</button>
+                        <span class="sub-legenda">casd</span>
+                    </div>
+                </div>
+                <div class="divisor-cartao"></div>
+
+                <div class="coluna-dados" data-categoria="nacionalidade">
+                    <div class="legenda-coluna">NACINALIDADE</div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="ingles"></button>
+                        <span class="sub-legenda">Ingl</span>
+                    </div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="estrangeiro"></button>
+                        <span class="sub-legenda">Estr</span>
+                    </div>
+                </div>
+
+                <div class="divisor-cartao"></div>
+
+                <div class="coluna-dados" data-categoria="alfabetizacao">
+                    <div class="legenda-coluna">ALFABETIZAÇÃO</div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="sim"></button>
+                        <span class="sub-legenda">Sim</span>
+                    </div>
+                    <div class="furo-container">
+                        <button type="button" class="furo-circular" data-value="nao"></button>
+                        <span class="sub-legenda">Não</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <button type="button" id="btn-Processar" class="btn-maquina">Acionar Alavanca</button>
+
+        <div id="feedback" class="oculto"></div>
+    </div>
+
+    <script src="holerith.js"></script>
+</body>
+</html>

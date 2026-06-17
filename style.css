@@ -320,7 +320,9 @@ h1{
     #playButton{
         width:100%;
     }
+}
 
+<<<<<<< HEAD
     .topbar{
         flex-direction:column;
         align-items:flex-start;
@@ -337,5 +339,59 @@ h1{
 
     .ranking-points{
         grid-column:2;
+=======
+#tutorialButton{
+    margin-top:40px;
+
+    width:220px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#8a6a42;
+
+    color:white;
+
+    font-size:1rem;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+#tutorialButton:hover{
+    background:#6d5131;
+}
+
+@media(max-width:900px){
+
+    .menu{
+        flex-direction:column;
+    }
+
+    .left-panel{
+        width:100%;
+        border-right:none;
+        border-bottom:4px solid #b99a6b;
+    }
+
+    .right-panel{
+        padding:40px 25px;
+    }
+
+    h1{
+        font-size:2.8rem;
+    }
+
+    #detailTitle{
+        font-size:2rem;
+    }
+
+    #playButton{
+        width:100%;
+>>>>>>> c338758a6d7ea717f9ac47d29d0cd17387719ec8
     }
 }
