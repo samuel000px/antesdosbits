@@ -2,9 +2,36 @@ body {
     font-family: Inter,sans-serif;
     background-color: #e8dcc4; /* Fundo bem escuro */
     color:#2f2419;
-    display: flex;
-    justify-content: center;
+    display: block;
     padding: 20px;
+}
+
+.topbar {
+    max-width: 850px;
+    width: 100%;
+    margin: 0 auto 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    background: #f5ecd9;
+    border: 2px solid #b48b4d;
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+
+.topbar a {
+    color: #2f2419;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#coinsDisplay {
+    background: #8a6a42;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: bold;
 }
 
 .game-container {
@@ -171,4 +198,9 @@ h1 {
 
 .oculto {display: none !important;}
 .sucesso { color: #52be80; }
+<<<<<<< HEAD
 .erro { color: #ec7063; }
+.oculto { display: none; }
+=======
+.erro { color: #ec7063; }
+>>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6

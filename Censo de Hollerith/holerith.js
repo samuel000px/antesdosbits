@@ -29,8 +29,13 @@ const personagensOriginais = [
     }
 ];
 
+<<<<<<< HEAD
+let coins = Number(localStorage.getItem("coins")) || 0;
+let streak = 0;
+=======
 // Variáveis de controle do estado do jogo
 let poolPersonagens = [];
+>>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
 let personagemAtual = null;
 let rodadaAtual = 0;
 let moedasGanhas = 0;
@@ -46,6 +51,42 @@ let escolhasJogador = {
     alfabetizacao: null
 };
 
+<<<<<<< HEAD
+function updateCoins() {
+    const display = document.getElementById("coinsDisplay");
+    if (display) {
+        display.textContent = coins + " moedas";
+    }
+}
+
+async function saveRanking() {
+    if (!window.supabaseClient || !coins) return;
+
+    try {
+        const { data } = await window.supabaseClient.auth.getUser();
+        const user = data.user || JSON.parse(localStorage.getItem("user") || "null");
+        const nome =
+            user?.user_metadata?.name ||
+            user?.user_metadata?.nome ||
+            localStorage.getItem("playerName") ||
+            user?.email ||
+            "Anonimo";
+
+        if (user?.id) {
+            const { error } = await window.supabaseClient
+                .from("ranking")
+                .upsert({ user_id: user.id, nome, pontos: coins }, { onConflict: "user_id" });
+
+            if (!error) return;
+        }
+
+        await window.supabaseClient.from("ranking").insert([{ nome, pontos: coins }]);
+    } catch (error) {
+        console.warn("Ranking nao salvo:", error);
+    }
+}
+=======
+>>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
 
 function carregarNovoPersonagem() {
     if (rodadaAtual >= MAX_RODADAS || poolPersonagens.length === 0) {
@@ -193,15 +234,32 @@ function processarCartao() {
     const acertouNacionalidade = escolhasJogador.nacionalidade === personagemAtual.respostasCorretas.nacionalidade;
     const acertouAlfabetizacao = escolhasJogador.alfabetizacao === personagemAtual.respostasCorretas.alfabetizacao;
 
+<<<<<<< HEAD
+    if (acertouIdade && acertouProfissao && acertouEstadoCivil&& acertouSexo && acertouNacionalidade&&acertouAlfabetizacao) {
+        streak++;
+        const reward = 35 + Math.min(streak, 5) * 5;
+        coins += reward;
+        localStorage.setItem("coins", coins);
+        updateCoins();
+        saveRanking();
+
+        feedbackDiv.innerText = "Você acertou! +" + reward + " moedas";
+=======
     if (acertouIdade && acertouProfissao && acertouEstadoCivil && acertouSexo && acertouNacionalidade && acertouAlfabetizacao) {
         feedbackDiv.innerText = "✓ Registro tabulado com sucesso pelo sistema mecânico!";
+>>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
         feedbackDiv.className = "sucesso";
         moedasGanhas += MOEDAS_POR_ACERTO;
         
         // Se acertou, avança sozinho após 2 segundos (mantém o fluxo fluido)
         setTimeout(carregarNovoPersonagem, 2000);
     } else {
+<<<<<<< HEAD
+        streak = 0;
+        feedbackDiv.innerText = "Erro. Tente novamente.";
+=======
         feedbackDiv.innerText = "✕ Erro de tabulação! Dados inconsistentes com o prontuário.";
+>>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
         feedbackDiv.className = "erro";
         
         // Se errou, exibe o botão de Continuar para o jogador avançar manualmente
@@ -223,10 +281,14 @@ function finalizarPartida() {
 }
 
 window.onload = function() {
+    updateCoins();
     configurarCliquesDoCartao();
     iniciarJogo();
     
     document.getElementById("btn-Processar").addEventListener("click", processarCartao);
+<<<<<<< HEAD
+};
+=======
     
     // Adiciona o evento de clique para o novo botão de Continuar
     document.getElementById("btn-Continuar").addEventListener("click", carregarNovoPersonagem);
@@ -236,3 +298,4 @@ window.onload = function() {
         alert("Retornando ao menu principal do jogo...");
     });
 };
+>>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6

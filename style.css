@@ -172,31 +172,36 @@ h1{
     color:#7ec7bc;
 }
 
-#playButton{
+#playButton,
+#tutorialButton{
     margin-top:40px;
-
     width:220px;
-
     padding:18px;
-
     border:none;
-
     border-radius:8px;
-
-    background:#a73f36;
-
     color:#fff8e8;
-
     font-size:1rem;
     font-weight:800;
-
     cursor:pointer;
-
     transition:.2s;
+}
+
+#playButton{
+    background:#a73f36;
 }
 
 #playButton:hover{
     background:#c24f44;
+    transform:translateY(-2px);
+}
+
+#tutorialButton{
+    margin-top:18px;
+    background:#8a6a42;
+}
+
+#tutorialButton:hover{
+    background:#6d5131;
     transform:translateY(-2px);
 }
 
@@ -317,10 +322,10 @@ h1{
         font-size:2rem;
     }
 
-    #playButton{
+    #playButton,
+    #tutorialButton{
         width:100%;
     }
-}
 
     .topbar{
         flex-direction:column;
@@ -338,6 +343,8 @@ h1{
 
     .ranking-points{
         grid-column:2;
+<<<<<<< HEAD
+=======
 #tutorialButton{
     margin-top:40px;
 
@@ -390,5 +397,6 @@ h1{
 
     #playButton{
         width:100%;
+>>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
     }
 }

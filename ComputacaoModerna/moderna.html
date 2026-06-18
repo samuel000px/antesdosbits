@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computação Moderna - Duelo de Cartões</title>
+    <link rel="stylesheet" href="moderna.css">
+</head>
+<body>
+    <header class="topbar">
+        <a href="../index.html">Antes dos Bits</a>
+        <div id="coinsDisplay">0 moedas</div>
+    </header>
+
+    <main class="arena">
+        <section class="control-panel">
+            <div>
+                <p class="eyebrow">Computação moderna</p>
+                <h1>Duelo de Cartões Inteligentes</h1>
+            </div>
+
+            <div class="setup-grid" id="setupPanel">
+                <label>
+                    Jogadores humanos
+                    <select id="humanCount">
+                        <option value="1">1 jogador</option>
+                        <option value="2">2 jogadores</option>
+                        <option value="3">3 jogadores</option>
+                        <option value="4">4 jogadores</option>
+                    </select>
+                </label>
+
+                <label>
+                    Bots de IA
+                    <select id="aiCount">
+                        <option value="1">1 IA</option>
+                        <option value="2" selected>2 IAs</option>
+                        <option value="3">3 IAs</option>
+                    </select>
+                </label>
+
+                <label>
+                    Rodadas
+                    <select id="roundLimit">
+                        <option value="4">4</option>
+                        <option value="5" selected>5</option>
+                        <option value="6">6</option>
+                    </select>
+                </label>
+
+                <button type="button" id="startBtn">Iniciar partida</button>
+            </div>
+
+            <div class="match-status">
+                <div>
+                    <span>Rodada</span>
+                    <strong id="roundDisplay">0 / 5</strong>
+                </div>
+                <div>
+                    <span>Vez de</span>
+                    <strong id="turnDisplay">Configure a partida</strong>
+                </div>
+                <div>
+                    <span>Prêmio</span>
+                    <strong id="prizeDisplay">0 moedas</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="scoreboard" id="scoreboard"></section>
+
+        <section class="game-board">
+            <div class="card-lab">
+                <h2>Baralho</h2>
+                <div class="cards" id="cardChoices"></div>
+            </div>
+
+            <aside class="machine-panel">
+                <h2>Processador de Jogadas</h2>
+                <div class="terminal" id="roundLog">Aguardando nova partida.</div>
+                <button type="button" id="nextRoundBtn" disabled>Próxima rodada</button>
+            </aside>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../db.js"></script>
+    <script src="moderna.js"></script>
+</body>
+</html>

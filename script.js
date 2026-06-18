@@ -212,6 +212,7 @@ const title = document.getElementById("detailTitle");
 const description = document.getElementById("detailDescription");
 
 let currentPage = "Jacquard/jacquard.html";
+let currentTutorial = "Jacquard/tutorial.html";
 
 phases.forEach(phase => {
 
@@ -221,6 +222,7 @@ phases.forEach(phase => {
         description.textContent = phase.dataset.desc;
 
         currentPage = phase.dataset.page || currentPage;
+        currentTutorial = phase.dataset.tutorial || "";
     }
 
     phase.addEventListener("mouseenter", updateDetails);
@@ -240,8 +242,11 @@ document.getElementById("playButton")
 document.getElementById("tutorialButton")
 .addEventListener("click", () => {
 
-    console.log(currentPage);
+    if (!currentTutorial) {
+        alert("Esta fase ainda nao tem tutorial.");
+        return;
+    }
 
-    window.location.href = currentPage;
+    window.location.href = currentTutorial;
 
 });
