@@ -167,19 +167,7 @@ function configurarCliquesDoCartao() {
 function processarCartao() {
     if (!document.getElementById("tela-final").classList.contains("oculto")) return;
 
-<<<<<<< HEAD
     if (!escolhasJogador.idade || !escolhasJogador.profissao || !escolhasJogador.estadoCivil || !escolhasJogador.sexo || !escolhasJogador.nacionalidade || !escolhasJogador.alfabetizacao) {
-=======
-    const incompleto =
-        !escolhasJogador.idade ||
-        !escolhasJogador.profissao ||
-        !escolhasJogador.estadoCivil ||
-        !escolhasJogador.sexo ||
-        !escolhasJogador.nacionalidade ||
-        !escolhasJogador.alfabetizacao;
-
-    if (incompleto) {
->>>>>>> 7df96eeea3ce90ce604c2d26274dae70ecbe8d30
         alert("O sistema mecânico do Pantógrafo travou! Realize exatamente uma perfuração por coluna antes de puxar a alavanca.");
         return;
     }
