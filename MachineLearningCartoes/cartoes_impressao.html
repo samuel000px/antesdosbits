@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartões Perfurados para Impressão</title>
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            margin:0;
+            font-family:Arial,sans-serif;
+            background:#f5f0e4;
+            color:#241b12;
+        }
+
+        main{
+            width:min(1100px,calc(100% - 32px));
+            margin:0 auto;
+            padding:24px 0;
+        }
+
+        h1{
+            margin:0 0 8px;
+            font-size:28px;
+        }
+
+        .hint{
+            margin:0 0 18px;
+            line-height:1.45;
+        }
+
+        .sheet{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:16px;
+        }
+
+        .card{
+            break-inside:avoid;
+            padding:16px;
+            border:2px solid #2b2015;
+            border-radius:8px;
+            background:#fff8e8;
+        }
+
+        .card-head{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:12px;
+            margin-bottom:12px;
+            border-bottom:1px solid #7a6343;
+            padding-bottom:8px;
+        }
+
+        .card h2{
+            margin:0;
+            font-size:18px;
+        }
+
+        .card code{
+            display:block;
+            margin-top:4px;
+            font-weight:700;
+        }
+
+        .mark{
+            max-width:160px;
+            font-size:12px;
+            font-weight:700;
+            text-align:right;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(12,1fr);
+            gap:8px;
+            padding:12px;
+            border:1px solid #7a6343;
+            background:#fffdf5;
+        }
+
+        .dot{
+            aspect-ratio:1;
+            display:grid;
+            place-items:center;
+            border:2px solid #241b12;
+            border-radius:50%;
+            background:#fff;
+            font-size:9px;
+            color:#6b5a43;
+        }
+
+        .dot.on{
+            background:#111;
+            color:#fff;
+        }
+
+        .rows{
+            display:grid;
+            grid-template-columns:repeat(12,1fr);
+            gap:8px;
+            margin:8px 12px 0;
+            font-size:10px;
+            text-align:center;
+            color:#6b5a43;
+        }
+
+        .blank .dot.on{
+            background:#fff;
+            color:#6b5a43;
+        }
+
+        @media print{
+            body{
+                background:#fff;
+            }
+
+            main{
+                width:100%;
+                padding:0;
+            }
+
+            .hint{
+                font-size:12px;
+            }
+
+            .sheet{
+                gap:10px;
+            }
+
+            .card{
+                box-shadow:none;
+            }
+        }
+
+        @media(max-width:800px){
+            .sheet{
+                grid-template-columns:1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Cartões perfurados para imprimir</h1>
+        <p class="hint">
+            Pinte de preto as bolinhas já preenchidas no modelo. As bolinhas vazias ficam sem pintar.
+            Para fazer seu próprio cartão, use o modelo em branco no fim da página.
+        </p>
+
+        <section class="sheet" id="sheet"></section>
+    </main>
+
+    <script>
+        const rows = 5;
+        const cols = 12;
+        const cards = [
+            {
+                title: "READ",
+                code: "READ C",
+                holes: [1, 14, 25, 38, 49]
+            },
+            {
+                title: "CALCULO",
+                code: "F = C * 9 / 5 + 32",
+                holes: [0, 5, 13, 18, 29, 34, 47, 58]
+            },
+            {
+                title: "IF / GOTO",
+                code: "IF (N) 10,20,30",
+                holes: [3, 9, 12, 21, 30, 42, 51, 57]
+            },
+            {
+                title: "PRINT",
+                code: "PRINT RESULT",
+                holes: [2, 16, 23, 31, 36, 44, 55]
+            },
+            {
+                title: "MODELO EM BRANCO",
+                code: "Crie seu padrão",
+                holes: [],
+                blank: true
+            }
+        ];
+
+        const sheet = document.getElementById("sheet");
+
+        cards.forEach(card => {
+            const article = document.createElement("article");
+            article.className = "card" + (card.blank ? " blank" : "");
+            article.innerHTML =
+                "<div class='card-head'>" +
+                    "<div><h2>" + card.title + "</h2><code>" + card.code + "</code></div>" +
+                    "<div class='mark'>Bolinha preta = pintar ou furar</div>" +
+                "</div>" +
+                "<div class='grid'>" + renderDots(card.holes) + "</div>" +
+                "<div class='rows'>" + Array.from({ length: cols }, (_, index) => "<span>" + (index + 1) + "</span>").join("") + "</div>";
+
+            sheet.appendChild(article);
+        });
+
+        function renderDots(holes) {
+            return Array.from({ length: rows * cols }, (_, index) => {
+                const active = holes.includes(index);
+                return "<span class='dot" + (active ? " on" : "") + "'>" + (index + 1) + "</span>";
+            }).join("");
+        }
+    </script>
+</body>
+</html>

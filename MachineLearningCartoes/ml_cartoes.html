@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IA Machine Learning - Scanner de Cartões</title>
     <link rel="stylesheet" href="ml_cartoes.css">
+    <link rel="stylesheet" href="../theme.css">
 </head>
-<body>
+<body class="theme-ml">
     <header class="topbar">
         <a href="../index.html">Antes dos Bits</a>
         <div id="modelStatus">Modelo inicial</div>
@@ -18,14 +19,15 @@
                 <p class="eyebrow">Novo • Computação moderna</p>
                 <h1>IA Scanner de Cartões Perfurados</h1>
                 <p>
-                    Treine um detector com fotos reais de cartões perfurados. O laboratório lê os furos,
-                    traduz o padrão para uma instrução e projeta a interpretação sobre a imagem.
+                    Treine um modelo neural com fotos reais de cartões perfurados feitos em cartolina,
+                    papelão ou impressos. O laboratório aprende pela imagem rotulada, lê os furos
+                    e projeta a instrução interpretada sobre a foto.
                 </p>
             </div>
             <div class="model-card">
-                <span>Amostras salvas</span>
+                <span>Fotos rotuladas</span>
                 <strong id="sampleCount">0</strong>
-                <small>Quanto mais fotos reais rotuladas, melhor a detecção.</small>
+                <small id="modelSummary">Colete fotos reais e treine o modelo.</small>
             </div>
         </section>
 
@@ -38,6 +40,9 @@
                     <input id="imageInput" type="file" accept="image/*" capture="environment">
                 </label>
 
+                <button type="button" id="startCameraBtn">Abrir scanner ao vivo</button>
+                <button type="button" id="captureFrameBtn" disabled>Congelar foto do scanner</button>
+                <button type="button" id="stopCameraBtn" disabled>Fechar câmera</button>
                 <button type="button" id="sampleBtn">Gerar cartão realista</button>
                 <button type="button" id="detectBtn">Detectar instrução</button>
 
@@ -46,12 +51,15 @@
                     <select id="labelSelect"></select>
                 </label>
 
-                <button type="button" id="trainBtn">Salvar amostra treinada</button>
+                <button type="button" id="trainBtn">Salvar foto rotulada</button>
+                <button type="button" id="fitModelBtn">Treinar modelo real</button>
+                <button type="button" id="predictMlBtn">Usar IA treinada</button>
                 <button type="button" id="exportBtn">Exportar dataset</button>
                 <button type="button" id="clearTrainingBtn">Limpar treino local</button>
 
                 <div class="hint">
-                    Para treino real: fotografe cartões de perto, com boa luz, rotule os furos na grade e salve a amostra.
+                    Para treinar bem: fotografe o cartão inteiro, com boa luz, usando o mesmo enquadramento da moldura.
+                    Salve várias fotos por instrução, incluindo cartões impressos e feitos à mão.
                 </div>
             </div>
 
@@ -61,6 +69,7 @@
                     <span id="imageStatus">Nenhuma imagem</span>
                 </div>
                 <div class="canvas-wrap">
+                    <video id="cameraVideo" playsinline muted></video>
                     <canvas id="cardCanvas" width="900" height="520"></canvas>
                 </div>
             </div>
@@ -71,6 +80,14 @@
                     Carregue ou gere uma imagem para iniciar.
                 </div>
 
+                <h2>Treinamento real</h2>
+                <div id="trainingBox" class="training-box">
+                    O modelo neural ainda não foi treinado neste navegador.
+                </div>
+
+                <h2>Dataset coletado</h2>
+                <div id="datasetBox" class="dataset-box"></div>
+
                 <h2>Furos detectados</h2>
                 <div id="holeMatrix" class="hole-matrix"></div>
 
@@ -80,6 +97,7 @@
         </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
     <script src="ml_cartoes.js"></script>
 </body>
 </html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria | Samuel e Larissa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=16">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html">Samuel & Larissa</a>
+        <button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+        <nav class="nav-links" aria-label="Navegacao principal">
+            <a href="historia.html">Historia</a>
+            <a class="active" href="galeria.html">Galeria</a>
+            <a href="musicas.html">Musicas</a>
+            <a href="larissa.html">Larissa</a>
+            <a href="cartas.html">Cartas</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="futuro.html">Futuro</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-title">
+            <p class="eyebrow">Album</p>
+            <h1>Fotos, videos e lugares da gente</h1>
+            <p>Coloque fotos em `assets/fotos/` e videos em `assets/videos/`. O site ja esta preparado para os arquivos abaixo.</p>
+        </section>
+
+        <section class="gallery">
+            <article class="photo-card large">
+                <div class="photo-placeholder photo-media photo-contain">
+                    <img src="assets/fotos/print-conversa.png" alt="Print da primeira conversa pelo Instagram" loading="lazy">
+                </div>
+                <h2>O print do comeco</h2>
+                <p>Coloque aqui o print da primeira conversa pelo Instagram, o marco zero de tudo.</p>
+            </article>
+            <article class="photo-card">
+                <div class="photo-placeholder photo-media">
+                    <img src="assets/fotos/motiva-miramar.jpg" alt="Motiva Miramar" loading="lazy">
+                </div>
+                <h2>Motiva Miramar</h2>
+                <p>Uma foto da escola, dos corredores ou de voces nesse tempo.</p>
+            </article>
+            <article class="photo-card">
+                <div class="photo-placeholder photo-media">
+                    <img src="assets/fotos/forneria-origem.jpg" alt="Forneria de Origem" loading="lazy">
+                </div>
+                <h2>Forneria de Origem</h2>
+                <p>A pizza de pera que comecou como fingimento e virou gosto de verdade.</p>
+            </article>
+            <article class="photo-card wide">
+                <div class="photo-placeholder photo-media">
+                    <img src="assets/fotos/busto-tamandare.jpg" alt="Busto de Tamandare" loading="lazy">
+                </div>
+                <h2>Busto de Tamandare</h2>
+                <p>O lugar do pedido de namoro, em 24 de novembro de 2025.</p>
+            </article>
+            <article class="media-card">
+                <video controls poster="assets/fotos/video-01-poster.jpg">
+                    <source src="assets/videos/video-01.mp4" type="video/mp4">
+                </video>
+                <h2>Video favorito</h2>
+                <p>Video convertido para MP4 e pronto para tocar no celular.</p>
+            </article>
+            <article class="media-card">
+                <video controls poster="assets/fotos/video-02-poster.jpg">
+                    <source src="assets/videos/video-02.mp4" type="video/mp4">
+                </video>
+                <h2>Camboinha ou viagem</h2>
+                <p>Um video do verao, da praia ou da primeira viagem de voces.</p>
+            </article>
+        </section>
+    </main>
+
+    <script src="script.js?v=14"></script>
+</body>
+</html>

@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tear de Jacquard</title>
     <link rel="stylesheet" href="style_jacquard.css">
+    <link rel="stylesheet" href="../theme.css">
 </head>
-<body>
+<body class="theme-jacquard">
     <h1>Tear de Jacquard</h1>
 
     <p class="subtitle">
@@ -42,6 +43,14 @@
     </div>
 
     <div id="orderBox">
+        <div id="difficultyControls" class="difficulty-controls" aria-label="Escolha a dificuldade do pedido">
+            <button type="button" data-difficulty="auto">Auto</button>
+            <button type="button" data-difficulty="facil">Fácil</button>
+            <button type="button" data-difficulty="intermediario">Intermediário</button>
+            <button type="button" data-difficulty="dificil">Difícil</button>
+        </div>
+        <p id="difficultyProgress" class="difficulty-progress"></p>
+
         <h3 id="clientName"></h3>
         <p id="orderQuality"></p>
         <p id="orderCost"></p>

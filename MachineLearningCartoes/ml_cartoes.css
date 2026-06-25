@@ -170,8 +170,22 @@ button:hover{
 }
 
 #sampleBtn,
+#startCameraBtn,
+#captureFrameBtn,
+#fitModelBtn,
+#predictMlBtn,
 #exportBtn{
     background:#2f5f5a;
+}
+
+#stopCameraBtn{
+    background:#6f512f;
+}
+
+button:disabled{
+    cursor:not-allowed;
+    opacity:.55;
+    transform:none;
 }
 
 #clearTrainingBtn{
@@ -191,11 +205,20 @@ button:hover{
 }
 
 .canvas-wrap{
+    position:relative;
     width:100%;
     overflow:auto;
     border:2px dashed #a8844b;
     border-radius:8px;
     background:#fff8e8;
+}
+
+#cameraVideo{
+    position:absolute;
+    width:1px;
+    height:1px;
+    opacity:0;
+    pointer-events:none;
 }
 
 canvas{
@@ -214,11 +237,113 @@ canvas{
     margin-bottom:18px;
 }
 
+.training-box{
+    min-height:110px;
+    padding:14px;
+    border:1px solid #d0b070;
+    border-radius:8px;
+    background:#fff8e8;
+    color:#5d4a31;
+    line-height:1.55;
+    margin-bottom:18px;
+}
+
+.training-box strong{
+    display:block;
+    color:#2f5f5a;
+    margin-bottom:8px;
+}
+
+.dataset-box{
+    display:grid;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.dataset-summary{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+}
+
+.dataset-summary article,
+.dataset-empty{
+    padding:10px;
+    border:1px solid #d0b070;
+    border-radius:8px;
+    background:#fff8e8;
+    color:#5d4a31;
+}
+
+.dataset-summary strong{
+    display:block;
+    color:#2f5f5a;
+    font-size:1.25rem;
+}
+
+.dataset-summary span,
+.sample-tile span{
+    font-size:.76rem;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.dataset-warning{
+    padding:10px;
+    border:1px solid #a73f36;
+    border-radius:8px;
+    background:#fff1ea;
+    color:#7a2b25;
+    font-weight:800;
+    line-height:1.45;
+}
+
+.sample-list{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    max-height:360px;
+    overflow:auto;
+    padding-right:4px;
+}
+
+.sample-tile{
+    display:grid;
+    gap:7px;
+    padding:8px;
+    border:1px solid #d0b070;
+    border-radius:8px;
+    background:#fff8e8;
+}
+
+.sample-tile canvas{
+    width:100%;
+    min-width:0;
+    border-radius:6px;
+    background:#151922;
+}
+
+.sample-tile button{
+    min-height:34px;
+    padding:0 8px;
+    background:#a73f36;
+    font-size:.78rem;
+}
+
 .prediction strong{
     display:block;
     color:#2f5f5a;
     font-size:1.6rem;
     margin-bottom:8px;
+}
+
+.prediction.missing-card{
+    border-color:#a73f36;
+    background:#fff1ea;
+}
+
+.prediction.missing-card strong{
+    color:#a73f36;
 }
 
 .prediction code{

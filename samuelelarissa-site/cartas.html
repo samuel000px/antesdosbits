@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartas | Samuel e Larissa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=16">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html">Samuel & Larissa</a>
+        <button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+        <nav class="nav-links" aria-label="Navegacao principal">
+            <a href="historia.html">Historia</a>
+            <a href="galeria.html">Galeria</a>
+            <a href="musicas.html">Musicas</a>
+            <a href="larissa.html">Larissa</a>
+            <a class="active" href="cartas.html">Cartas</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="futuro.html">Futuro</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-title">
+            <p class="eyebrow">Surpresas</p>
+            <h1>Cartinhas para Larissa abrir com calma</h1>
+            <p>Clique em cada envelope para revelar uma mensagem.</p>
+        </section>
+
+        <section class="letter-grid">
+            <button class="letter" type="button" data-letter="Larissa, desde o Motiva Miramar ate hoje, eu vejo nossa historia como uma coisa que foi chegando de mansinho e ficando. Obrigado por fazer parte dos meus dias.">
+                <span>01</span>
+                <strong>Para lembrar do comeco</strong>
+            </button>
+            <button class="letter" type="button" data-letter="Eu gosto de lembrar que um gesto simples, como te oferecer para deixar em casa, significou tanto. Quero continuar sendo cuidado, presenca e abrigo para voce.">
+                <span>02</span>
+                <strong>Para falar de cuidado</strong>
+            </button>
+            <button class="letter" type="button" data-letter="Ainda quero conhecer a Tailandia, o Japao e a Italia com voce. Mais do que os lugares, quero viver a sensacao de olhar para o lado e ver voce ali.">
+                <span>03</span>
+                <strong>Para sonhar longe</strong>
+            </button>
+            <button class="letter" type="button" data-letter="Se um dia voce duvidar da sua beleza, volta nesse site. Ele existe para dizer, de varias formas, que voce e linda por fora, por dentro e no jeito que transforma os lugares.">
+                <span>04</span>
+                <strong>Para quando esquecer o quanto e bela</strong>
+            </button>
+        </section>
+    </main>
+
+    <dialog class="letter-dialog" id="letterDialog">
+        <button class="dialog-close" type="button" aria-label="Fechar">x</button>
+        <p id="letterText"></p>
+    </dialog>
+
+    <script src="script.js?v=14"></script>
+</body>
+</html>

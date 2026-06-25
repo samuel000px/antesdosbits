@@ -127,14 +127,19 @@ const orderDatabase = {
     ]
 };
 
-function getDifficultyKey() {
+function getAutoDifficultyKey() {
     if (completedOrders < 3) return "facil";
     if (completedOrders < 7) return "intermediario";
     return "dificil";
 }
 
+function getDifficultyKey() {
+    if (selectedDifficulty !== "auto") return selectedDifficulty;
+    return getAutoDifficultyKey();
+}
+
 function getRandomOrder() {
-    const pool = orderDatabase[getDifficultyKey()];
+    const pool = orderDatabase[getDifficultyKey()] || orderDatabase.facil;
     return pool[Math.floor(Math.random() * pool.length)];
 }
 
@@ -149,9 +154,15 @@ function isValidOrder(savedOrder) {
 
 let completedOrders = Number(localStorage.getItem("completedOrders")) || 0;
 let coins = Number(localStorage.getItem("coins")) || 0;
+let selectedDifficulty = localStorage.getItem("jacquardDifficulty") || "auto";
 let order = JSON.parse(localStorage.getItem("currentOrder")) || getRandomOrder();
 
-if (!isValidOrder(order)) {
+if (!orderDatabase[selectedDifficulty] && selectedDifficulty !== "auto") {
+    selectedDifficulty = "auto";
+    localStorage.setItem("jacquardDifficulty", selectedDifficulty);
+}
+
+if (!isValidOrder(order) || getOrderDifficultyKey(order) !== getDifficultyKey()) {
     order = getRandomOrder();
 }
 
@@ -183,6 +194,7 @@ if (savedFabric) {
 updateStats();
 updateCoins();
 renderOrder();
+setupDifficultyControls();
 
 // --- Sleep helper ---
 function sleep(ms) {
@@ -338,6 +350,8 @@ document.getElementById("restartBtn").addEventListener("click", () => {
     fabricMatrix = [];
     coins = 0;
     completedOrders = 0;
+    selectedDifficulty = "auto";
+    localStorage.setItem("jacquardDifficulty", selectedDifficulty);
     order = getRandomOrder();
     localStorage.setItem("currentOrder", JSON.stringify(order));
 
@@ -346,6 +360,7 @@ document.getElementById("restartBtn").addEventListener("click", () => {
     updateStats();
     updateCoins();
     renderOrder();
+    updateDifficultyControls();
     document.getElementById("resultBox").textContent = "";
     document.getElementById("executeBtn").disabled = false;
 });
@@ -484,6 +499,69 @@ function getQuality(fabric) { return getFabricMetrics(fabric).quality; }
 function getCost(fabric) { return getFabricMetrics(fabric).cost; }
 function getSize(fabric) { return fabric.length; }
 
+function getOrderDifficultyKey(targetOrder) {
+    if (!targetOrder) return "";
+
+    return Object.keys(orderDatabase).find(key =>
+        orderDatabase[key].some(candidate => candidate.client === targetOrder.client)
+    ) || "";
+}
+
+function getDifficultyLabel(key) {
+    if (key === "facil") return "Fácil";
+    if (key === "intermediario") return "Intermediário";
+    if (key === "dificil") return "Difícil";
+    return "Automático";
+}
+
+function setupDifficultyControls() {
+    document.querySelectorAll("[data-difficulty]").forEach(button => {
+        button.addEventListener("click", () => {
+            selectedDifficulty = button.dataset.difficulty;
+            localStorage.setItem("jacquardDifficulty", selectedDifficulty);
+
+            stopRequested = true;
+            isRunning = false;
+            order = getRandomOrder();
+            localStorage.setItem("currentOrder", JSON.stringify(order));
+
+            resetFabric();
+            resetCard();
+            renderOrder();
+            document.getElementById("resultBox").textContent = "";
+            document.getElementById("executeBtn").disabled = false;
+        });
+    });
+
+    updateDifficultyControls();
+}
+
+function updateDifficultyControls() {
+    document.querySelectorAll("[data-difficulty]").forEach(button => {
+        button.classList.toggle("active", button.dataset.difficulty === selectedDifficulty);
+    });
+
+    const progress = document.getElementById("difficultyProgress");
+    if (!progress) return;
+
+    if (selectedDifficulty === "auto") {
+        const nextText = completedOrders < 3
+            ? "Complete " + (3 - completedOrders) + " pedido(s) para o automático entrar no intermediário."
+            : completedOrders < 7
+                ? "Complete " + (7 - completedOrders) + " pedido(s) para o automático entrar no difícil."
+                : "Automático no nível difícil.";
+
+        progress.textContent =
+            "Modo automático: " + getDifficultyLabel(getAutoDifficultyKey()) +
+            " | Pedidos concluídos: " + completedOrders +
+            " | " + nextText;
+    } else {
+        progress.textContent =
+            "Modo escolhido: " + getDifficultyLabel(selectedDifficulty) +
+            ". Você pode testar este nível sem esperar a progressão automática.";
+    }
+}
+
 function updateStats() {
     const metrics = getFabricMetrics(fabricMatrix);
     document.getElementById("qualityValue").textContent = "Qualidade: " + metrics.quality;
@@ -510,6 +588,7 @@ function renderOrder() {
         "Tamanho mínimo: " + order.minSize +
         " | Densidade mínima: " + order.minDensity + "%" +
         " | Regularidade mínima: " + order.minRegularity;
+    updateDifficultyControls();
 }
 
 function updateCoins() {

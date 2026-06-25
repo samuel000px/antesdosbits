@@ -1,6 +1,8 @@
 const GRID_ROWS = 5;
 const GRID_COLS = 12;
 const CARD_AREA = { x: 90, y: 90, w: 720, h: 330 };
+const ML_IMAGE_SIZE = 64;
+const TF_MODEL_KEY = "punch-card-instruction-model";
 
 const instructions = [
     {
@@ -34,37 +36,205 @@ const instructions = [
 ];
 
 let currentImage = null;
+let currentSyntheticInstruction = null;
 let currentPattern = Array(GRID_ROWS * GRID_COLS).fill(false);
 let lastFeatures = [];
+let neuralModel = null;
+let neuralReady = false;
+let cameraStream = null;
+let scannerLive = false;
+let scannerBusy = false;
+let lastScannerScan = 0;
 
 const canvas = document.getElementById("cardCanvas");
 const ctx = canvas.getContext("2d");
+const cameraVideo = document.getElementById("cameraVideo");
 const imageInput = document.getElementById("imageInput");
+const startCameraBtn = document.getElementById("startCameraBtn");
+const captureFrameBtn = document.getElementById("captureFrameBtn");
+const stopCameraBtn = document.getElementById("stopCameraBtn");
 const sampleBtn = document.getElementById("sampleBtn");
 const detectBtn = document.getElementById("detectBtn");
 const trainBtn = document.getElementById("trainBtn");
+const fitModelBtn = document.getElementById("fitModelBtn");
+const predictMlBtn = document.getElementById("predictMlBtn");
 const exportBtn = document.getElementById("exportBtn");
 const clearTrainingBtn = document.getElementById("clearTrainingBtn");
 const labelSelect = document.getElementById("labelSelect");
 const modelStatus = document.getElementById("modelStatus");
+const modelSummary = document.getElementById("modelSummary");
 const sampleCount = document.getElementById("sampleCount");
 const imageStatus = document.getElementById("imageStatus");
 const predictionBox = document.getElementById("predictionBox");
+const trainingBox = document.getElementById("trainingBox");
+const datasetBox = document.getElementById("datasetBox");
 const holeMatrix = document.getElementById("holeMatrix");
 const legendBox = document.getElementById("legendBox");
 
 function getTrainingSamples() {
-    return JSON.parse(localStorage.getItem("cardMlSamples") || "[]");
+    try {
+        return JSON.parse(localStorage.getItem("cardMlSamples") || "[]");
+    } catch (error) {
+        return [];
+    }
 }
 
 function setTrainingSamples(samples) {
     localStorage.setItem("cardMlSamples", JSON.stringify(samples));
 }
 
-function updateTrainingStatus() {
+function getImageSamples() {
+    return getTrainingSamples().filter(sample => sample.imageBytes);
+}
+
+function updateTrainingStatus(extraText = "") {
     const samples = getTrainingSamples();
-    sampleCount.textContent = samples.length;
-    modelStatus.textContent = samples.length ? "Modelo treinado local" : "Modelo inicial";
+    const imageSamples = samples.filter(sample => sample.imageBytes);
+    const labelCount = new Set(imageSamples.map(sample => sample.label)).size;
+
+    sampleCount.textContent = imageSamples.length;
+    renderDatasetPanel(imageSamples);
+
+    if (neuralReady) {
+        modelStatus.textContent = "Modelo neural treinado";
+        modelSummary.textContent = imageSamples.length + " fotos | " + labelCount + " rótulos";
+        return;
+    }
+
+    if (imageSamples.length) {
+        modelStatus.textContent = "Coletando fotos";
+        modelSummary.textContent = imageSamples.length + " fotos salvas. Clique em Treinar modelo real.";
+    } else {
+        modelStatus.textContent = "Modelo inicial";
+        modelSummary.textContent = "Colete fotos reais e treine o modelo.";
+    }
+
+    if (extraText) {
+        trainingBox.textContent = extraText;
+    }
+}
+
+function getInstructionById(id) {
+    return instructions.find(instruction => instruction.id === id) || instructions[0];
+}
+
+function countSamplesByLabel(samples) {
+    return instructions.reduce((counts, instruction) => {
+        counts[instruction.id] = samples.filter(sample => sample.label === instruction.id).length;
+        return counts;
+    }, {});
+}
+
+function renderDatasetPanel(samples = getImageSamples()) {
+    const counts = countSamplesByLabel(samples);
+    const weakLabels = instructions
+        .filter(instruction => counts[instruction.id] > 0 && counts[instruction.id] < 8)
+        .map(instruction => instruction.name);
+    const missingLabels = instructions
+        .filter(instruction => counts[instruction.id] === 0)
+        .map(instruction => instruction.name);
+
+    if (!samples.length) {
+        datasetBox.innerHTML =
+            "<div class='dataset-empty'>Nenhuma foto rotulada ainda. Congele uma imagem, escolha o rótulo correto e salve.</div>";
+        return;
+    }
+
+    datasetBox.innerHTML =
+        "<div class='dataset-summary'>" +
+            instructions.map(instruction =>
+                "<article><span>" + instruction.name + "</span><strong>" + counts[instruction.id] + "</strong></article>"
+            ).join("") +
+        "</div>" +
+        renderDatasetWarning(samples, weakLabels, missingLabels) +
+        "<div class='sample-list' id='sampleList'></div>";
+
+    renderSampleTiles(samples);
+}
+
+function renderDatasetWarning(samples, weakLabels, missingLabels) {
+    const labelCount = new Set(samples.map(sample => sample.label)).size;
+
+    if (samples.length < 8 || labelCount < 2) {
+        return "<div class='dataset-warning'>Para treinar o modelo real, junte pelo menos 8 fotos e 2 tipos de instrução.</div>";
+    }
+
+    if (weakLabels.length) {
+        return "<div class='dataset-warning'>Poucas fotos em: " + weakLabels.join(", ") + ". O ideal é 10 a 20 por tipo.</div>";
+    }
+
+    if (missingLabels.length) {
+        return "<div class='dataset-warning'>Sem exemplos de: " + missingLabels.join(", ") + ". O modelo não aprenderá esses tipos.</div>";
+    }
+
+    return "";
+}
+
+function renderSampleTiles(samples) {
+    const sampleList = document.getElementById("sampleList");
+    if (!sampleList) return;
+
+    sampleList.innerHTML = "";
+
+    samples.slice().reverse().forEach(sample => {
+        const realIndex = getTrainingSamples().findIndex(candidate =>
+            candidate.createdAt === sample.createdAt &&
+            candidate.label === sample.label &&
+            candidate.imageBytes === sample.imageBytes
+        );
+        const tile = document.createElement("article");
+        tile.className = "sample-tile";
+        tile.innerHTML =
+            "<canvas width='" + ML_IMAGE_SIZE + "' height='" + ML_IMAGE_SIZE + "'></canvas>" +
+            "<span>" + getInstructionById(sample.label).name + "</span>" +
+            "<button type='button'>Apagar</button>";
+
+        drawSampleThumb(tile.querySelector("canvas"), sample);
+        tile.querySelector("button").addEventListener("click", () => void removeTrainingSample(realIndex));
+        sampleList.appendChild(tile);
+    });
+}
+
+function drawSampleThumb(thumbCanvas, sample) {
+    const thumbCtx = thumbCanvas.getContext("2d");
+    const imageData = thumbCtx.createImageData(ML_IMAGE_SIZE, ML_IMAGE_SIZE);
+    const bytes = base64ToBytes(sample.imageBytes);
+
+    for (let i = 0; i < bytes.length; i++) {
+        const value = bytes[i];
+        const offset = i * 4;
+        imageData.data[offset] = value;
+        imageData.data[offset + 1] = value;
+        imageData.data[offset + 2] = value;
+        imageData.data[offset + 3] = 255;
+    }
+
+    thumbCtx.putImageData(imageData, 0, 0);
+}
+
+async function removeTrainingSample(sampleIndex) {
+    if (sampleIndex < 0) return;
+
+    const samples = getTrainingSamples();
+    samples.splice(sampleIndex, 1);
+    setTrainingSamples(samples);
+
+    if (neuralModel) {
+        neuralModel.dispose();
+        neuralModel = null;
+    }
+
+    neuralReady = false;
+
+    if (window.tf) {
+        try {
+            await tf.io.removeModel("indexeddb://" + TF_MODEL_KEY);
+        } catch (error) {
+            // O modelo pode ainda não existir.
+        }
+    }
+
+    updateTrainingStatus("Amostra removida. Treine novamente para atualizar o modelo.");
 }
 
 function renderInstructionOptions() {
@@ -107,6 +277,8 @@ function renderMatrix() {
 }
 
 function drawEmptyCanvas() {
+    currentImage = null;
+    currentSyntheticInstruction = null;
     ctx.fillStyle = "#fff8e8";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#6a5537";
@@ -115,7 +287,16 @@ function drawEmptyCanvas() {
 }
 
 function drawSyntheticCard(instruction = instructions[Math.floor(Math.random() * instructions.length)]) {
+    stopLiveScanner();
     currentImage = null;
+    currentSyntheticInstruction = instruction;
+    paintSyntheticCard(instruction);
+    imageStatus.textContent = "Cartão sintético realista";
+    renderMatrix();
+    void detectInstruction();
+}
+
+function paintSyntheticCard(instruction) {
     currentPattern = Array(GRID_ROWS * GRID_COLS).fill(false);
     instruction.holes.forEach(index => currentPattern[index] = true);
     labelSelect.value = instruction.id;
@@ -161,9 +342,6 @@ function drawSyntheticCard(instruction = instructions[Math.floor(Math.random() *
             }
         }
     }
-    imageStatus.textContent = "Cartão sintético realista";
-    renderMatrix();
-    detectInstruction();
 }
 
 function roundRect(context, x, y, width, height, radius) {
@@ -184,14 +362,16 @@ function gridPoint(row, col) {
 }
 
 function loadImage(file) {
+    stopLiveScanner();
     const reader = new FileReader();
     reader.onload = event => {
         const image = new Image();
         image.onload = () => {
             currentImage = image;
+            currentSyntheticInstruction = null;
             fitImageToCanvas(image);
             imageStatus.textContent = "Imagem carregada";
-            detectInstruction();
+            void detectInstruction();
         };
         image.src = event.target.result;
     };
@@ -211,6 +391,124 @@ function fitImageToCanvas(image) {
     ctx.drawImage(image, x, y, width, height);
 }
 
+function fitVideoToCanvas(video) {
+    ctx.fillStyle = "#11151b";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const videoWidth = video.videoWidth || canvas.width;
+    const videoHeight = video.videoHeight || canvas.height;
+    const scale = Math.max(canvas.width / videoWidth, canvas.height / videoHeight);
+    const width = videoWidth * scale;
+    const height = videoHeight * scale;
+    const x = (canvas.width - width) / 2;
+    const y = (canvas.height - height) / 2;
+
+    ctx.drawImage(video, x, y, width, height);
+}
+
+function redrawBaseImage() {
+    if (scannerLive && cameraVideo.videoWidth) {
+        fitVideoToCanvas(cameraVideo);
+        return;
+    }
+
+    if (currentImage) {
+        fitImageToCanvas(currentImage);
+        return;
+    }
+
+    if (currentSyntheticInstruction) {
+        const savedPattern = [...currentPattern];
+        paintSyntheticCard(currentSyntheticInstruction);
+        currentPattern = savedPattern;
+    }
+}
+
+async function startLiveScanner() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+        imageStatus.textContent = "Câmera indisponível neste navegador";
+        return;
+    }
+
+    stopLiveScanner(false);
+
+    try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: { ideal: "environment" },
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+            },
+            audio: false
+        });
+
+        cameraVideo.srcObject = cameraStream;
+        await cameraVideo.play();
+
+        currentImage = null;
+        currentSyntheticInstruction = null;
+        scannerLive = true;
+        imageStatus.textContent = "Scanner ao vivo";
+        startCameraBtn.disabled = true;
+        captureFrameBtn.disabled = false;
+        stopCameraBtn.disabled = false;
+        scanLiveFrame();
+    } catch (error) {
+        console.error(error);
+        imageStatus.textContent = "Não foi possível abrir a câmera";
+        startCameraBtn.disabled = false;
+        captureFrameBtn.disabled = true;
+        stopCameraBtn.disabled = true;
+    }
+}
+
+function stopLiveScanner(clearStatus = true) {
+    scannerLive = false;
+    scannerBusy = false;
+
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+
+    cameraVideo.srcObject = null;
+    startCameraBtn.disabled = false;
+    captureFrameBtn.disabled = true;
+    stopCameraBtn.disabled = true;
+
+    if (clearStatus) {
+        imageStatus.textContent = "Scanner fechado";
+    }
+}
+
+function scanLiveFrame(timestamp = 0) {
+    if (!scannerLive) return;
+
+    requestAnimationFrame(scanLiveFrame);
+
+    if (scannerBusy || timestamp - lastScannerScan < 420) return;
+
+    scannerBusy = true;
+    lastScannerScan = timestamp;
+    void detectInstruction().finally(() => {
+        scannerBusy = false;
+    });
+}
+
+function captureScannerFrame() {
+    if (!scannerLive || !cameraVideo.videoWidth) return;
+
+    fitVideoToCanvas(cameraVideo);
+    stopLiveScanner(false);
+    currentImage = new Image();
+    currentImage.onload = () => {
+        fitImageToCanvas(currentImage);
+        imageStatus.textContent = "Foto congelada do scanner";
+        void detectInstruction(true);
+    };
+    currentImage.src = canvas.toDataURL("image/png");
+}
+
 function getModelThreshold() {
     const samples = getTrainingSamples();
 
@@ -220,6 +518,7 @@ function getModelThreshold() {
 
     const values = [];
     samples.forEach(sample => {
+        if (!sample.features || !sample.pattern) return;
         sample.features.forEach((feature, index) => {
             values.push({ feature, active: sample.pattern[index] });
         });
@@ -276,17 +575,138 @@ function sampleDarkness(x, y, radius) {
     return darkness / count;
 }
 
-function detectInstruction() {
-    if (currentImage) {
-        fitImageToCanvas(currentImage);
+async function detectInstruction(forceNeural = false) {
+    redrawBaseImage();
+
+    const cardCheck = detectCardInFrame();
+
+    if (!cardCheck.detected) {
+        currentPattern = Array(GRID_ROWS * GRID_COLS).fill(false);
+        lastFeatures = [];
+        renderMatrix();
+        drawCardGateOverlay(false);
+        renderCardGate(false, cardCheck);
+        return;
     }
 
     detectPatternFromCanvas();
     renderMatrix();
-    drawOverlay();
 
-    const prediction = classifyPattern(currentPattern);
-    renderPrediction(prediction);
+    const patternPrediction = classifyPattern(currentPattern);
+    const neuralPrediction = await predictCurrentImage();
+    const finalPrediction = forceNeural && neuralPrediction ? neuralPrediction : (neuralPrediction || patternPrediction);
+
+    imageStatus.textContent = "Cartão detectado";
+    drawOverlay(finalPrediction);
+    drawCardGateOverlay(true);
+    renderPrediction(patternPrediction, neuralPrediction, finalPrediction);
+}
+
+function detectCardInFrame() {
+    const inside = measureArea(CARD_AREA.x, CARD_AREA.y, CARD_AREA.w, CARD_AREA.h);
+    const outer = measureFrameAroundCard();
+    const contrast = inside.avgLuma - outer.avgLuma;
+    const paperLike = inside.brightRatio > 0.34 && inside.darkRatio < 0.42;
+    const separatedFromBackground = contrast > 0.08;
+    const enoughTexture = inside.lumaSpread > 0.09;
+
+    return {
+        detected: paperLike && (separatedFromBackground || enoughTexture),
+        brightRatio: inside.brightRatio,
+        darkRatio: inside.darkRatio,
+        contrast
+    };
+}
+
+function measureArea(x, y, width, height) {
+    const imageData = ctx.getImageData(x, y, width, height);
+    let lumaSum = 0;
+    let minLuma = 1;
+    let maxLuma = 0;
+    let brightPixels = 0;
+    let darkPixels = 0;
+    let total = 0;
+
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        const r = imageData.data[i];
+        const g = imageData.data[i + 1];
+        const b = imageData.data[i + 2];
+        const luma = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 255;
+
+        lumaSum += luma;
+        minLuma = Math.min(minLuma, luma);
+        maxLuma = Math.max(maxLuma, luma);
+        if (luma > 0.45) brightPixels++;
+        if (luma < 0.24) darkPixels++;
+        total++;
+    }
+
+    return {
+        avgLuma: lumaSum / total,
+        brightRatio: brightPixels / total,
+        darkRatio: darkPixels / total,
+        lumaSpread: maxLuma - minLuma
+    };
+}
+
+function measureFrameAroundCard() {
+    const margin = 34;
+    const x = Math.max(0, CARD_AREA.x - margin);
+    const y = Math.max(0, CARD_AREA.y - margin);
+    const width = Math.min(canvas.width - x, CARD_AREA.w + margin * 2);
+    const height = Math.min(canvas.height - y, CARD_AREA.h + margin * 2);
+    const imageData = ctx.getImageData(x, y, width, height);
+    let lumaSum = 0;
+    let total = 0;
+
+    for (let row = 0; row < height; row++) {
+        for (let col = 0; col < width; col++) {
+            const canvasX = x + col;
+            const canvasY = y + row;
+            const insideCard =
+                canvasX >= CARD_AREA.x &&
+                canvasX <= CARD_AREA.x + CARD_AREA.w &&
+                canvasY >= CARD_AREA.y &&
+                canvasY <= CARD_AREA.y + CARD_AREA.h;
+
+            if (insideCard) continue;
+
+            const index = (row * width + col) * 4;
+            const r = imageData.data[index];
+            const g = imageData.data[index + 1];
+            const b = imageData.data[index + 2];
+            const luma = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 255;
+
+            lumaSum += luma;
+            total++;
+        }
+    }
+
+    return { avgLuma: total ? lumaSum / total : 0 };
+}
+
+function renderCardGate(detected, cardCheck) {
+    imageStatus.textContent = detected ? "Cartão detectado" : "Cartão não detectado";
+    predictionBox.classList.toggle("missing-card", !detected);
+    predictionBox.innerHTML = detected
+        ? "<strong>Cartão detectado</strong><p>Leitura liberada. A IA vai analisar os furos dentro da moldura.</p>"
+        : "<strong>Cartão não detectado</strong><p>Coloque um cartão claro dentro da moldura para iniciar a leitura dos furos.</p>" +
+            "<p>Confiança visual: " + Math.round(Math.max(0, cardCheck.brightRatio - cardCheck.darkRatio) * 100) + "%</p>";
+}
+
+function drawCardGateOverlay(detected) {
+    ctx.save();
+    ctx.lineWidth = detected ? 4 : 3;
+    ctx.strokeStyle = detected ? "rgba(47,95,90,.96)" : "rgba(167,63,54,.96)";
+    ctx.strokeRect(CARD_AREA.x, CARD_AREA.y, CARD_AREA.w, CARD_AREA.h);
+
+    ctx.fillStyle = detected ? "rgba(47,95,90,.92)" : "rgba(167,63,54,.92)";
+    roundRect(ctx, CARD_AREA.x, CARD_AREA.y - 54, 330, 40, 8);
+    ctx.fill();
+    ctx.fillStyle = "#fff8e8";
+    ctx.font = "bold 20px Arial";
+    ctx.fillText(detected ? "Cartão detectado" : "Cartão não detectado", CARD_AREA.x + 18, CARD_AREA.y - 28);
+    ctx.restore();
 }
 
 function classifyPattern(pattern) {
@@ -300,6 +720,7 @@ function classifyPattern(pattern) {
         }
 
         return {
+            source: "furos",
             instruction,
             confidence: Math.round((matches / expected.length) * 100)
         };
@@ -308,15 +729,25 @@ function classifyPattern(pattern) {
     return ranked[0];
 }
 
-function renderPrediction(prediction) {
+function renderPrediction(patternPrediction, neuralPrediction, finalPrediction) {
+    predictionBox.classList.remove("missing-card");
+
+    const prediction = finalPrediction || neuralPrediction || patternPrediction;
+    const neuralLine = neuralPrediction
+        ? "<p>Modelo neural: " + neuralPrediction.instruction.name + " (" + neuralPrediction.confidence + "%)</p>"
+        : "<p>Modelo neural: ainda não treinado neste navegador.</p>";
+
     predictionBox.innerHTML =
         "<strong>" + prediction.instruction.name + "</strong>" +
         "<code>" + prediction.instruction.code + "</code>" +
         "<p>" + prediction.instruction.meaning + "</p>" +
-        "<p>Confiança: " + prediction.confidence + "%</p>";
+        "<p>Resultado usado: " + (prediction.source === "neural" ? "IA treinada por fotos" : "leitura dos furos") +
+        " | Confiança: " + prediction.confidence + "%</p>" +
+        neuralLine +
+        "<p>Leitura geométrica dos furos: " + patternPrediction.instruction.name + " (" + patternPrediction.confidence + "%)</p>";
 }
 
-function drawOverlay() {
+function drawOverlay(predictionOverride) {
     ctx.save();
     ctx.lineWidth = 2;
     ctx.strokeStyle = "rgba(126,199,188,.95)";
@@ -335,7 +766,7 @@ function drawOverlay() {
         ctx.stroke();
     });
 
-    const prediction = classifyPattern(currentPattern);
+    const prediction = predictionOverride || classifyPattern(currentPattern);
     ctx.fillStyle = "rgba(17,21,27,.9)";
     roundRect(ctx, 105, 36, 690, 42, 8);
     ctx.fill();
@@ -345,29 +776,294 @@ function drawOverlay() {
     ctx.restore();
 }
 
-function saveTrainingSample() {
+function captureTrainingImageBytes() {
+    const workCanvas = document.createElement("canvas");
+    workCanvas.width = ML_IMAGE_SIZE;
+    workCanvas.height = ML_IMAGE_SIZE;
+    const workCtx = workCanvas.getContext("2d");
+
+    workCtx.fillStyle = "#fff";
+    workCtx.fillRect(0, 0, ML_IMAGE_SIZE, ML_IMAGE_SIZE);
+    workCtx.drawImage(
+        canvas,
+        CARD_AREA.x,
+        CARD_AREA.y,
+        CARD_AREA.w,
+        CARD_AREA.h,
+        0,
+        0,
+        ML_IMAGE_SIZE,
+        ML_IMAGE_SIZE
+    );
+
+    const imageData = workCtx.getImageData(0, 0, ML_IMAGE_SIZE, ML_IMAGE_SIZE);
+    const bytes = new Uint8Array(ML_IMAGE_SIZE * ML_IMAGE_SIZE);
+
+    for (let i = 0, j = 0; i < imageData.data.length; i += 4, j++) {
+        const r = imageData.data[i];
+        const g = imageData.data[i + 1];
+        const b = imageData.data[i + 2];
+        bytes[j] = Math.round(r * 0.2126 + g * 0.7152 + b * 0.0722);
+    }
+
+    return bytesToBase64(bytes);
+}
+
+async function saveTrainingSample() {
+    redrawBaseImage();
+
     if (!lastFeatures.length) {
         detectPatternFromCanvas();
     }
 
+    const imageBytes = captureTrainingImageBytes();
     const samples = getTrainingSamples();
     samples.push({
         label: labelSelect.value,
         pattern: currentPattern,
         features: lastFeatures,
+        imageBytes,
+        size: ML_IMAGE_SIZE,
         createdAt: new Date().toISOString()
     });
 
     setTrainingSamples(samples);
+    updateTrainingStatus("Foto rotulada salva. Ela agora pode entrar no treino real do modelo neural.");
+    drawOverlay();
+}
+
+function createNeuralModel() {
+    const model = tf.sequential();
+
+    model.add(tf.layers.conv2d({
+        inputShape: [ML_IMAGE_SIZE, ML_IMAGE_SIZE, 1],
+        filters: 8,
+        kernelSize: 3,
+        activation: "relu",
+        padding: "same"
+    }));
+    model.add(tf.layers.maxPooling2d({ poolSize: 2 }));
+    model.add(tf.layers.conv2d({
+        filters: 16,
+        kernelSize: 3,
+        activation: "relu",
+        padding: "same"
+    }));
+    model.add(tf.layers.maxPooling2d({ poolSize: 2 }));
+    model.add(tf.layers.flatten());
+    model.add(tf.layers.dense({ units: 32, activation: "relu" }));
+    model.add(tf.layers.dropout({ rate: 0.2 }));
+    model.add(tf.layers.dense({ units: instructions.length, activation: "softmax" }));
+
+    model.compile({
+        optimizer: tf.train.adam(0.001),
+        loss: "categoricalCrossentropy",
+        metrics: ["accuracy"]
+    });
+
+    return model;
+}
+
+async function trainNeuralModel() {
+    const samples = getImageSamples();
+    const labelCount = new Set(samples.map(sample => sample.label)).size;
+
+    if (!window.tf) {
+        trainingBox.innerHTML =
+            "<strong>TensorFlow.js não carregou</strong>" +
+            "<p>Mesmo assim, o laboratório ainda consegue aprender por vizinho mais parecido usando as fotos salvas. Para rede neural, abra com internet para carregar TensorFlow.js.</p>";
+        updateTrainingStatus();
+        return;
+    }
+
+    if (samples.length < 8 || labelCount < 2) {
+        trainingBox.innerHTML =
+            "<strong>Faltam fotos</strong>" +
+            "<p>Para começar um treino útil, salve pelo menos 8 fotos rotuladas e pelo menos 2 tipos de instrução. O ideal é 10 a 20 fotos por instrução.</p>";
+        updateTrainingStatus();
+        return;
+    }
+
+    fitModelBtn.disabled = true;
+    trainingBox.innerHTML = "<strong>Treinando...</strong><p>Preparando fotos rotuladas.</p>";
+
+    const { xs, ys } = buildTrainingTensors(samples);
+
+    if (neuralModel) {
+        neuralModel.dispose();
+    }
+
+    neuralModel = createNeuralModel();
+    neuralReady = false;
+
+    try {
+        await neuralModel.fit(xs, ys, {
+            epochs: 30,
+            batchSize: Math.min(8, samples.length),
+            shuffle: true,
+            validationSplit: samples.length >= 16 ? 0.2 : 0,
+            callbacks: {
+                onEpochEnd(epoch, logs) {
+                    const acc = logs.acc ?? logs.accuracy ?? 0;
+                    const loss = logs.loss ?? 0;
+                    trainingBox.innerHTML =
+                        "<strong>Treinando modelo neural</strong>" +
+                        "<p>Época " + (epoch + 1) + " / 30</p>" +
+                        "<p>Acerto no treino: " + Math.round(acc * 100) + "% | Erro: " + loss.toFixed(3) + "</p>";
+                }
+            }
+        });
+
+        await neuralModel.save("indexeddb://" + TF_MODEL_KEY);
+        neuralReady = true;
+        trainingBox.innerHTML =
+            "<strong>Modelo treinado e salvo</strong>" +
+            "<p>A rede neural agora usa as fotos reais deste navegador para reconhecer novas imagens.</p>";
+        await detectInstruction(true);
+    } catch (error) {
+        console.error(error);
+        trainingBox.innerHTML =
+            "<strong>Não foi possível treinar</strong>" +
+            "<p>Confira se há fotos suficientes e tente novamente.</p>";
+    } finally {
+        xs.dispose();
+        ys.dispose();
+        fitModelBtn.disabled = false;
+        updateTrainingStatus();
+    }
+}
+
+function buildTrainingTensors(samples) {
+    const pixels = new Float32Array(samples.length * ML_IMAGE_SIZE * ML_IMAGE_SIZE);
+    const labels = new Int32Array(samples.length);
+
+    samples.forEach((sample, sampleIndex) => {
+        const bytes = base64ToBytes(sample.imageBytes);
+        for (let i = 0; i < bytes.length; i++) {
+            pixels[sampleIndex * ML_IMAGE_SIZE * ML_IMAGE_SIZE + i] = bytes[i] / 255;
+        }
+        labels[sampleIndex] = instructions.findIndex(instruction => instruction.id === sample.label);
+    });
+
+    const xs = tf.tensor4d(pixels, [samples.length, ML_IMAGE_SIZE, ML_IMAGE_SIZE, 1]);
+    const labelTensor = tf.tensor1d(labels, "int32");
+    const ys = tf.oneHot(labelTensor, instructions.length);
+    labelTensor.dispose();
+
+    return { xs, ys };
+}
+
+async function predictCurrentImage() {
+    const neuralPrediction = predictWithNeuralModel();
+    if (neuralPrediction) return neuralPrediction;
+
+    return predictWithNearestSample();
+}
+
+function predictWithNeuralModel() {
+    if (!window.tf || !neuralModel || !neuralReady) return null;
+
+    redrawBaseImage();
+    const imageBytes = captureTrainingImageBytes();
+    const bytes = base64ToBytes(imageBytes);
+    const input = tf.tidy(() => {
+        const pixels = new Float32Array(bytes.length);
+        for (let i = 0; i < bytes.length; i++) {
+            pixels[i] = bytes[i] / 255;
+        }
+        return tf.tensor4d(pixels, [1, ML_IMAGE_SIZE, ML_IMAGE_SIZE, 1]);
+    });
+
+    const output = neuralModel.predict(input);
+    const scores = Array.from(output.dataSync());
+    input.dispose();
+    output.dispose();
+
+    const bestIndex = scores.reduce((best, value, index) => value > scores[best] ? index : best, 0);
+    return {
+        source: "neural",
+        instruction: instructions[bestIndex],
+        confidence: Math.round(scores[bestIndex] * 100)
+    };
+}
+
+function predictWithNearestSample() {
+    const samples = getImageSamples();
+    if (!samples.length) return null;
+
+    redrawBaseImage();
+    const currentBytes = base64ToBytes(captureTrainingImageBytes());
+    let bestSample = null;
+    let bestDistance = Infinity;
+
+    samples.forEach(sample => {
+        const bytes = base64ToBytes(sample.imageBytes);
+        let distance = 0;
+        for (let i = 0; i < currentBytes.length; i++) {
+            const diff = currentBytes[i] - bytes[i];
+            distance += diff * diff;
+        }
+
+        if (distance < bestDistance) {
+            bestDistance = distance;
+            bestSample = sample;
+        }
+    });
+
+    if (!bestSample) return null;
+
+    const normalizedDistance = Math.sqrt(bestDistance / currentBytes.length) / 255;
+    const confidence = Math.round(Math.max(25, Math.min(96, (1 - normalizedDistance) * 100)));
+
+    return {
+        source: "neural",
+        instruction: getInstructionById(bestSample.label),
+        confidence
+    };
+}
+
+async function loadSavedNeuralModel() {
+    if (!window.tf) {
+        trainingBox.innerHTML =
+            "<strong>TensorFlow.js indisponível</strong>" +
+            "<p>A página ainda salva fotos e usa comparação por exemplo, mas a rede neural precisa da biblioteca TensorFlow.js.</p>";
+        updateTrainingStatus();
+        return;
+    }
+
+    try {
+        neuralModel = await tf.loadLayersModel("indexeddb://" + TF_MODEL_KEY);
+        neuralReady = true;
+        trainingBox.innerHTML =
+            "<strong>Modelo neural carregado</strong>" +
+            "<p>Este navegador já tem um modelo treinado salvo.</p>";
+    } catch (error) {
+        neuralReady = false;
+        trainingBox.innerHTML = "O modelo neural ainda não foi treinado neste navegador.";
+    }
+
     updateTrainingStatus();
-    predictionBox.innerHTML =
-        "<strong>Amostra salva</strong>" +
-        "<p>Essa foto rotulada agora ajuda o limiar local a separar furo e papel.</p>";
+}
+
+async function useTrainedModel() {
+    if (!neuralReady && window.tf) {
+        await loadSavedNeuralModel();
+    }
+
+    if (!neuralReady && !getImageSamples().length) {
+        trainingBox.innerHTML =
+            "<strong>Sem modelo treinado</strong>" +
+            "<p>Salve fotos rotuladas e clique em Treinar modelo real.</p>";
+        return;
+    }
+
+    await detectInstruction(true);
 }
 
 function exportDataset() {
     const dataset = {
         grid: { rows: GRID_ROWS, cols: GRID_COLS },
+        imageModel: { size: ML_IMAGE_SIZE, format: "grayscale-base64" },
         instructions,
         samples: getTrainingSamples()
     };
@@ -381,10 +1077,49 @@ function exportDataset() {
     URL.revokeObjectURL(url);
 }
 
-function clearTraining() {
+async function clearTraining() {
     localStorage.removeItem("cardMlSamples");
-    updateTrainingStatus();
-    predictionBox.textContent = "Treino local limpo. O detector voltou ao modelo inicial.";
+
+    if (neuralModel) {
+        neuralModel.dispose();
+        neuralModel = null;
+    }
+
+    neuralReady = false;
+
+    if (window.tf) {
+        try {
+            await tf.io.removeModel("indexeddb://" + TF_MODEL_KEY);
+        } catch (error) {
+            // O modelo pode não existir ainda.
+        }
+    }
+
+    updateTrainingStatus("Treino local limpo. A rede neural e as fotos rotuladas foram removidas deste navegador.");
+    predictionBox.textContent = "Treino local limpo. Carregue uma imagem para detectar novamente.";
+}
+
+function bytesToBase64(bytes) {
+    let binary = "";
+    const chunkSize = 0x8000;
+
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+        const chunk = bytes.subarray(i, i + chunkSize);
+        binary += String.fromCharCode.apply(null, chunk);
+    }
+
+    return btoa(binary);
+}
+
+function base64ToBytes(base64) {
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+
+    for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+    }
+
+    return bytes;
 }
 
 imageInput.addEventListener("change", event => {
@@ -394,14 +1129,20 @@ imageInput.addEventListener("change", event => {
     }
 });
 
+startCameraBtn.addEventListener("click", () => void startLiveScanner());
+captureFrameBtn.addEventListener("click", captureScannerFrame);
+stopCameraBtn.addEventListener("click", () => stopLiveScanner());
 sampleBtn.addEventListener("click", () => drawSyntheticCard());
-detectBtn.addEventListener("click", detectInstruction);
-trainBtn.addEventListener("click", saveTrainingSample);
+detectBtn.addEventListener("click", () => void detectInstruction());
+trainBtn.addEventListener("click", () => void saveTrainingSample());
+fitModelBtn.addEventListener("click", () => void trainNeuralModel());
+predictMlBtn.addEventListener("click", () => void useTrainedModel());
 exportBtn.addEventListener("click", exportDataset);
-clearTrainingBtn.addEventListener("click", clearTraining);
+clearTrainingBtn.addEventListener("click", () => void clearTraining());
 
 renderInstructionOptions();
 renderLegend();
 renderMatrix();
 drawEmptyCanvas();
 updateTrainingStatus();
+void loadSavedNeuralModel();
