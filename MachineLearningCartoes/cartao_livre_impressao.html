@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartão Livre para Pintar</title>
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            margin:0;
+            font-family:Arial,sans-serif;
+            background:#f5f0e4;
+            color:#241b12;
+        }
+
+        main{
+            width:min(1100px,calc(100% - 32px));
+            margin:0 auto;
+            padding:24px 0;
+        }
+
+        h1{
+            margin:0 0 8px;
+            font-size:28px;
+        }
+
+        .hint{
+            margin:0 0 18px;
+            line-height:1.45;
+        }
+
+        .sheet{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:16px;
+        }
+
+        .card{
+            break-inside:avoid;
+            padding:16px;
+            border:2px solid #241b12;
+            border-radius:8px;
+            background:#fff8e8;
+        }
+
+        .fields{
+            display:grid;
+            gap:8px;
+            margin-bottom:12px;
+            font-weight:700;
+        }
+
+        .line{
+            display:grid;
+            grid-template-columns:auto 1fr;
+            gap:8px;
+            align-items:end;
+        }
+
+        .blank-line{
+            border-bottom:2px solid #241b12;
+            min-height:20px;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(12,1fr);
+            gap:8px;
+            padding:12px;
+            border:1px solid #7a6343;
+            background:#fffdf5;
+        }
+
+        .dot{
+            aspect-ratio:1;
+            display:grid;
+            place-items:center;
+            border:2px solid #241b12;
+            border-radius:50%;
+            background:#fff;
+            font-size:9px;
+            color:#6b5a43;
+        }
+
+        .cols{
+            display:grid;
+            grid-template-columns:repeat(12,1fr);
+            gap:8px;
+            margin:8px 12px 0;
+            font-size:10px;
+            text-align:center;
+            color:#6b5a43;
+        }
+
+        @media print{
+            body{
+                background:#fff;
+            }
+
+            main{
+                width:100%;
+                padding:0;
+            }
+
+            .hint{
+                font-size:12px;
+            }
+
+            .sheet{
+                gap:10px;
+            }
+        }
+
+        @media(max-width:800px){
+            .sheet{
+                grid-template-columns:1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Cartão livre para pintar</h1>
+        <p class="hint">
+            Escreva o comando desejado e pinte as bolinhas que farão parte do padrão.
+            Cada bolinha tem um número para você repetir o mesmo padrão depois.
+        </p>
+
+        <section class="sheet" id="sheet"></section>
+    </main>
+
+    <script>
+        const rows = 5;
+        const cols = 12;
+        const totalCards = 8;
+        const sheet = document.getElementById("sheet");
+
+        for (let cardIndex = 0; cardIndex < totalCards; cardIndex++) {
+            const article = document.createElement("article");
+            article.className = "card";
+            article.innerHTML =
+                "<div class='fields'>" +
+                    "<div class='line'><span>Comando:</span><span class='blank-line'></span></div>" +
+                    "<div class='line'><span>Código:</span><span class='blank-line'></span></div>" +
+                "</div>" +
+                "<div class='grid'>" + renderDots() + "</div>" +
+                "<div class='cols'>" + Array.from({ length: cols }, (_, index) => "<span>" + (index + 1) + "</span>").join("") + "</div>";
+
+            sheet.appendChild(article);
+        }
+
+        function renderDots() {
+            return Array.from({ length: rows * cols }, (_, index) =>
+                "<span class='dot'>" + (index + 1) + "</span>"
+            ).join("");
+        }
+    </script>
+</body>
+</html>
