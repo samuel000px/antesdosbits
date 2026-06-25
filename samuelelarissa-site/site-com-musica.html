@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samuel e Larissa | Musica continua</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=16">
+</head>
+<body class="music-shell">
+    <header class="site-header shell-header">
+        <a class="brand" href="index.html" data-shell-page>Samuel & Larissa</a>
+        <button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" aria-label="Navegacao principal">
+            <a href="historia.html" data-shell-page>Historia</a>
+            <a href="galeria.html" data-shell-page>Galeria</a>
+            <a href="musicas.html" data-shell-page>Musicas</a>
+            <a href="larissa.html" data-shell-page>Larissa</a>
+            <a href="cartas.html" data-shell-page>Cartas</a>
+            <a href="quiz.html" data-shell-page>Quiz</a>
+            <a href="futuro.html" data-shell-page>Futuro</a>
+        </nav>
+    </header>
+
+    <main class="shell-frame-wrap">
+        <iframe id="siteFrame" title="Site Samuel e Larissa" src="index.html?embedded=1"></iframe>
+    </main>
+
+    <button class="show-player-button" id="showPlayerButton" type="button">Mostrar musica</button>
+
+    <section class="persistent-player" id="persistentPlayer" aria-label="Player de musica continua">
+        <button class="hide-player-button" id="hidePlayerButton" type="button" aria-label="Fechar player">x</button>
+        <div class="persistent-now">
+            <span>Tocando agora</span>
+            <strong id="shellMusicNow">Escolha uma musica</strong>
+            <small id="shellMusicStatus">Escolha uma opcao e aperte play.</small>
+        </div>
+
+        <div class="shell-controls">
+            <label>
+                <span>Musica de fundo</span>
+                <select id="shellSongSelect"></select>
+            </label>
+            <div class="shell-control-buttons">
+                <button type="button" id="shellPrevSong">Anterior</button>
+                <button type="button" id="shellNextSong">Proxima</button>
+            </div>
+        </div>
+
+        <audio id="shellMusicPlayer" controls preload="metadata"></audio>
+    </section>
+
+    <script src="script.js?v=14"></script>
+</body>
+</html>

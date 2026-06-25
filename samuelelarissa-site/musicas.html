@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musicas | Samuel e Larissa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=16">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html">Samuel & Larissa</a>
+        <button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+        <nav class="nav-links" aria-label="Navegacao principal">
+            <a href="historia.html">Historia</a>
+            <a href="galeria.html">Galeria</a>
+            <a class="active" href="musicas.html">Musicas</a>
+            <a href="larissa.html">Larissa</a>
+            <a href="cartas.html">Cartas</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="futuro.html">Futuro</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-title">
+            <p class="eyebrow">Trilha sonora</p>
+            <h1>Escolha uma musica para tocar</h1>
+            <p>As musicas ficam na pasta `musica`, do lado deste arquivo.</p>
+            <a class="button primary" href="site-com-musica.html?page=musicas.html">Abrir modo com musica continua</a>
+        </section>
+
+        <section class="music-station">
+            <article class="music-player-card">
+                <p class="eyebrow">Tocando agora</p>
+                <h2 id="musicNow">Nenhuma musica selecionada</h2>
+                <audio id="musicPlayer" controls loop preload="metadata"></audio>
+                <p class="music-status" id="musicStatus">Escolha uma musica na lista ao lado.</p>
+            </article>
+
+            <div class="music-list" id="musicList"></div>
+        </section>
+
+        <section class="music-path-card">
+            <p class="eyebrow">Onde colocar os MP3</p>
+            <h2>samuelelarissa-site/musica/</h2>
+            <p>Para adicionar mais musicas, coloque novos arquivos MP3 nessa pasta e adicione o nome deles na lista `availableSongs` do arquivo `script.js`.</p>
+        </section>
+    </main>
+
+    <script src="script.js?v=14"></script>
+</body>
+</html>

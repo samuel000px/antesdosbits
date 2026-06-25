@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | Samuel e Larissa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=16">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html">Samuel & Larissa</a>
+        <button class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+        <nav class="nav-links" aria-label="Navegacao principal">
+            <a href="historia.html">Historia</a>
+            <a href="galeria.html">Galeria</a>
+            <a href="musicas.html">Musicas</a>
+            <a href="larissa.html">Larissa</a>
+            <a href="cartas.html">Cartas</a>
+            <a class="active" href="quiz.html">Quiz</a>
+            <a href="futuro.html">Futuro</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-title">
+            <p class="eyebrow">Joguinho</p>
+            <h1>Quiz para ver se Larissa lembra</h1>
+            <p>Um teste carinhoso com detalhes da historia de voces dois.</p>
+        </section>
+
+        <section class="quiz-box" id="quizBox">
+            <div class="quiz-progress" id="quizProgress">Pergunta 1 de 4</div>
+            <h2 id="quizQuestion">Carregando...</h2>
+            <div class="quiz-options" id="quizOptions"></div>
+            <p class="quiz-result" id="quizResult"></p>
+        </section>
+    </main>
+
+    <script src="script.js?v=14"></script>
+</body>
+</html>

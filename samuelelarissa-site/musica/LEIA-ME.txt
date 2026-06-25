@@ -1,0 +1,9 @@
+Esta pasta guarda as musicas em MP3 da aba musicas.html.
+
+Arquivos atuais:
+- jorge-mateus-seu-astral.mp3
+- gustavo-mioto-last-goodbye.mp3
+- luan-santana-amar-nao-e-pecado.mp3
+- luan-santana-o-amor-coloriu.mp3
+- luan-santana-te-esperando.mp3
+- luan-santana-te-vivo.mp3

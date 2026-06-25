@@ -1,0 +1,8 @@
+*.mov
+*.MOV
+
+assets/musica/*.mp3
+
+Thumbs.db
+.DS_Store
+.vscode/

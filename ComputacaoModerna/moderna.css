@@ -48,6 +48,7 @@ body{
 
 .control-panel,
 .scoreboard,
+.job-panel,
 .game-board{
     border:1px solid rgba(243,212,125,.34);
     border-radius:8px;
@@ -174,6 +175,57 @@ button:disabled{
     padding:18px;
 }
 
+.job-panel{
+    display:grid;
+    grid-template-columns:1fr minmax(280px,520px);
+    gap:18px;
+    margin-top:18px;
+    padding:22px;
+}
+
+.job-panel h2{
+    color:#2c2013;
+    font-size:clamp(1.35rem,3vw,2.2rem);
+    line-height:1.05;
+    margin-bottom:10px;
+    text-transform:none;
+}
+
+#jobDescription{
+    max-width:760px;
+    color:#5d4a31;
+    line-height:1.65;
+}
+
+.job-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.job-stats div{
+    padding:13px;
+    border:1px solid #d0b070;
+    border-radius:8px;
+    background:#fff8e8;
+}
+
+.job-stats span{
+    display:block;
+    color:#6a5537;
+    font-size:.74rem;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.job-stats strong{
+    display:block;
+    margin-top:5px;
+    color:#2f5f5a;
+    font-size:1rem;
+    line-height:1.2;
+}
+
 .player-card.active{
     border-color:#2f5f5a;
     background:#e7f1e8;
@@ -194,25 +246,29 @@ button:disabled{
 
 .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
     gap:14px;
 }
 
 .action-card{
-    min-height:190px;
+    position:relative;
+    min-height:260px;
     display:flex;
     flex-direction:column;
     align-items:flex-start;
     justify-content:space-between;
     gap:12px;
-    padding:16px;
-    border:2px solid #755936;
+    overflow:hidden;
+    padding:16px 16px 16px 58px;
+    border:2px solid #7b5f38;
     border-radius:8px;
     background:
-        linear-gradient(180deg,rgba(255,255,255,.66),rgba(255,248,232,.95)),
-        repeating-linear-gradient(0deg,transparent 0 13px,rgba(47,95,90,.13) 14px 15px);
+        linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,248,232,.97)),
+        repeating-linear-gradient(90deg,transparent 0 15px,rgba(47,95,90,.1) 16px 17px),
+        linear-gradient(180deg,#fff8e8,#ead6ad);
     color:#23190f;
     text-align:left;
+    box-shadow:0 12px 20px rgba(64,45,24,.14);
 }
 
 .action-card.selected{
@@ -222,8 +278,54 @@ button:disabled{
         repeating-linear-gradient(0deg,transparent 0 13px,rgba(167,63,54,.15) 14px 15px);
 }
 
+.action-card:disabled{
+    cursor:not-allowed;
+}
+
+.action-card:disabled:not(.selected){
+    opacity:.62;
+}
+
+.punch-code{
+    position:absolute;
+    left:13px;
+    top:16px;
+    bottom:16px;
+    width:30px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    align-content:space-between;
+    gap:5px 4px;
+    padding:6px 4px;
+    border-radius:18px;
+    background:rgba(131,96,52,.18);
+}
+
+.punch-code i{
+    aspect-ratio:1;
+    border:1px solid rgba(82,61,35,.34);
+    border-radius:50%;
+    background:rgba(255,248,232,.7);
+}
+
+.punch-code i.open{
+    background:#15120e;
+    border-color:#15120e;
+    box-shadow:inset 2px 2px 4px rgba(0,0,0,.8);
+}
+
+.card-topline{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
 .action-card strong{
-    font-size:1.1rem;
+    color:#2c2013;
+    font-size:1.15rem;
+    line-height:1.1;
 }
 
 .action-card small,
@@ -239,6 +341,25 @@ button:disabled{
     text-transform:uppercase;
     font-size:.72rem;
     color:#2f5f5a;
+}
+
+.metric-row{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+}
+
+.metric-row span{
+    display:grid;
+    place-items:center;
+    min-height:30px;
+    border:1px solid rgba(168,132,75,.7);
+    border-radius:8px;
+    background:#fff8e8;
+    color:#5d4a31;
+    font-size:.76rem;
+    font-weight:900;
 }
 
 .action-card .power{
@@ -306,12 +427,24 @@ button:disabled{
 
 @media(max-width:900px){
     .control-panel,
+    .job-panel,
     .game-board{
         grid-template-columns:1fr;
     }
 
     .setup-grid,
-    .match-status{
+    .match-status,
+    .job-stats{
         grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:560px){
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .action-card{
+        min-height:230px;
     }
 }

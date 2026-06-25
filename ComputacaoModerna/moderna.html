@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computação Moderna - Guerra de Protocolos</title>
+    <title>Computação Moderna - Corrida dos Baralhos</title>
     <link rel="stylesheet" href="moderna.css">
+    <link rel="stylesheet" href="../theme.css">
 </head>
-<body>
+<body class="theme-modern">
     <header class="topbar">
         <a href="../index.html">Antes dos Bits</a>
         <div id="coinsDisplay">0 moedas</div>
@@ -15,8 +16,8 @@
     <main class="arena">
         <section class="control-panel">
             <div>
-                <p class="eyebrow">Computação moderna</p>
-                <h1>Guerra de Protocolos</h1>
+                <p class="eyebrow">Computação moderna • multiplayer real</p>
+                <h1>Corrida dos Baralhos Perfurados</h1>
             </div>
 
             <div class="setup-grid" id="setupPanel">
@@ -69,7 +70,7 @@
                     <strong id="turnDisplay">Entre em uma sala</strong>
                 </div>
                 <div>
-                    <span>Prêmio</span>
+                    <span>Bolsa da rodada</span>
                     <strong id="prizeDisplay">0 moedas</strong>
                 </div>
             </div>
@@ -77,17 +78,39 @@
 
         <section class="scoreboard" id="scoreboard"></section>
 
+        <section class="job-panel" id="jobPanel">
+            <div>
+                <p class="eyebrow">Ordem de processamento</p>
+                <h2 id="jobTitle">Aguardando lote</h2>
+                <p id="jobDescription">Crie uma sala online e dispute quem processa melhor o baralho de cartões.</p>
+            </div>
+            <div class="job-stats">
+                <div>
+                    <span>Prioridade</span>
+                    <strong id="jobFocus">--</strong>
+                </div>
+                <div>
+                    <span>Risco da sala</span>
+                    <strong id="jobHazard">--</strong>
+                </div>
+                <div>
+                    <span>Máquina ideal</span>
+                    <strong id="jobMachine">--</strong>
+                </div>
+            </div>
+        </section>
+
         <section class="game-board">
             <div class="card-lab">
                 <div class="section-head">
-                    <h2>Sua mão</h2>
-                    <div id="energyDisplay">Energia: 0</div>
+                    <h2>Cartões de controle</h2>
+                    <div id="energyDisplay">Colunas livres: 0</div>
                 </div>
                 <div class="cards" id="cardChoices"></div>
             </div>
 
             <aside class="machine-panel">
-                <h2>Rede da Partida</h2>
+                <h2>Leitor da partida</h2>
                 <div class="terminal" id="roundLog">Crie ou entre em uma sala para começar.</div>
                 <button type="button" id="nextRoundBtn" disabled>Próxima rodada</button>
             </aside>
