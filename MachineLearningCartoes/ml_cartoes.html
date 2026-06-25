@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Machine Learning - Scanner de Cartões</title>
+    <link rel="stylesheet" href="ml_cartoes.css">
+</head>
+<body>
+    <header class="topbar">
+        <a href="../index.html">Antes dos Bits</a>
+        <div id="modelStatus">Modelo inicial</div>
+    </header>
+
+    <main class="lab">
+        <section class="hero">
+            <div>
+                <p class="eyebrow">Novo • Computação moderna</p>
+                <h1>IA Scanner de Cartões Perfurados</h1>
+                <p>
+                    Treine um detector com fotos reais de cartões perfurados. O laboratório lê os furos,
+                    traduz o padrão para uma instrução e projeta a interpretação sobre a imagem.
+                </p>
+            </div>
+            <div class="model-card">
+                <span>Amostras salvas</span>
+                <strong id="sampleCount">0</strong>
+                <small>Quanto mais fotos reais rotuladas, melhor a detecção.</small>
+            </div>
+        </section>
+
+        <section class="scanner-grid">
+            <div class="panel controls">
+                <h2>Entrada</h2>
+
+                <label class="file-control">
+                    Enviar foto do cartão
+                    <input id="imageInput" type="file" accept="image/*" capture="environment">
+                </label>
+
+                <button type="button" id="sampleBtn">Gerar cartão realista</button>
+                <button type="button" id="detectBtn">Detectar instrução</button>
+
+                <label>
+                    Rótulo para treino
+                    <select id="labelSelect"></select>
+                </label>
+
+                <button type="button" id="trainBtn">Salvar amostra treinada</button>
+                <button type="button" id="exportBtn">Exportar dataset</button>
+                <button type="button" id="clearTrainingBtn">Limpar treino local</button>
+
+                <div class="hint">
+                    Para treino real: fotografe cartões de perto, com boa luz, rotule os furos na grade e salve a amostra.
+                </div>
+            </div>
+
+            <div class="panel image-panel">
+                <div class="section-head">
+                    <h2>Imagem e projeção</h2>
+                    <span id="imageStatus">Nenhuma imagem</span>
+                </div>
+                <div class="canvas-wrap">
+                    <canvas id="cardCanvas" width="900" height="520"></canvas>
+                </div>
+            </div>
+
+            <aside class="panel result-panel">
+                <h2>Resultado da IA</h2>
+                <div id="predictionBox" class="prediction">
+                    Carregue ou gere uma imagem para iniciar.
+                </div>
+
+                <h2>Furos detectados</h2>
+                <div id="holeMatrix" class="hole-matrix"></div>
+
+                <h2>Instruções conhecidas</h2>
+                <div id="legendBox" class="legend-box"></div>
+            </aside>
+        </section>
+    </main>
+
+    <script src="ml_cartoes.js"></script>
+</body>
+</html>

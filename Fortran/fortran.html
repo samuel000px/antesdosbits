@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORTRAN - Pilha de Cartões</title>
+    <link rel="stylesheet" href="fortran.css">
+</head>
+<body>
+    <header class="topbar">
+        <a href="../index.html">Antes dos Bits</a>
+        <div id="coinsDisplay">0 moedas</div>
+    </header>
+
+    <main class="workspace">
+        <section class="intro" id="tutorialPanel">
+            <p class="eyebrow">1957 • Programação em cartões</p>
+            <h1>FORTRAN: Pilha de Cartões</h1>
+            <p>
+                Nos computadores antigos, o programa não era digitado e executado como hoje.
+                Cada linha virava um cartão perfurado. A ordem da pilha importava: uma linha
+                fora do lugar podia mudar variáveis, pular instruções ou imprimir o resultado errado.
+            </p>
+            <div class="tutorial-steps">
+                <article>
+                    <strong>1</strong>
+                    <span>Leia a missão e observe os valores de entrada.</span>
+                </article>
+                <article>
+                    <strong>2</strong>
+                    <span>Clique nos cartões para montar a pilha na ordem correta.</span>
+                </article>
+                <article>
+                    <strong>3</strong>
+                    <span>Execute no leitor. O simulador mostra variáveis, IF, GOTO, DO e PRINT.</span>
+                </article>
+            </div>
+            <button type="button" id="startTutorialBtn">Começar programação</button>
+        </section>
+
+        <section class="game-shell" id="gamePanel">
+            <section class="mission-panel">
+                <div>
+                    <p class="eyebrow">Missão atual</p>
+                    <h1 id="missionTitle">Carregando...</h1>
+                    <p id="missionText"></p>
+                </div>
+
+                <div class="mission-stats">
+                    <div>
+                        <span>Missão</span>
+                        <strong id="missionCounter">1 / 1</strong>
+                    </div>
+                    <div>
+                        <span>Prêmio</span>
+                        <strong id="rewardDisplay">0 moedas</strong>
+                    </div>
+                    <div>
+                        <span>Status</span>
+                        <strong id="statusDisplay">Monte a pilha</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="board">
+                <div class="card-bank">
+                    <div class="section-head">
+                        <h2>Cartões disponíveis</h2>
+                        <button type="button" id="resetBtn">Limpar pilha</button>
+                    </div>
+                    <div id="availableCards" class="cards"></div>
+                </div>
+
+                <div class="reader-zone">
+                    <div class="section-head">
+                        <h2>Pilha no leitor</h2>
+                        <button type="button" id="runBtn">Executar pilha</button>
+                    </div>
+                    <div id="deck" class="deck"></div>
+                    <div class="reader">
+                        <div class="reader-slot"></div>
+                        <div class="reader-label">IBM 704 • FORTRAN Monitor</div>
+                    </div>
+                </div>
+
+                <aside class="console-panel">
+                    <h2>Execução</h2>
+                    <div id="consoleOutput" class="console">Monte a pilha de cartões e execute.</div>
+                    <button type="button" id="nextBtn" disabled>Próxima missão</button>
+                </aside>
+            </section>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../db.js"></script>
+    <script src="fortran.js"></script>
+</body>
+</html>

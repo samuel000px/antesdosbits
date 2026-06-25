@@ -1,20 +1,20 @@
 const personagensOriginais = [
     {
-        descricao: "José tem 42 anos. Ele tem um doutorado em Gravitação e Cosmologia Quântica, mas passa seus dias cuidando das plantações de algodão em Liverpool e se casou no ano passado. ",
-        respostasCorretas: { idade: "adulto", profissao: "agricultura", estadoCivil: "casado", sexo: "M", nacionalidade: "ingles", alfabetizacao: "sim"}
+        descricao: "José tem 42 anos. Ele tem um doutorado em Gravitação e Cosmologia Quântica, mas passa seus dias cuidando das plantações de algodão em Liverpool e se casou no ano passado.",
+        respostasCorretas: { idade: "adulto", profissao: "agricultura", estadoCivil: "casado", sexo: "M", nacionalidade: "ingles", alfabetizacao: "sim" }
     },
     {
-        descricao: "Alexandra acabou de entrar na faculdade de Ciência da Computação em Oxford. Ela tem 18 anos, mora sozinha e está focada apenas nos estudos., mas sempre que consegue, tira um tempinho para ligar para seus pais em Bucareste.",
+        descricao: "Alexandra acabou de entrar na faculdade de Ciência da Computação em Oxford. Ela tem 18 anos, mora sozinha e está focada apenas nos estudos, mas sempre que consegue liga para seus pais em Bucareste.",
         respostasCorretas: { idade: "adulto", profissao: "intelectual", estadoCivil: "solteiro", sexo: "F", nacionalidade: "estrangeiro", alfabetizacao: "sim" }
     },
     {
-        descricao: "John, de 71 anos, trabalhou desde a infância em uma fábrica de tecidos operando teares mecânicos em Londres e encontrou o amor da sua vida recentemente",
+        descricao: "John, de 71 anos, trabalhou desde a infância em uma fábrica de tecidos operando teares mecânicos em Londres e encontrou o amor da sua vida recentemente.",
         respostasCorretas: { idade: "idoso", profissao: "industria", estadoCivil: "solteiro", sexo: "M", nacionalidade: "ingles", alfabetizacao: "nao" }
     },
     {
         descricao: "Christopher é um diretor de cinema bastante reconhecido e está fazendo uma adaptação de uma das maiores obras literárias da história.",
         respostasCorretas: { idade: "adulto", profissao: "artes", estadoCivil: "casado", sexo: "M", nacionalidade: "ingles", alfabetizacao: "sim" }
-    }, 
+    },
     {
         descricao: "Albert descobriu que o tempo é relativo.",
         respostasCorretas: { idade: "idoso", profissao: "intelectual", estadoCivil: "solteiro", sexo: "M", nacionalidade: "estrangeiro", alfabetizacao: "sim" }
@@ -24,23 +24,21 @@ const personagensOriginais = [
         respostasCorretas: { idade: "adulto", profissao: "intelectual", estadoCivil: "solteiro", sexo: "M", nacionalidade: "ingles", alfabetizacao: "sim" }
     },
     {
-        descricao: "Pablo adora pintar",
+        descricao: "Pablo adora pintar.",
         respostasCorretas: { idade: "idoso", profissao: "artes", estadoCivil: "casado", sexo: "M", nacionalidade: "estrangeiro", alfabetizacao: "sim" }
     }
 ];
 
-<<<<<<< HEAD
 let coins = Number(localStorage.getItem("coins")) || 0;
 let streak = 0;
-=======
-// Variáveis de controle do estado do jogo
 let poolPersonagens = [];
->>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
 let personagemAtual = null;
 let rodadaAtual = 0;
 let moedasGanhas = 0;
+let cartaoBloqueado = false;
+
 const MAX_RODADAS = 4;
-const MOEDAS_POR_ACERTO = 25; // Quantidade de moedas ganhas por acerto
+const MOEDAS_POR_ACERTO = 25;
 
 let escolhasJogador = {
     idade: null,
@@ -51,7 +49,6 @@ let escolhasJogador = {
     alfabetizacao: null
 };
 
-<<<<<<< HEAD
 function updateCoins() {
     const display = document.getElementById("coinsDisplay");
     if (display) {
@@ -85,8 +82,19 @@ async function saveRanking() {
         console.warn("Ranking nao salvo:", error);
     }
 }
-=======
->>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
+
+function resetEscolhas() {
+    escolhasJogador = {
+        idade: null,
+        profissao: null,
+        estadoCivil: null,
+        sexo: null,
+        nacionalidade: null,
+        alfabetizacao: null
+    };
+
+    document.querySelectorAll(".furo-circular").forEach(btn => btn.classList.remove("perfurado"));
+}
 
 function carregarNovoPersonagem() {
     if (rodadaAtual >= MAX_RODADAS || poolPersonagens.length === 0) {
@@ -95,103 +103,48 @@ function carregarNovoPersonagem() {
     }
 
     rodadaAtual++;
-    
-    // Sorteia e REMOVE o personagem da lista para evitar repetição
+    cartaoBloqueado = false;
+
     const indiceAleatorio = Math.floor(Math.random() * poolPersonagens.length);
     personagemAtual = poolPersonagens.splice(indiceAleatorio, 1)[0];
-    
-    // Atualiza o prontuário na tela
-    document.getElementById("descricao-personagem").innerText = `[Cidadão ${rodadaAtual}/${MAX_RODADAS}] — ${personagemAtual.descricao}`;
+
+    document.getElementById("descricao-personagem").innerText =
+        "[Cidadão " + rodadaAtual + "/" + MAX_RODADAS + "] — " + personagemAtual.descricao;
     document.getElementById("feedback").className = "oculto";
-    
-    // Reseta o cartão perfurado do jogador
-    escolhasJogador = { idade: null, profissao: null, estadoCivil: null , sexo: null, nacionalidade: null, alfabetizacao: null};
-    document.querySelectorAll(".furo-circular").forEach(btn => btn.classList.remove("perfurado"));
+    document.getElementById("btn-Continuar").classList.add("oculto");
+    document.getElementById("btn-Processar").classList.remove("oculto");
+
+    resetEscolhas();
 }
 
 function iniciarJogo() {
     poolPersonagens = [...personagensOriginais];
     rodadaAtual = 0;
     moedasGanhas = 0;
-    
-    // Usando seletores mais seguros e garantindo que não quebrem
-    const ficha = document.querySelector(".ficha-cidadao") || document.querySelector(".card");
-    const cartao = document.querySelector(".cartao-perfurado");
-    const btnProcessar = document.getElementById("btn-Processar");
-    const telaFinal = document.getElementById("tela-final");
-    const btnContinuar = document.getElementById("btn-Continuar");
+    streak = 0;
+    cartaoBloqueado = false;
 
-    if (ficha) {
-        ficha.style.display = "block"; // Força exibição padrão
-        ficha.classList.remove("oculto");
-    }
-    if (cartao) {
-        cartao.style.display = "block"; // Força exibição padrão
-        cartao.classList.remove("oculto");
-    }
-    if (btnProcessar) {
-        btnProcessar.style.display = "block";
-        btnProcessar.classList.remove("oculto");
-    }
-    if (btnContinuar) btnContinuar.classList.add("oculto");
-    if (telaFinal) telaFinal.classList.add("oculto");
-    
+    document.querySelector(".ficha-cidadao").classList.remove("oculto");
+    document.querySelector(".cartao-perfurado").classList.remove("oculto");
+    document.getElementById("btn-Processar").classList.remove("oculto");
+    document.getElementById("btn-Continuar").classList.add("oculto");
+    document.getElementById("tela-final").classList.add("oculto");
+    document.getElementById("feedback").className = "oculto";
+
     carregarNovoPersonagem();
+    updateCoins();
 }
 
 function finalizarPartida() {
-    const ficha = document.querySelector(".ficha-cidadao") || document.querySelector(".card");
-    const cartao = document.querySelector(".cartao-perfurado");
-    const btnProcessar = document.getElementById("btn-Processar");
-    const btnContinuar = document.getElementById("btn-Continuar");
-    const feedback = document.getElementById("feedback");
-    
-    // Adiciona classe oculto e esconde via display
-    if (ficha) ficha.classList.add("oculto");
-    if (cartao) cartao.classList.add("oculto");
-    if (btnProcessar) btnProcessar.classList.add("oculto");
-    if (btnContinuar) btnContinuar.classList.add("oculto");
-    if (feedback) feedback.className = "oculto";
-    
-    const resultadoTexto = document.getElementById("resultado-moedas");
-    if (resultadoTexto) {
-        resultadoTexto.innerText = `Triagem concluída! Você tabulou os cartões e ganhou um total de: 🪙 ${moedasGanhas} moedas de ouro.`;
-    }
-    
-    const telaFinal = document.getElementById("tela-final");
-    if (telaFinal) {
-        telaFinal.classList.remove("oculto");
-    }
-}
-
-
-
-// Variável global para controlar se o cartão está bloqueado para cliques
-let cartaoBloqueado = false;
-
-function carregarNovoPersonagem() {
-    if (rodadaAtual >= MAX_RODADAS || poolPersonagens.length === 0) {
-        finalizarPartida();
-        return;
-    }
-
-    rodadaAtual++;
-    cartaoBloqueado = false; // Desbloqueia o cartão para a nova rodada
-    
-    const indiceAleatorio = Math.floor(Math.random() * poolPersonagens.length);
-    personagemAtual = poolPersonagens.splice(indiceAleatorio, 1)[0];
-    
-    document.getElementById("descricao-personagem").innerText = `[Cidadão ${rodadaAtual}/${MAX_RODADAS}] — ${personagemAtual.descricao}`;
-    
-    // Esconde o feedback e o botão de continuar
-    document.getElementById("feedback").className = "oculto";
+    document.querySelector(".ficha-cidadao").classList.add("oculto");
+    document.querySelector(".cartao-perfurado").classList.add("oculto");
+    document.getElementById("btn-Processar").classList.add("oculto");
     document.getElementById("btn-Continuar").classList.add("oculto");
-    
-    // Mostra novamente o botão de processar
-    document.getElementById("btn-Processar").classList.remove("oculto");
-    
-    escolhasJogador = { idade: null, profissao: null, estadoCivil: null , sexo: null, nacionalidade: null, alfabetizacao: null};
-    document.querySelectorAll(".furo-circular").forEach(btn => btn.classList.remove("perfurado"));
+    document.getElementById("feedback").className = "oculto";
+
+    document.getElementById("resultado-moedas").innerText =
+        "Triagem concluída! Você tabulou os cartões e ganhou " + moedasGanhas + " moedas.";
+    document.getElementById("tela-final").classList.remove("oculto");
 }
 
 function configurarCliquesDoCartao() {
@@ -201,7 +154,6 @@ function configurarCliquesDoCartao() {
 
         botoes.forEach(botao => {
             botao.addEventListener("click", () => {
-                // Se o cartão estiver bloqueado, ignora o clique do jogador
                 if (cartaoBloqueado) return;
 
                 botoes.forEach(b => b.classList.remove("perfurado"));
@@ -213,89 +165,68 @@ function configurarCliquesDoCartao() {
 }
 
 function processarCartao() {
-    if (document.getElementById("tela-final").className.indexOf("oculto") === -1) return;
+    if (!document.getElementById("tela-final").classList.contains("oculto")) return;
 
+<<<<<<< HEAD
     if (!escolhasJogador.idade || !escolhasJogador.profissao || !escolhasJogador.estadoCivil || !escolhasJogador.sexo || !escolhasJogador.nacionalidade || !escolhasJogador.alfabetizacao) {
+=======
+    const incompleto =
+        !escolhasJogador.idade ||
+        !escolhasJogador.profissao ||
+        !escolhasJogador.estadoCivil ||
+        !escolhasJogador.sexo ||
+        !escolhasJogador.nacionalidade ||
+        !escolhasJogador.alfabetizacao;
+
+    if (incompleto) {
+>>>>>>> 7df96eeea3ce90ce604c2d26274dae70ecbe8d30
         alert("O sistema mecânico do Pantógrafo travou! Realize exatamente uma perfuração por coluna antes de puxar a alavanca.");
         return;
     }
 
-    cartaoBloqueado = true; // Bloqueia o cartão para impedir correções!
-    
-    // Esconde o botão de processar (alavanca) para o jogador não clicar duas vezes
+    cartaoBloqueado = true;
     document.getElementById("btn-Processar").classList.add("oculto");
 
     const feedbackDiv = document.getElementById("feedback");
-    
-    const acertouIdade = escolhasJogador.idade === personagemAtual.respostasCorretas.idade;
-    const acertouProfissao = escolhasJogador.profissao === personagemAtual.respostasCorretas.profissao;
-    const acertouEstadoCivil = escolhasJogador.estadoCivil === personagemAtual.respostasCorretas.estadoCivil || personagemAtual.respostasCorretas.estadoCivil === "qualquer";
-    const acertouSexo = escolhasJogador.sexo === personagemAtual.respostasCorretas.sexo;
-    const acertouNacionalidade = escolhasJogador.nacionalidade === personagemAtual.respostasCorretas.nacionalidade;
-    const acertouAlfabetizacao = escolhasJogador.alfabetizacao === personagemAtual.respostasCorretas.alfabetizacao;
+    const respostas = personagemAtual.respostasCorretas;
 
-<<<<<<< HEAD
-    if (acertouIdade && acertouProfissao && acertouEstadoCivil&& acertouSexo && acertouNacionalidade&&acertouAlfabetizacao) {
+    const acertou =
+        escolhasJogador.idade === respostas.idade &&
+        escolhasJogador.profissao === respostas.profissao &&
+        (escolhasJogador.estadoCivil === respostas.estadoCivil || respostas.estadoCivil === "qualquer") &&
+        escolhasJogador.sexo === respostas.sexo &&
+        escolhasJogador.nacionalidade === respostas.nacionalidade &&
+        escolhasJogador.alfabetizacao === respostas.alfabetizacao;
+
+    if (acertou) {
         streak++;
-        const reward = 35 + Math.min(streak, 5) * 5;
+        const reward = MOEDAS_POR_ACERTO + Math.min(streak, 5) * 5;
+
+        moedasGanhas += reward;
         coins += reward;
         localStorage.setItem("coins", coins);
         updateCoins();
         saveRanking();
 
-        feedbackDiv.innerText = "Você acertou! +" + reward + " moedas";
-=======
-    if (acertouIdade && acertouProfissao && acertouEstadoCivil && acertouSexo && acertouNacionalidade && acertouAlfabetizacao) {
-        feedbackDiv.innerText = "✓ Registro tabulado com sucesso pelo sistema mecânico!";
->>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
+        feedbackDiv.innerText = "Registro tabulado com sucesso! +" + reward + " moedas";
         feedbackDiv.className = "sucesso";
-        moedasGanhas += MOEDAS_POR_ACERTO;
-        
-        // Se acertou, avança sozinho após 2 segundos (mantém o fluxo fluido)
         setTimeout(carregarNovoPersonagem, 2000);
     } else {
-<<<<<<< HEAD
         streak = 0;
-        feedbackDiv.innerText = "Erro. Tente novamente.";
-=======
-        feedbackDiv.innerText = "✕ Erro de tabulação! Dados inconsistentes com o prontuário.";
->>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
+        feedbackDiv.innerText = "Erro de tabulação! Dados inconsistentes com o prontuário.";
         feedbackDiv.className = "erro";
-        
-        // Se errou, exibe o botão de Continuar para o jogador avançar manualmente
         document.getElementById("btn-Continuar").classList.remove("oculto");
     }
 }
 
-function finalizarPartida() {
-    document.querySelector(".ficha-cidadao").classList.add("oculto");
-    document.querySelector(".cartao-perfurado").classList.add("oculto");
-    document.getElementById("btn-Processar").classList.add("oculto");
-    document.getElementById("btn-Continuar").classList.add("oculto"); // Garante que suma no fim
-    document.getElementById("feedback").className = "oculto";
-    
-    const resultadoTexto = document.getElementById("resultado-moedas");
-    resultadoTexto.innerText = `Triagem concluída! Você tabulou os cartões e ganhou um total de: 🪙 ${moedasGanhas} moedas de ouro.`;
-    
-    document.getElementById("tela-final").classList.remove("oculto");
-}
-
 window.onload = function() {
-    updateCoins();
     configurarCliquesDoCartao();
     iniciarJogo();
-    
+
     document.getElementById("btn-Processar").addEventListener("click", processarCartao);
-<<<<<<< HEAD
-};
-=======
-    
-    // Adiciona o evento de clique para o novo botão de Continuar
     document.getElementById("btn-Continuar").addEventListener("click", carregarNovoPersonagem);
-    
     document.getElementById("btn-Reiniciar").addEventListener("click", iniciarJogo);
     document.getElementById("btn-Sair").addEventListener("click", () => {
-        alert("Retornando ao menu principal do jogo...");
+        window.location.href = "../index.html";
     });
 };
->>>>>>> d19268311d943aafac7d2d9469dc9d18f02bdcc6
