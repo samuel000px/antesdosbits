@@ -7,6 +7,16 @@ const CLOUD_SAMPLE_TABLE = "card_ml_samples";
 const MASK_HOLE_RADIUS_X = 13;
 const MASK_HOLE_RADIUS_Y = 18;
 const DEFAULT_MASK_THRESHOLD = 0.16;
+const PAPER_SCAN_STEP = 8;
+const MIN_CARD_WIDTH = 230;
+const MIN_CARD_HEIGHT = 120;
+const HOLE_SEARCH_POINTS = [
+    [0, 0],
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1]
+];
 
 const instructions = [
     {
@@ -49,6 +59,8 @@ let cameraStream = null;
 let scannerLive = false;
 let scannerBusy = false;
 let lastScannerScan = 0;
+let activeCardArea = { ...CARD_AREA };
+let cachedMaskThreshold = null;
 
 const canvas = document.getElementById("cardCanvas");
 const ctx = canvas.getContext("2d");
@@ -87,6 +99,7 @@ function getTrainingSamples() {
 
 function setTrainingSamples(samples) {
     localStorage.setItem("cardMlSamples", JSON.stringify(normalizeSamples(samples)));
+    cachedMaskThreshold = null;
 }
 
 function getImageSamples() {
@@ -323,6 +336,7 @@ function renderMatrix() {
 function drawEmptyCanvas() {
     currentImage = null;
     currentSyntheticInstruction = null;
+    activeCardArea = { ...CARD_AREA };
     ctx.fillStyle = "#fff8e8";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#6a5537";
@@ -342,6 +356,7 @@ function drawSyntheticCard(instruction = instructions[Math.floor(Math.random() *
 
 function paintSyntheticCard(instruction) {
     currentPattern = Array(GRID_ROWS * GRID_COLS).fill(false);
+    activeCardArea = { ...CARD_AREA };
     instruction.holes.forEach(index => currentPattern[index] = true);
     labelSelect.value = instruction.id;
 
@@ -399,9 +414,10 @@ function roundRect(context, x, y, width, height, radius) {
 }
 
 function gridPoint(row, col) {
+    const area = activeCardArea;
     return {
-        x: CARD_AREA.x + (col + 0.5) * (CARD_AREA.w / GRID_COLS),
-        y: CARD_AREA.y + (row + 0.5) * (CARD_AREA.h / GRID_ROWS)
+        x: area.x + (col + 0.5) * (area.w / GRID_COLS),
+        y: area.y + (row + 0.5) * (area.h / GRID_ROWS)
     };
 }
 
@@ -530,7 +546,7 @@ function scanLiveFrame(timestamp = 0) {
 
     requestAnimationFrame(scanLiveFrame);
 
-    if (scannerBusy || timestamp - lastScannerScan < 420) return;
+    if (scannerBusy || timestamp - lastScannerScan < 220) return;
 
     scannerBusy = true;
     lastScannerScan = timestamp;
@@ -554,10 +570,15 @@ function captureScannerFrame() {
 }
 
 function getModelThreshold() {
+    if (cachedMaskThreshold !== null) {
+        return cachedMaskThreshold;
+    }
+
     const samples = getTrainingSamples();
 
     if (!samples.length) {
-        return DEFAULT_MASK_THRESHOLD;
+        cachedMaskThreshold = DEFAULT_MASK_THRESHOLD;
+        return cachedMaskThreshold;
     }
 
     const values = [];
@@ -573,12 +594,14 @@ function getModelThreshold() {
     const blankValues = values.filter(item => !item.active).map(item => item.feature);
 
     if (!holeValues.length || !blankValues.length) {
-        return DEFAULT_MASK_THRESHOLD;
+        cachedMaskThreshold = DEFAULT_MASK_THRESHOLD;
+        return cachedMaskThreshold;
     }
 
     const holeAvg = average(holeValues);
     const blankAvg = average(blankValues);
-    return (holeAvg + blankAvg) / 2;
+    cachedMaskThreshold = (holeAvg + blankAvg) / 2;
+    return cachedMaskThreshold;
 }
 
 function average(values) {
@@ -604,9 +627,68 @@ function detectPatternFromCanvas() {
 
 function sampleMaskedHoleScore(row, col) {
     const point = gridPoint(row, col);
-    const centerDarkness = sampleEllipseDarkness(point.x, point.y, MASK_HOLE_RADIUS_X, MASK_HOLE_RADIUS_Y);
-    const ringDarkness = sampleRingDarkness(point.x, point.y, MASK_HOLE_RADIUS_X + 8, MASK_HOLE_RADIUS_Y + 8, MASK_HOLE_RADIUS_X + 2, MASK_HOLE_RADIUS_Y + 2);
-    return Math.max(0, Math.min(1, centerDarkness - ringDarkness));
+    const cellW = activeCardArea.w / GRID_COLS;
+    const cellH = activeCardArea.h / GRID_ROWS;
+    const offsetX = Math.min(12, Math.max(6, cellW * 0.16));
+    const offsetY = Math.min(15, Math.max(7, cellH * 0.16));
+    const outerRadiusX = MASK_HOLE_RADIUS_X + 8;
+    const outerRadiusY = MASK_HOLE_RADIUS_Y + 8;
+    const innerRadiusX = MASK_HOLE_RADIUS_X + 2;
+    const innerRadiusY = MASK_HOLE_RADIUS_Y + 2;
+    const left = Math.max(0, Math.floor(point.x - outerRadiusX - offsetX));
+    const top = Math.max(0, Math.floor(point.y - outerRadiusY - offsetY));
+    const right = Math.min(canvas.width, Math.ceil(point.x + outerRadiusX + offsetX));
+    const bottom = Math.min(canvas.height, Math.ceil(point.y + outerRadiusY + offsetY));
+    const width = right - left;
+    const height = bottom - top;
+
+    if (width <= 0 || height <= 0) return 0;
+
+    const imageData = ctx.getImageData(left, top, width, height);
+    let bestScore = 0;
+
+    HOLE_SEARCH_POINTS.forEach(([dx, dy]) => {
+        const sampleX = point.x + dx * offsetX;
+        const sampleY = point.y + dy * offsetY;
+        let centerDarkness = 0;
+        let ringDarkness = 0;
+        let centerCount = 0;
+        let ringCount = 0;
+
+        for (let pixelRow = 0; pixelRow < height; pixelRow++) {
+            for (let pixelCol = 0; pixelCol < width; pixelCol++) {
+                const pixelX = left + pixelCol + 0.5;
+                const pixelY = top + pixelRow + 0.5;
+                const outerDx = (pixelX - sampleX) / outerRadiusX;
+                const outerDy = (pixelY - sampleY) / outerRadiusY;
+                if (outerDx * outerDx + outerDy * outerDy > 1) continue;
+
+                const offset = (pixelRow * width + pixelCol) * 4;
+                const darkness = pixelDarkness(imageData.data[offset], imageData.data[offset + 1], imageData.data[offset + 2]);
+                const centerDx = (pixelX - sampleX) / MASK_HOLE_RADIUS_X;
+                const centerDy = (pixelY - sampleY) / MASK_HOLE_RADIUS_Y;
+
+                if (centerDx * centerDx + centerDy * centerDy <= 1) {
+                    centerDarkness += darkness;
+                    centerCount++;
+                    continue;
+                }
+
+                const innerDx = (pixelX - sampleX) / innerRadiusX;
+                const innerDy = (pixelY - sampleY) / innerRadiusY;
+                if (innerDx * innerDx + innerDy * innerDy <= 1) continue;
+
+                ringDarkness += darkness;
+                ringCount++;
+            }
+        }
+
+        if (!centerCount || !ringCount) return;
+
+        bestScore = Math.max(bestScore, centerDarkness / centerCount - ringDarkness / ringCount);
+    });
+
+    return Math.max(0, Math.min(1, bestScore));
 }
 
 function sampleEllipseDarkness(x, y, radiusX, radiusY) {
@@ -680,8 +762,11 @@ function sampleDarkness(x, y, radius) {
 }
 
 function pixelDarkness(r, g, b) {
-    const luma = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 255;
-    return 1 - luma;
+    return 1 - pixelLuma(r, g, b);
+}
+
+function pixelLuma(r, g, b) {
+    return (r * 0.2126 + g * 0.7152 + b * 0.0722) / 255;
 }
 
 async function detectInstruction(forceNeural = false) {
@@ -702,7 +787,7 @@ async function detectInstruction(forceNeural = false) {
     renderMatrix();
 
     const patternPrediction = classifyPattern(currentPattern);
-    const neuralPrediction = await predictCurrentImage();
+    const neuralPrediction = forceNeural ? await predictCurrentImage() : null;
     const finalPrediction = forceNeural && neuralPrediction ? neuralPrediction : patternPrediction;
 
     imageStatus.textContent = "Cartão detectado";
@@ -712,18 +797,170 @@ async function detectInstruction(forceNeural = false) {
 }
 
 function detectCardInFrame() {
-    const inside = measureArea(CARD_AREA.x, CARD_AREA.y, CARD_AREA.w, CARD_AREA.h);
-    const outer = measureFrameAroundCard();
+    const paperArea = findPaperArea();
+    if (paperArea) {
+        activeCardArea = smoothDetectedArea(paperToMaskArea(paperArea));
+    } else if (!scannerLive) {
+        activeCardArea = { ...CARD_AREA };
+    }
+
+    const area = activeCardArea;
+    const inside = measureArea(area.x, area.y, area.w, area.h);
+    const outer = measureFrameAroundCard(area);
     const contrast = inside.avgLuma - outer.avgLuma;
-    const paperLike = inside.brightRatio > 0.34 && inside.darkRatio < 0.42;
-    const separatedFromBackground = contrast > 0.08;
-    const enoughTexture = inside.lumaSpread > 0.09;
+    const paperLike = inside.brightRatio > 0.24 && inside.darkRatio < 0.58;
+    const separatedFromBackground = contrast > 0.035;
+    const enoughTexture = inside.lumaSpread > 0.06;
+    const areaLooksUsable = area.w >= MIN_CARD_WIDTH && area.h >= MIN_CARD_HEIGHT;
+    const fallbackAllowed = !scannerLive && (separatedFromBackground || enoughTexture);
 
     return {
-        detected: paperLike && (separatedFromBackground || enoughTexture),
+        detected: areaLooksUsable && paperLike && (!!paperArea || fallbackAllowed),
         brightRatio: inside.brightRatio,
         darkRatio: inside.darkRatio,
-        contrast
+        contrast,
+        area
+    };
+}
+
+function paperToMaskArea(paperArea) {
+    const padX = Math.max(10, paperArea.w * 0.035);
+    const padTop = Math.max(12, paperArea.h * 0.06);
+    const padBottom = Math.max(8, paperArea.h * 0.045);
+    return {
+        x: Math.round(paperArea.x + padX),
+        y: Math.round(paperArea.y + padTop),
+        w: Math.round(Math.max(MIN_CARD_WIDTH, paperArea.w - padX * 2)),
+        h: Math.round(Math.max(MIN_CARD_HEIGHT, paperArea.h - padTop - padBottom))
+    };
+}
+
+function findPaperArea() {
+    const step = PAPER_SCAN_STEP;
+    const cols = Math.ceil(canvas.width / step);
+    const rows = Math.ceil(canvas.height / step);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const lumas = new Float32Array(cols * rows);
+    let lumaSum = 0;
+    let sampleCount = 0;
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            const x = Math.min(canvas.width - 1, col * step + Math.floor(step / 2));
+            const y = Math.min(canvas.height - 1, row * step + Math.floor(step / 2));
+            const offset = (y * canvas.width + x) * 4;
+            const luma = pixelLuma(imageData.data[offset], imageData.data[offset + 1], imageData.data[offset + 2]);
+            lumas[row * cols + col] = luma;
+            lumaSum += luma;
+            sampleCount++;
+        }
+    }
+
+    const avgLuma = sampleCount ? lumaSum / sampleCount : 0;
+    const threshold = Math.max(0.43, Math.min(0.7, avgLuma + 0.08));
+    const paperCells = new Uint8Array(cols * rows);
+
+    for (let i = 0; i < lumas.length; i++) {
+        paperCells[i] = lumas[i] > threshold || lumas[i] > 0.68 ? 1 : 0;
+    }
+
+    return findLargestPaperComponent(paperCells, cols, rows, step);
+}
+
+function findLargestPaperComponent(cells, cols, rows, step) {
+    const visited = new Uint8Array(cells.length);
+    let best = null;
+
+    for (let start = 0; start < cells.length; start++) {
+        if (!cells[start] || visited[start]) continue;
+
+        const stack = [start];
+        visited[start] = 1;
+        let count = 0;
+        let minCol = cols;
+        let maxCol = 0;
+        let minRow = rows;
+        let maxRow = 0;
+
+        while (stack.length) {
+            const index = stack.pop();
+            const row = Math.floor(index / cols);
+            const col = index % cols;
+            count++;
+            minCol = Math.min(minCol, col);
+            maxCol = Math.max(maxCol, col);
+            minRow = Math.min(minRow, row);
+            maxRow = Math.max(maxRow, row);
+
+            const neighbors = [
+                index - 1,
+                index + 1,
+                index - cols,
+                index + cols
+            ];
+
+            neighbors.forEach(next => {
+                if (next < 0 || next >= cells.length || visited[next] || !cells[next]) return;
+                const nextRow = Math.floor(next / cols);
+                const nextCol = next % cols;
+                if (Math.abs(nextRow - row) + Math.abs(nextCol - col) !== 1) return;
+                visited[next] = 1;
+                stack.push(next);
+            });
+        }
+
+        const x = Math.max(0, minCol * step - step);
+        const y = Math.max(0, minRow * step - step);
+        const w = Math.min(canvas.width - x, (maxCol - minCol + 2) * step);
+        const h = Math.min(canvas.height - y, (maxRow - minRow + 2) * step);
+        const aspect = w / Math.max(1, h);
+        const areaRatio = (w * h) / (canvas.width * canvas.height);
+        const fillRatio = count / ((maxCol - minCol + 1) * (maxRow - minRow + 1));
+        const score = count * (aspect > 1.25 && aspect < 3.6 ? 1.3 : 0.75);
+
+        if (
+            w >= MIN_CARD_WIDTH &&
+            h >= MIN_CARD_HEIGHT &&
+            areaRatio > 0.045 &&
+            areaRatio < 0.92 &&
+            aspect > 1.18 &&
+            aspect < 4.2 &&
+            fillRatio > 0.36 &&
+            (!best || score > best.score)
+        ) {
+            best = { x, y, w, h, score };
+        }
+    }
+
+    if (!best) return null;
+    return {
+        x: Math.round(best.x),
+        y: Math.round(best.y),
+        w: Math.round(best.w),
+        h: Math.round(best.h)
+    };
+}
+
+function smoothDetectedArea(nextArea) {
+    if (!scannerLive) return nextArea;
+
+    const currentCenterX = activeCardArea.x + activeCardArea.w / 2;
+    const currentCenterY = activeCardArea.y + activeCardArea.h / 2;
+    const nextCenterX = nextArea.x + nextArea.w / 2;
+    const nextCenterY = nextArea.y + nextArea.h / 2;
+    const centerShift = Math.hypot(currentCenterX - nextCenterX, currentCenterY - nextCenterY);
+
+    if (centerShift > 120 || Math.abs(activeCardArea.w - nextArea.w) > 180) {
+        return nextArea;
+    }
+
+    const keep = 0.62;
+    const take = 1 - keep;
+    return {
+        x: Math.round(activeCardArea.x * keep + nextArea.x * take),
+        y: Math.round(activeCardArea.y * keep + nextArea.y * take),
+        w: Math.round(activeCardArea.w * keep + nextArea.w * take),
+        h: Math.round(activeCardArea.h * keep + nextArea.h * take)
     };
 }
 
@@ -758,12 +995,12 @@ function measureArea(x, y, width, height) {
     };
 }
 
-function measureFrameAroundCard() {
+function measureFrameAroundCard(area = activeCardArea) {
     const margin = 34;
-    const x = Math.max(0, CARD_AREA.x - margin);
-    const y = Math.max(0, CARD_AREA.y - margin);
-    const width = Math.min(canvas.width - x, CARD_AREA.w + margin * 2);
-    const height = Math.min(canvas.height - y, CARD_AREA.h + margin * 2);
+    const x = Math.max(0, area.x - margin);
+    const y = Math.max(0, area.y - margin);
+    const width = Math.min(canvas.width - x, area.w + margin * 2);
+    const height = Math.min(canvas.height - y, area.h + margin * 2);
     const imageData = ctx.getImageData(x, y, width, height);
     let lumaSum = 0;
     let total = 0;
@@ -773,10 +1010,10 @@ function measureFrameAroundCard() {
             const canvasX = x + col;
             const canvasY = y + row;
             const insideCard =
-                canvasX >= CARD_AREA.x &&
-                canvasX <= CARD_AREA.x + CARD_AREA.w &&
-                canvasY >= CARD_AREA.y &&
-                canvasY <= CARD_AREA.y + CARD_AREA.h;
+                canvasX >= area.x &&
+                canvasX <= area.x + area.w &&
+                canvasY >= area.y &&
+                canvasY <= area.y + area.h;
 
             if (insideCard) continue;
 
@@ -798,23 +1035,24 @@ function renderCardGate(detected, cardCheck) {
     imageStatus.textContent = detected ? "Cartão detectado" : "Cartão não detectado";
     predictionBox.classList.toggle("missing-card", !detected);
     predictionBox.innerHTML = detected
-        ? "<strong>Cartão detectado</strong><p>Leitura liberada. A IA vai analisar os furos dentro da moldura.</p>"
-        : "<strong>Cartão não detectado</strong><p>Coloque um cartão claro dentro da moldura para iniciar a leitura dos furos.</p>" +
+        ? "<strong>Cartão detectado</strong><p>Máscara ajustada automaticamente sobre o papel.</p>"
+        : "<strong>Cartão não detectado</strong><p>Mostre um papel claro no quadro. A máscara tenta se ajustar sozinha, sem precisar encaixar perfeito.</p>" +
             "<p>Confiança visual: " + Math.round(Math.max(0, cardCheck.brightRatio - cardCheck.darkRatio) * 100) + "%</p>";
 }
 
 function drawCardGateOverlay(detected) {
+    const area = activeCardArea;
     ctx.save();
     ctx.lineWidth = detected ? 4 : 3;
     ctx.strokeStyle = detected ? "rgba(47,95,90,.96)" : "rgba(167,63,54,.96)";
-    ctx.strokeRect(CARD_AREA.x, CARD_AREA.y, CARD_AREA.w, CARD_AREA.h);
+    ctx.strokeRect(area.x, area.y, area.w, area.h);
 
     ctx.fillStyle = detected ? "rgba(47,95,90,.92)" : "rgba(167,63,54,.92)";
-    roundRect(ctx, CARD_AREA.x, CARD_AREA.y - 54, 330, 40, 8);
+    roundRect(ctx, area.x, Math.max(8, area.y - 54), 330, 40, 8);
     ctx.fill();
     ctx.fillStyle = "#fff8e8";
     ctx.font = "bold 20px Arial";
-    ctx.fillText(detected ? "Cartão detectado" : "Cartão não detectado", CARD_AREA.x + 18, CARD_AREA.y - 28);
+    ctx.fillText(detected ? "Cartão detectado" : "Cartão não detectado", area.x + 18, Math.max(34, area.y - 28));
     ctx.restore();
 }
 
@@ -863,10 +1101,11 @@ function renderPrediction(patternPrediction, neuralPrediction, finalPrediction) 
 }
 
 function drawOverlay(predictionOverride) {
+    const area = activeCardArea;
     ctx.save();
     ctx.lineWidth = 2;
     ctx.strokeStyle = "rgba(126,199,188,.95)";
-    ctx.strokeRect(CARD_AREA.x, CARD_AREA.y, CARD_AREA.w, CARD_AREA.h);
+    ctx.strokeRect(area.x, area.y, area.w, area.h);
 
     currentPattern.forEach((active, index) => {
         const row = Math.floor(index / GRID_COLS);
@@ -896,15 +1135,16 @@ function captureTrainingImageBytes() {
     workCanvas.width = ML_IMAGE_SIZE;
     workCanvas.height = ML_IMAGE_SIZE;
     const workCtx = workCanvas.getContext("2d");
+    const area = activeCardArea;
 
     workCtx.fillStyle = "#fff";
     workCtx.fillRect(0, 0, ML_IMAGE_SIZE, ML_IMAGE_SIZE);
     workCtx.drawImage(
         canvas,
-        CARD_AREA.x,
-        CARD_AREA.y,
-        CARD_AREA.w,
-        CARD_AREA.h,
+        area.x,
+        area.y,
+        area.w,
+        area.h,
         0,
         0,
         ML_IMAGE_SIZE,
@@ -1329,6 +1569,7 @@ async function loadCloudTrainingSamples(silent = false) {
 
 async function clearTraining() {
     localStorage.removeItem("cardMlSamples");
+    cachedMaskThreshold = null;
 
     if (neuralModel) {
         neuralModel.dispose();
