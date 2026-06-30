@@ -758,11 +758,15 @@ button:disabled{
 
 .memory-grid .punch-hole.active,
 .memory-grid .punch-hole.active:hover:not(:disabled),
-.memory-grid .punch-hole.active:focus-visible{
-    background:#050403;
-    border-color:#050403;
-    color:transparent;
-    box-shadow:inset 4px 4px 7px rgba(0,0,0,.82),0 0 0 3px rgba(255,248,232,.22);
+.memory-grid .punch-hole.active:focus-visible,
+.memory-grid .punch-hole[data-marked="true"],
+.memory-grid .punch-hole[data-marked="true"]:hover:not(:disabled),
+.memory-grid .punch-hole[aria-pressed="true"],
+.memory-grid .punch-hole[aria-pressed="true"]:hover:not(:disabled){
+    background:#050403 !important;
+    border-color:#050403 !important;
+    color:transparent !important;
+    box-shadow:inset 4px 4px 7px rgba(0,0,0,.82),0 0 0 3px rgba(255,248,232,.22) !important;
 }
 
 .submit-row{

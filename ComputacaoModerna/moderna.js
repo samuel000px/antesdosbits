@@ -721,15 +721,24 @@ function renderPunchBoard(localPlayer, isMyTurn) {
 
     const grid = document.getElementById("punchGrid");
     for (let index = 0; index < GRID_SIZE; index++) {
+        const isMarked = selectedHoles.has(index);
         const button = document.createElement("button");
         button.type = "button";
-        button.className = "punch-hole" + (selectedHoles.has(index) ? " active" : "");
+        button.className = "punch-hole" + (isMarked ? " active" : "");
         button.textContent = index + 1;
         button.setAttribute("aria-label", "Furo " + (index + 1));
+        button.setAttribute("aria-pressed", isMarked ? "true" : "false");
+        button.dataset.marked = isMarked ? "true" : "false";
+        applyHoleVisual(button, isMarked);
         button.disabled = !isMyTurn;
         button.addEventListener("click", () => {
             if (selectedHoles.has(index)) selectedHoles.delete(index);
             else selectedHoles.add(index);
+            const markedNow = selectedHoles.has(index);
+            button.classList.toggle("active", markedNow);
+            button.setAttribute("aria-pressed", markedNow ? "true" : "false");
+            button.dataset.marked = markedNow ? "true" : "false";
+            applyHoleVisual(button, markedNow);
             render();
         });
         grid.appendChild(button);
@@ -772,6 +781,21 @@ function renderMatrixDots(holes) {
     return Array.from({ length: GRID_SIZE }, (_, index) =>
         "<span class='matrix-dot" + (active.has(index) ? " on" : "") + "'>" + (index + 1) + "</span>"
     ).join("");
+}
+
+function applyHoleVisual(button, marked) {
+    if (marked) {
+        button.style.background = "#050403";
+        button.style.borderColor = "#050403";
+        button.style.color = "transparent";
+        button.style.boxShadow = "inset 4px 4px 7px rgba(0,0,0,.82), 0 0 0 3px rgba(255,248,232,.22)";
+        return;
+    }
+
+    button.style.background = "";
+    button.style.borderColor = "";
+    button.style.color = "";
+    button.style.boxShadow = "";
 }
 
 createRoomBtn.addEventListener("click", createRoom);
