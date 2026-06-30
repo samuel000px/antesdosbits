@@ -3,7 +3,8 @@ const INSTRUCTION_CARDS = [
         id: "read",
         name: "READ C",
         title: "Entrada de dado",
-        meaning: "O leitor deve perfurar um cartao que representa a instrucao READ C.",
+        meaning: "O programa precisa ler um valor de entrada chamado C.",
+        tutorial: "Cartao de entrada: traz dados do lote para dentro do programa.",
         holes: [1, 14, 25, 38, 49],
         difficulty: "basico"
     },
@@ -11,7 +12,8 @@ const INSTRUCTION_CARDS = [
         id: "calc",
         name: "F = C * 9 / 5 + 32",
         title: "Calculo FORTRAN",
-        meaning: "Monte a instrucao de processamento matematico usada para converter temperatura.",
+        meaning: "O programa precisa converter Celsius em Fahrenheit.",
+        tutorial: "Cartao de calculo: manda a maquina executar uma formula.",
         holes: [0, 5, 13, 18, 29, 34, 47, 58],
         difficulty: "medio"
     },
@@ -19,7 +21,8 @@ const INSTRUCTION_CARDS = [
         id: "ifgoto",
         name: "IF (N) 10,20,30",
         title: "Desvio condicional",
-        meaning: "Perfure a instrucao que muda o fluxo do programa conforme o valor de N.",
+        meaning: "O programa precisa decidir para qual linha pular conforme o valor de N.",
+        tutorial: "Cartao de decisao: escolhe o proximo caminho do programa.",
         holes: [3, 9, 12, 21, 30, 42, 51, 57],
         difficulty: "medio"
     },
@@ -27,7 +30,8 @@ const INSTRUCTION_CARDS = [
         id: "print",
         name: "PRINT RESULT",
         title: "Saida impressa",
-        meaning: "Represente o cartao que envia o resultado para impressao.",
+        meaning: "O programa precisa mandar o resultado para a impressora.",
+        tutorial: "Cartao de saida: transforma o resultado em relatorio impresso.",
         holes: [2, 16, 23, 31, 36, 44, 55],
         difficulty: "basico"
     },
@@ -35,7 +39,8 @@ const INSTRUCTION_CARDS = [
         id: "loop",
         name: "DO 20 I = 1,10",
         title: "Laco numerico",
-        meaning: "Monte o cartao que repete uma rotina numerada.",
+        meaning: "O programa precisa repetir uma rotina de I = 1 ate 10.",
+        tutorial: "Cartao de repeticao: faz a maquina voltar e repetir uma sequencia.",
         holes: [4, 7, 15, 20, 26, 33, 41, 52, 59],
         difficulty: "dificil"
     },
@@ -43,9 +48,30 @@ const INSTRUCTION_CARDS = [
         id: "stop",
         name: "STOP",
         title: "Fim do programa",
-        meaning: "Perfure o cartao que encerra a execucao do lote.",
+        meaning: "O programa precisa encerrar o lote com seguranca.",
+        tutorial: "Cartao de parada: avisa que o programa terminou.",
         holes: [6, 17, 22, 28, 39, 46, 53],
         difficulty: "basico"
+    },
+    {
+        id: "rewind",
+        name: "REWIND TAPE",
+        title: "Controle de fita",
+        meaning: "O operador precisa voltar a fita para o inicio.",
+        tutorial: "Cartao de periferico: controla um dispositivo de armazenamento.",
+        holes: [8, 11, 19, 27, 35, 43, 54],
+        difficulty: "medio",
+        decoy: true
+    },
+    {
+        id: "sort",
+        name: "SORT FILE",
+        title: "Ordenacao",
+        meaning: "O lote precisa organizar registros por uma chave.",
+        tutorial: "Cartao de rotina: chama uma etapa de organizacao de dados.",
+        holes: [10, 24, 32, 37, 45, 48, 56],
+        difficulty: "medio",
+        decoy: true
     }
 ];
 
@@ -68,7 +94,7 @@ let roomCode = "";
 let isHost = false;
 let playerId = localStorage.getItem("modernPlayerId") || createPlayerId();
 let playerName = localStorage.getItem("playerName") || "";
-let selectedHoles = new Set();
+let selectedCardId = "";
 let localSubmitted = false;
 let roundStartedAt = 0;
 let hostState = createEmptyState();
@@ -90,6 +116,7 @@ const turnDisplay = document.getElementById("turnDisplay");
 const prizeDisplay = document.getElementById("prizeDisplay");
 const scoreboard = document.getElementById("scoreboard");
 const cardChoices = document.getElementById("cardChoices");
+const tutorialCards = document.getElementById("tutorialCards");
 const roundLog = document.getElementById("roundLog");
 const energyDisplay = document.getElementById("energyDisplay");
 const jobTitle = document.getElementById("jobTitle");
@@ -137,9 +164,14 @@ function getTarget(targetId = hostState.targetId) {
     return INSTRUCTION_CARDS.find(card => card.id === targetId) || INSTRUCTION_CARDS[0];
 }
 
+function getCard(cardId) {
+    return INSTRUCTION_CARDS.find(card => card.id === cardId) || null;
+}
+
 function chooseTargetForRound(round) {
     const seed = roomCode.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
-    return INSTRUCTION_CARDS[(seed + round * 2) % INSTRUCTION_CARDS.length];
+    const playable = INSTRUCTION_CARDS.filter(card => !card.decoy);
+    return playable[(seed + round * 2) % playable.length];
 }
 
 function getPrize() {
@@ -361,27 +393,19 @@ function receiveSubmission(payload) {
 function makeAiSubmissions() {
     const target = getTarget();
     hostState.players.filter(player => player.isAI).forEach(player => {
-        const holes = mutatePattern(target.holes, player.score);
+        const holes = chooseAiCard(target, player.score).holes;
         const elapsed = Math.round(2200 + Math.random() * 4300 - Math.min(player.score, 50) * 18);
         hostState.submissions[player.id] = { holes, elapsed, submittedAt: Date.now() + elapsed };
         player.ready = true;
     });
 }
 
-function mutatePattern(holes, score) {
-    const accuracyBoost = Math.min(0.28, score / 400);
-    const missChance = Math.max(0.05, 0.22 - accuracyBoost);
-    const output = new Set(holes);
+function chooseAiCard(target, score) {
+    const precision = Math.min(0.86, 0.58 + score / 900);
+    if (Math.random() < precision) return target;
 
-    holes.forEach(hole => {
-        if (Math.random() < missChance) output.delete(hole);
-    });
-
-    if (Math.random() < missChance * 2) {
-        output.add(Math.floor(Math.random() * GRID_SIZE));
-    }
-
-    return [...output].sort((a, b) => a - b);
+    const alternatives = INSTRUCTION_CARDS.filter(card => card.id !== target.id);
+    return alternatives[Math.floor(Math.random() * alternatives.length)];
 }
 
 function tryResolveRound() {
@@ -478,19 +502,25 @@ function formatTime(milliseconds) {
 
 function submitPattern() {
     if (!roomCode || hostState.status !== "choosing" || localSubmitted) return;
+    const selectedCard = getCard(selectedCardId);
+    if (!selectedCard) {
+        roundLog.textContent = hostState.log + "\n\nEscolha um cartao antes de enviar.";
+        return;
+    }
 
     localSubmitted = true;
     const elapsed = Date.now() - (roundStartedAt || hostState.roundStartedAt || Date.now());
     sendEvent("submit_pattern", {
         playerId,
-        holes: [...selectedHoles].sort((a, b) => a - b),
+        cardId: selectedCard.id,
+        holes: selectedCard.holes.slice().sort((a, b) => a - b),
         elapsed
     });
     render();
 }
 
 function resetLocalCard() {
-    selectedHoles = new Set();
+    selectedCardId = "";
     localSubmitted = false;
     roundStartedAt = hostState.roundStartedAt || Date.now();
 }
@@ -551,6 +581,7 @@ function render() {
     roundLimitInput.disabled = !isHost || hostState.status !== "lobby";
 
     renderScoreboard();
+    renderTutorialCards();
     renderPunchBoard(localPlayer, isMyTurn);
 }
 
@@ -586,7 +617,8 @@ function renderScoreboard() {
 
 function renderPunchBoard(localPlayer, isMyTurn) {
     cardChoices.innerHTML = "";
-    energyDisplay.textContent = "Furos marcados: " + selectedHoles.size;
+    const selectedCard = getCard(selectedCardId);
+    energyDisplay.textContent = selectedCard ? "Selecionado: " + selectedCard.name : "Nenhum cartão selecionado";
 
     if (!localPlayer) {
         cardChoices.innerHTML = "<div class='empty-hand'>Entre em uma sala para receber o cartao em branco.</div>";
@@ -600,46 +632,87 @@ function renderPunchBoard(localPlayer, isMyTurn) {
 
     const target = getTarget();
     const panel = document.createElement("div");
-    panel.className = "punch-workbench";
+    panel.className = "choice-workbench";
     panel.innerHTML =
         "<div class='target-card'>" +
-            "<span>Instrucao alvo</span>" +
-            "<strong>" + target.name + "</strong>" +
-            "<small>Pinte exatamente os furos do cartao. Envie rapido: em empate de acerto, menor tempo vence.</small>" +
-            "<code>" + target.holes.map(index => index + 1).join(", ") + "</code>" +
+            "<span>Ordem recebida pela equipe</span>" +
+            "<strong>" + target.title + "</strong>" +
+            "<small>" + target.meaning + " Compare com o tutorial, escolha o cartao perfurado correto e envie. Voce pode trocar a escolha antes do envio final.</small>" +
+            "<code>Rodada " + hostState.round + " de " + hostState.roundLimit + " | empate: menor tempo vence</code>" +
         "</div>" +
-        "<div class='punch-grid' id='punchGrid'></div>" +
+        "<div class='choice-grid' id='choiceGrid'></div>" +
         "<div class='submit-row'>" +
-            "<button type='button' id='clearPunchBtn'>Limpar furos</button>" +
-            "<button type='button' id='submitPunchBtn'>Enviar cartão</button>" +
+            "<button type='button' id='clearPunchBtn'>Trocar / limpar escolha</button>" +
+            "<button type='button' id='submitPunchBtn'>Enviar cartão final</button>" +
         "</div>";
 
     cardChoices.appendChild(panel);
 
-    const grid = document.getElementById("punchGrid");
-    for (let index = 0; index < GRID_SIZE; index++) {
+    const grid = document.getElementById("choiceGrid");
+    getRoundOptions(target).forEach(card => {
         const button = document.createElement("button");
         button.type = "button";
-        button.className = "punch-hole" + (selectedHoles.has(index) ? " active" : "");
-        button.textContent = index + 1;
+        button.className = "card-option" + (selectedCardId === card.id ? " selected" : "");
         button.disabled = !isMyTurn;
+        button.innerHTML = renderMiniCard(card, false);
         button.addEventListener("click", () => {
-            if (selectedHoles.has(index)) selectedHoles.delete(index);
-            else selectedHoles.add(index);
+            selectedCardId = card.id;
             render();
         });
         grid.appendChild(button);
-    }
+    });
 
     const clearBtn = document.getElementById("clearPunchBtn");
     const submitBtn = document.getElementById("submitPunchBtn");
     clearBtn.disabled = !isMyTurn;
-    submitBtn.disabled = !isMyTurn;
+    submitBtn.disabled = !isMyTurn || !selectedCardId;
     clearBtn.addEventListener("click", () => {
-        selectedHoles.clear();
+        selectedCardId = "";
         render();
     });
     submitBtn.addEventListener("click", submitPattern);
+}
+
+function getRoundOptions(target) {
+    const seed = roomCode.split("").reduce((sum, char) => sum + char.charCodeAt(0), hostState.round * 13);
+    const others = INSTRUCTION_CARDS.filter(card => card.id !== target.id);
+    const picked = [target];
+
+    for (let i = 0; picked.length < 4 && i < others.length * 2; i++) {
+        const card = others[(seed + i * 3) % others.length];
+        if (!picked.some(existing => existing.id === card.id)) picked.push(card);
+    }
+
+    return picked.sort((a, b) => ((a.id.charCodeAt(0) + seed) % 17) - ((b.id.charCodeAt(0) + seed) % 17));
+}
+
+function renderTutorialCards() {
+    if (!tutorialCards) return;
+    tutorialCards.innerHTML = "";
+
+    INSTRUCTION_CARDS.forEach(card => {
+        const article = document.createElement("article");
+        article.className = "tutorial-card" + (card.decoy ? " decoy" : "");
+        article.innerHTML = renderMiniCard(card, true);
+        tutorialCards.appendChild(article);
+    });
+}
+
+function renderMiniCard(card, showTutorial) {
+    const holes = new Set(card.holes);
+    let punch = "";
+    for (let index = 0; index < 24; index++) {
+        punch += "<i class='" + (holes.has(Math.floor(index * GRID_SIZE / 24)) ? "open" : "") + "'></i>";
+    }
+
+    return "" +
+        "<div class='mini-punch'>" + punch + "</div>" +
+        "<div class='mini-card-copy'>" +
+            "<span>" + card.title + "</span>" +
+            "<strong>" + card.name + "</strong>" +
+            "<small>" + (showTutorial ? card.tutorial : "Padrao de furos: " + card.holes.map(index => index + 1).join(", ")) + "</small>" +
+            (card.decoy ? "<em>cartao extra</em>" : "<em>" + card.difficulty + "</em>") +
+        "</div>";
 }
 
 createRoomBtn.addEventListener("click", createRoom);
