@@ -54,12 +54,14 @@
                 <button type="button" id="trainBtn">Salvar foto rotulada</button>
                 <button type="button" id="fitModelBtn">Treinar modelo real</button>
                 <button type="button" id="predictMlBtn">Usar IA treinada</button>
+                <button type="button" id="loadCloudBtn">Carregar treino do banco</button>
+                <button type="button" id="syncCloudBtn">Enviar treino ao banco</button>
                 <button type="button" id="exportBtn">Exportar dataset</button>
                 <button type="button" id="clearTrainingBtn">Limpar treino local</button>
 
                 <div class="hint">
-                    Para treinar bem: fotografe o cartão inteiro, com boa luz, usando o mesmo enquadramento da moldura.
-                    Salve várias fotos por instrução, incluindo cartões impressos e feitos à mão.
+                    Para treinar bem: alinhe o cartão na máscara da moldura. A leitura principal usa a máscara dos furos;
+                    o TensorFlow aprende com fotos reais salvas localmente ou carregadas do banco.
                 </div>
             </div>
 
@@ -98,6 +100,8 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../db.js"></script>
     <script src="ml_cartoes.js"></script>
 </body>
 </html>

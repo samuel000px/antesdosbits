@@ -3,6 +3,10 @@ const GRID_COLS = 12;
 const CARD_AREA = { x: 90, y: 90, w: 720, h: 330 };
 const ML_IMAGE_SIZE = 64;
 const TF_MODEL_KEY = "punch-card-instruction-model";
+const CLOUD_SAMPLE_TABLE = "card_ml_samples";
+const MASK_HOLE_RADIUS_X = 13;
+const MASK_HOLE_RADIUS_Y = 18;
+const DEFAULT_MASK_THRESHOLD = 0.16;
 
 const instructions = [
     {
@@ -58,6 +62,8 @@ const detectBtn = document.getElementById("detectBtn");
 const trainBtn = document.getElementById("trainBtn");
 const fitModelBtn = document.getElementById("fitModelBtn");
 const predictMlBtn = document.getElementById("predictMlBtn");
+const loadCloudBtn = document.getElementById("loadCloudBtn");
+const syncCloudBtn = document.getElementById("syncCloudBtn");
 const exportBtn = document.getElementById("exportBtn");
 const clearTrainingBtn = document.getElementById("clearTrainingBtn");
 const labelSelect = document.getElementById("labelSelect");
@@ -73,18 +79,57 @@ const legendBox = document.getElementById("legendBox");
 
 function getTrainingSamples() {
     try {
-        return JSON.parse(localStorage.getItem("cardMlSamples") || "[]");
+        return normalizeSamples(JSON.parse(localStorage.getItem("cardMlSamples") || "[]"));
     } catch (error) {
         return [];
     }
 }
 
 function setTrainingSamples(samples) {
-    localStorage.setItem("cardMlSamples", JSON.stringify(samples));
+    localStorage.setItem("cardMlSamples", JSON.stringify(normalizeSamples(samples)));
 }
 
 function getImageSamples() {
     return getTrainingSamples().filter(sample => sample.imageBytes);
+}
+
+function createSampleId(sample = null) {
+    if (sample?.label && sample?.imageBytes) {
+        const stableSource = [
+            sample.label,
+            sample.createdAt || "sem-data",
+            String(sample.imageBytes.length),
+            sample.imageBytes.slice(0, 24)
+        ].join("-");
+        return "sample-" + stableSource.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 110);
+    }
+
+    if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+    }
+
+    return "sample-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+}
+
+function normalizeSamples(samples) {
+    const seen = new Set();
+    return (Array.isArray(samples) ? samples : [])
+        .filter(sample => sample && sample.label && sample.imageBytes)
+        .map(sample => ({
+            ...sample,
+            id: sample.id || createSampleId(sample),
+            pattern: Array.isArray(sample.pattern) ? sample.pattern.map(Boolean) : Array(GRID_ROWS * GRID_COLS).fill(false),
+            features: Array.isArray(sample.features) ? sample.features.map(Number) : [],
+            featureMode: sample.featureMode || sample.feature_mode || "legacy",
+            size: Number(sample.size) || ML_IMAGE_SIZE,
+            createdAt: sample.createdAt || new Date().toISOString(),
+            source: sample.source || "local"
+        }))
+        .filter(sample => {
+            if (seen.has(sample.id)) return false;
+            seen.add(sample.id);
+            return true;
+        });
 }
 
 function updateTrainingStatus(extraText = "") {
@@ -98,6 +143,9 @@ function updateTrainingStatus(extraText = "") {
     if (neuralReady) {
         modelStatus.textContent = "Modelo neural treinado";
         modelSummary.textContent = imageSamples.length + " fotos | " + labelCount + " rótulos";
+        if (extraText) {
+            trainingBox.textContent = extraText;
+        }
         return;
     }
 
@@ -177,11 +225,7 @@ function renderSampleTiles(samples) {
     sampleList.innerHTML = "";
 
     samples.slice().reverse().forEach(sample => {
-        const realIndex = getTrainingSamples().findIndex(candidate =>
-            candidate.createdAt === sample.createdAt &&
-            candidate.label === sample.label &&
-            candidate.imageBytes === sample.imageBytes
-        );
+        const realIndex = getTrainingSamples().findIndex(candidate => candidate.id === sample.id);
         const tile = document.createElement("article");
         tile.className = "sample-tile";
         tile.innerHTML =
@@ -513,11 +557,12 @@ function getModelThreshold() {
     const samples = getTrainingSamples();
 
     if (!samples.length) {
-        return 0.46;
+        return DEFAULT_MASK_THRESHOLD;
     }
 
     const values = [];
     samples.forEach(sample => {
+        if (sample.featureMode !== "mask-v2") return;
         if (!sample.features || !sample.pattern) return;
         sample.features.forEach((feature, index) => {
             values.push({ feature, active: sample.pattern[index] });
@@ -528,7 +573,7 @@ function getModelThreshold() {
     const blankValues = values.filter(item => !item.active).map(item => item.feature);
 
     if (!holeValues.length || !blankValues.length) {
-        return 0.46;
+        return DEFAULT_MASK_THRESHOLD;
     }
 
     const holeAvg = average(holeValues);
@@ -547,15 +592,75 @@ function detectPatternFromCanvas() {
 
     for (let row = 0; row < GRID_ROWS; row++) {
         for (let col = 0; col < GRID_COLS; col++) {
-            const point = gridPoint(row, col);
-            const darkness = sampleDarkness(point.x, point.y, 18);
-            features.push(darkness);
-            pattern.push(darkness >= threshold);
+            const score = sampleMaskedHoleScore(row, col);
+            features.push(score);
+            pattern.push(score >= threshold);
         }
     }
 
     lastFeatures = features;
     currentPattern = pattern;
+}
+
+function sampleMaskedHoleScore(row, col) {
+    const point = gridPoint(row, col);
+    const centerDarkness = sampleEllipseDarkness(point.x, point.y, MASK_HOLE_RADIUS_X, MASK_HOLE_RADIUS_Y);
+    const ringDarkness = sampleRingDarkness(point.x, point.y, MASK_HOLE_RADIUS_X + 8, MASK_HOLE_RADIUS_Y + 8, MASK_HOLE_RADIUS_X + 2, MASK_HOLE_RADIUS_Y + 2);
+    return Math.max(0, Math.min(1, centerDarkness - ringDarkness));
+}
+
+function sampleEllipseDarkness(x, y, radiusX, radiusY) {
+    const left = Math.max(0, Math.floor(x - radiusX));
+    const top = Math.max(0, Math.floor(y - radiusY));
+    const width = Math.min(canvas.width - left, Math.ceil(radiusX * 2));
+    const height = Math.min(canvas.height - top, Math.ceil(radiusY * 2));
+    const imageData = ctx.getImageData(left, top, width, height);
+    let darkness = 0;
+    let count = 0;
+
+    for (let row = 0; row < height; row++) {
+        for (let col = 0; col < width; col++) {
+            const dx = (left + col + 0.5 - x) / radiusX;
+            const dy = (top + row + 0.5 - y) / radiusY;
+            if (dx * dx + dy * dy > 1) continue;
+
+            const offset = (row * width + col) * 4;
+            darkness += pixelDarkness(imageData.data[offset], imageData.data[offset + 1], imageData.data[offset + 2]);
+            count++;
+        }
+    }
+
+    return count ? darkness / count : 0;
+}
+
+function sampleRingDarkness(x, y, outerRadiusX, outerRadiusY, innerRadiusX, innerRadiusY) {
+    const left = Math.max(0, Math.floor(x - outerRadiusX));
+    const top = Math.max(0, Math.floor(y - outerRadiusY));
+    const width = Math.min(canvas.width - left, Math.ceil(outerRadiusX * 2));
+    const height = Math.min(canvas.height - top, Math.ceil(outerRadiusY * 2));
+    const imageData = ctx.getImageData(left, top, width, height);
+    let darkness = 0;
+    let count = 0;
+
+    for (let row = 0; row < height; row++) {
+        for (let col = 0; col < width; col++) {
+            const pixelX = left + col + 0.5;
+            const pixelY = top + row + 0.5;
+            const outerDx = (pixelX - x) / outerRadiusX;
+            const outerDy = (pixelY - y) / outerRadiusY;
+            const innerDx = (pixelX - x) / innerRadiusX;
+            const innerDy = (pixelY - y) / innerRadiusY;
+
+            if (outerDx * outerDx + outerDy * outerDy > 1) continue;
+            if (innerDx * innerDx + innerDy * innerDy <= 1) continue;
+
+            const offset = (row * width + col) * 4;
+            darkness += pixelDarkness(imageData.data[offset], imageData.data[offset + 1], imageData.data[offset + 2]);
+            count++;
+        }
+    }
+
+    return count ? darkness / count : 0;
 }
 
 function sampleDarkness(x, y, radius) {
@@ -567,12 +672,16 @@ function sampleDarkness(x, y, radius) {
         const r = imageData.data[i];
         const g = imageData.data[i + 1];
         const b = imageData.data[i + 2];
-        const luma = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 255;
-        darkness += 1 - luma;
+        darkness += pixelDarkness(r, g, b);
         count++;
     }
 
     return darkness / count;
+}
+
+function pixelDarkness(r, g, b) {
+    const luma = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 255;
+    return 1 - luma;
 }
 
 async function detectInstruction(forceNeural = false) {
@@ -594,7 +703,7 @@ async function detectInstruction(forceNeural = false) {
 
     const patternPrediction = classifyPattern(currentPattern);
     const neuralPrediction = await predictCurrentImage();
-    const finalPrediction = forceNeural && neuralPrediction ? neuralPrediction : (neuralPrediction || patternPrediction);
+    const finalPrediction = forceNeural && neuralPrediction ? neuralPrediction : patternPrediction;
 
     imageStatus.textContent = "Cartão detectado";
     drawOverlay(finalPrediction);
@@ -720,7 +829,7 @@ function classifyPattern(pattern) {
         }
 
         return {
-            source: "furos",
+            source: "mask",
             instruction,
             confidence: Math.round((matches / expected.length) * 100)
         };
@@ -733,18 +842,24 @@ function renderPrediction(patternPrediction, neuralPrediction, finalPrediction) 
     predictionBox.classList.remove("missing-card");
 
     const prediction = finalPrediction || neuralPrediction || patternPrediction;
-    const neuralLine = neuralPrediction
-        ? "<p>Modelo neural: " + neuralPrediction.instruction.name + " (" + neuralPrediction.confidence + "%)</p>"
+    const learnedLine = neuralPrediction
+        ? "<p>" + (neuralPrediction.source === "neural" ? "Modelo neural" : "Dataset por exemplos") + ": " +
+            neuralPrediction.instruction.name + " (" + neuralPrediction.confidence + "%)</p>"
         : "<p>Modelo neural: ainda não treinado neste navegador.</p>";
+    const sourceText = prediction.source === "neural"
+        ? "IA treinada por fotos"
+        : prediction.source === "dataset"
+            ? "comparação com dataset"
+            : "máscara dos furos";
 
     predictionBox.innerHTML =
         "<strong>" + prediction.instruction.name + "</strong>" +
         "<code>" + prediction.instruction.code + "</code>" +
         "<p>" + prediction.instruction.meaning + "</p>" +
-        "<p>Resultado usado: " + (prediction.source === "neural" ? "IA treinada por fotos" : "leitura dos furos") +
+        "<p>Resultado usado: " + sourceText +
         " | Confiança: " + prediction.confidence + "%</p>" +
-        neuralLine +
-        "<p>Leitura geométrica dos furos: " + patternPrediction.instruction.name + " (" + patternPrediction.confidence + "%)</p>";
+        learnedLine +
+        "<p>Leitura por máscara: " + patternPrediction.instruction.name + " (" + patternPrediction.confidence + "%)</p>";
 }
 
 function drawOverlay(predictionOverride) {
@@ -759,7 +874,7 @@ function drawOverlay(predictionOverride) {
         const point = gridPoint(row, col);
 
         ctx.beginPath();
-        ctx.arc(point.x, point.y, active ? 17 : 8, 0, Math.PI * 2);
+        ctx.ellipse(point.x, point.y, active ? 17 : 10, active ? 22 : 14, 0, 0, Math.PI * 2);
         ctx.fillStyle = active ? "rgba(167,63,54,.72)" : "rgba(47,95,90,.18)";
         ctx.fill();
         ctx.strokeStyle = active ? "rgba(255,248,232,.9)" : "rgba(47,95,90,.35)";
@@ -818,18 +933,28 @@ async function saveTrainingSample() {
 
     const imageBytes = captureTrainingImageBytes();
     const samples = getTrainingSamples();
-    samples.push({
+    const sample = {
+        id: createSampleId(),
         label: labelSelect.value,
         pattern: currentPattern,
         features: lastFeatures,
+        featureMode: "mask-v2",
         imageBytes,
         size: ML_IMAGE_SIZE,
-        createdAt: new Date().toISOString()
-    });
+        createdAt: new Date().toISOString(),
+        source: "local"
+    };
+
+    samples.push(sample);
 
     setTrainingSamples(samples);
     updateTrainingStatus("Foto rotulada salva. Ela agora pode entrar no treino real do modelo neural.");
     drawOverlay();
+
+    const savedOnline = await saveSamplesToCloud([sample], true);
+    if (savedOnline) {
+        updateTrainingStatus("Foto rotulada salva localmente e enviada ao banco de dados.");
+    }
 }
 
 function createNeuralModel() {
@@ -1016,7 +1141,7 @@ function predictWithNearestSample() {
     const confidence = Math.round(Math.max(25, Math.min(96, (1 - normalizedDistance) * 100)));
 
     return {
-        source: "neural",
+        source: "dataset",
         instruction: getInstructionById(bestSample.label),
         confidence
     };
@@ -1075,6 +1200,131 @@ function exportDataset() {
     link.download = "dataset-cartoes-perfurados.json";
     link.click();
     URL.revokeObjectURL(url);
+}
+
+function getSupabaseClient() {
+    return window.supabaseClient || null;
+}
+
+function sampleToCloudRow(sample) {
+    return {
+        id: sample.id,
+        label: sample.label,
+        pattern: sample.pattern,
+        features: sample.features,
+        feature_mode: sample.featureMode || "mask-v2",
+        image_bytes: sample.imageBytes,
+        size: sample.size || ML_IMAGE_SIZE,
+        created_at: sample.createdAt,
+        updated_at: new Date().toISOString()
+    };
+}
+
+function cloudRowToSample(row) {
+    return {
+        id: row.id,
+        label: row.label,
+        pattern: Array.isArray(row.pattern) ? row.pattern : [],
+        features: Array.isArray(row.features) ? row.features : [],
+        featureMode: row.feature_mode || "mask-v2",
+        imageBytes: row.image_bytes,
+        size: Number(row.size) || ML_IMAGE_SIZE,
+        createdAt: row.created_at || new Date().toISOString(),
+        source: "supabase"
+    };
+}
+
+async function saveSamplesToCloud(samples, silent = false) {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+        if (!silent) {
+            trainingBox.innerHTML =
+                "<strong>Banco indisponível</strong>" +
+                "<p>Supabase não carregou. Abra pelo GitHub Pages com internet para salvar o dataset online.</p>";
+        }
+        return false;
+    }
+
+    const rows = normalizeSamples(samples).map(sampleToCloudRow);
+    if (!rows.length) {
+        if (!silent) {
+            trainingBox.innerHTML =
+                "<strong>Nada para enviar</strong>" +
+                "<p>Salve fotos rotuladas antes de sincronizar com o banco.</p>";
+        }
+        return false;
+    }
+
+    const { error } = await supabase
+        .from(CLOUD_SAMPLE_TABLE)
+        .upsert(rows, { onConflict: "id" });
+
+    if (error) {
+        if (!silent) {
+            trainingBox.innerHTML =
+                "<strong>Banco ainda não configurado</strong>" +
+                "<p>Crie a tabela card_ml_samples no Supabase usando o SQL do projeto. Erro: " + error.message + "</p>";
+        }
+        return false;
+    }
+
+    if (!silent) {
+        trainingBox.innerHTML =
+            "<strong>Dataset enviado ao banco</strong>" +
+            "<p>" + rows.length + " foto(s) rotulada(s) foram salvas no Supabase.</p>";
+    }
+    return true;
+}
+
+async function syncTrainingToCloud() {
+    const samples = getImageSamples();
+    setTrainingSamples(samples);
+    const saved = await saveSamplesToCloud(samples);
+    if (saved) {
+        updateTrainingStatus(samples.length + " foto(s) enviadas ao banco de dados.");
+    }
+}
+
+async function loadCloudTrainingSamples(silent = false) {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+        if (!silent) {
+            trainingBox.innerHTML =
+                "<strong>Banco indisponível</strong>" +
+                "<p>Supabase não carregou. Abra pelo GitHub Pages com internet para carregar o dataset online.</p>";
+        }
+        return;
+    }
+
+    const { data, error } = await supabase
+        .from(CLOUD_SAMPLE_TABLE)
+        .select("id,label,pattern,features,feature_mode,image_bytes,size,created_at")
+        .order("created_at", { ascending: false })
+        .limit(800);
+
+    if (error) {
+        if (!silent) {
+            trainingBox.innerHTML =
+                "<strong>Dataset online não carregou</strong>" +
+                "<p>Confira se a tabela card_ml_samples existe no Supabase. Erro: " + error.message + "</p>";
+        }
+        return;
+    }
+
+    const localSamples = getTrainingSamples();
+    const cloudSamples = normalizeSamples((data || []).map(cloudRowToSample));
+    const merged = new Map();
+
+    [...localSamples, ...cloudSamples].forEach(sample => {
+        merged.set(sample.id, sample);
+    });
+
+    setTrainingSamples([...merged.values()].sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt))));
+    updateTrainingStatus(
+        silent
+            ? ""
+            : "Dataset online carregado. " + cloudSamples.length + " amostra(s) vieram do Supabase."
+    );
 }
 
 async function clearTraining() {
@@ -1137,6 +1387,8 @@ detectBtn.addEventListener("click", () => void detectInstruction());
 trainBtn.addEventListener("click", () => void saveTrainingSample());
 fitModelBtn.addEventListener("click", () => void trainNeuralModel());
 predictMlBtn.addEventListener("click", () => void useTrainedModel());
+loadCloudBtn.addEventListener("click", () => void loadCloudTrainingSamples());
+syncCloudBtn.addEventListener("click", () => void syncTrainingToCloud());
 exportBtn.addEventListener("click", exportDataset);
 clearTrainingBtn.addEventListener("click", () => void clearTraining());
 
@@ -1146,3 +1398,4 @@ renderMatrix();
 drawEmptyCanvas();
 updateTrainingStatus();
 void loadSavedNeuralModel();
+void loadCloudTrainingSamples(true);
