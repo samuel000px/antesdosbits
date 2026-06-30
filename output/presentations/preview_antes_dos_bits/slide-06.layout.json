@@ -1,0 +1,1436 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/04h7qd",
+    "id": "04h7qd",
+    "slide": 6,
+    "layoutId": "2b1e1024-e51d-409d-8372-13a1b7aac27d",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "7ab3a27b-c085-4c7a-922d-2926372af880",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFBEB",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "2b1e1024-e51d-409d-8372-13a1b7aac27d",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "7ab3a27b-c085-4c7a-922d-2926372af880",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "7ab3a27b-c085-4c7a-922d-2926372af880",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e9cvixcz",
+      "id": "1",
+      "bbox": [
+        72,
+        44,
+        760,
+        30
+      ],
+      "geometry": "rect",
+      "text": "JOGO 3",
+      "textPreview": "JOGO 3",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#00786F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "JOGO 3"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "JOGO 3",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#00786F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "JOGO 3",
+              "fontSize": 16,
+              "color": "#00786F",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lwval87e",
+      "id": "2",
+      "bbox": [
+        72,
+        78,
+        860,
+        72
+      ],
+      "geometry": "rect",
+      "text": "Era IBM: sala de cartões",
+      "textPreview": "Era IBM: sala de cartões",
+      "resolvedFontSize": 40,
+      "resolvedTextStyle": {
+        "fontSize": 40,
+        "typeface": "+mn-lt",
+        "color": "#020618",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Era IBM: sala de cartões"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Era IBM: sala de cartões",
+          "resolvedTextStyle": {
+            "fontSize": 40,
+            "color": "#020618",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Era IBM: sala de cartões",
+              "fontSize": 40,
+              "color": "#020618",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wb2hwfyx",
+      "id": "3",
+      "bbox": [
+        72,
+        160,
+        380,
+        330
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FEF3C6",
+      "lineColor": "#BB4D00",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3itgfmlk",
+      "id": "4",
+      "bbox": [
+        100,
+        184,
+        324,
+        26
+      ],
+      "geometry": "rect",
+      "text": "IBM CARDS",
+      "textPreview": "IBM CARDS",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "fontSize": 18,
+        "typeface": "+mn-lt",
+        "color": "#9F0712",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "IBM CARDS"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "IBM CARDS",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#9F0712",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "IBM CARDS",
+              "fontSize": 18,
+              "color": "#9F0712",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ex0nuxc3",
+      "id": "5",
+      "bbox": [
+        107,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/loj2t83i",
+      "id": "6",
+      "bbox": [
+        138,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/w3m94fu1",
+      "id": "7",
+      "bbox": [
+        169,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3ex0nuxc",
+      "id": "8",
+      "bbox": [
+        200,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/at47y1kr",
+      "id": "9",
+      "bbox": [
+        231,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/knih4byh",
+      "id": "10",
+      "bbox": [
+        262,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/d8bat47y",
+      "id": "11",
+      "bbox": [
+        293,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2lszqtcj",
+      "id": "12",
+      "bbox": [
+        324,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/v6psfil0",
+      "id": "13",
+      "bbox": [
+        355,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kf6dcbul",
+      "id": "14",
+      "bbox": [
+        386,
+        230,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/d0z61032",
+      "id": "15",
+      "bbox": [
+        107,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/29gr2p8n",
+      "id": "16",
+      "bbox": [
+        138,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vu9knih4",
+      "id": "17",
+      "bbox": [
+        169,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k3q5o7qp",
+      "id": "18",
+      "bbox": [
+        200,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/donyd0z6",
+      "id": "19",
+      "bbox": [
+        231,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hcrmhk3q",
+      "id": "20",
+      "bbox": [
+        262,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/orytsvu9",
+      "id": "21",
+      "bbox": [
+        293,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/z61032ls",
+      "id": "22",
+      "bbox": [
+        324,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/al87ed8b",
+      "id": "23",
+      "bbox": [
+        355,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/h0fepkzu",
+      "id": "24",
+      "bbox": [
+        386,
+        276,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sfil0rqd",
+      "id": "25",
+      "bbox": [
+        107,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zupwb2hw",
+      "id": "26",
+      "bbox": [
+        138,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a9w3m94f",
+      "id": "27",
+      "bbox": [
+        169,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 28,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hwfyxobm",
+      "id": "28",
+      "bbox": [
+        200,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/obm58z25",
+      "id": "29",
+      "bbox": [
+        231,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/il0rqd4v",
+      "id": "30",
+      "bbox": [
+        262,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 31,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b6xkf6dc",
+      "id": "31",
+      "bbox": [
+        293,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0rqd4vmt",
+      "id": "32",
+      "bbox": [
+        324,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 33,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tcj6tova",
+      "id": "33",
+      "bbox": [
+        355,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 34,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/idonyd0z",
+      "id": "34",
+      "bbox": [
+        386,
+        322,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 35,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/byhgn29g",
+      "id": "35",
+      "bbox": [
+        107,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 36,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0je9cvix",
+      "id": "36",
+      "bbox": [
+        138,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 37,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t47y1kre",
+      "id": "37",
+      "bbox": [
+        169,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 38,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/i9s36hcr",
+      "id": "38",
+      "bbox": [
+        200,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 39,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/bulwval8",
+      "id": "39",
+      "bbox": [
+        231,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 40,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rqd4vmtw",
+      "id": "40",
+      "bbox": [
+        262,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 41,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/25kb6xkf",
+      "id": "41",
+      "bbox": [
+        293,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 42,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9w3m94fu",
+      "id": "42",
+      "bbox": [
+        324,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 43,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kb6xkf6d",
+      "id": "43",
+      "bbox": [
+        355,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 44,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/re1w7mp0",
+      "id": "44",
+      "bbox": [
+        386,
+        368,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 45,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2t83itgf",
+      "id": "45",
+      "bbox": [
+        107,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 46,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9knih4by",
+      "id": "46",
+      "bbox": [
+        138,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 47,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kzupwb2h",
+      "id": "47",
+      "bbox": [
+        169,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 48,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ra5gbq1o",
+      "id": "48",
+      "bbox": [
+        200,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 49,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2p8nqxs7",
+      "id": "49",
+      "bbox": [
+        231,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 50,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cj6tovah",
+      "id": "50",
+      "bbox": [
+        262,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 51,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/54zidony",
+      "id": "51",
+      "bbox": [
+        293,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 52,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/udg7adsj",
+      "id": "52",
+      "bbox": [
+        324,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#020618",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 53,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nyd0z610",
+      "id": "53",
+      "bbox": [
+        355,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 54,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cvixczed",
+      "id": "54",
+      "bbox": [
+        386,
+        414,
+        20,
+        20
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#57534D",
+      "lineWidth": 1
+    },
+    {
+      "order": 55,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5gbq1ory",
+      "id": "55",
+      "bbox": [
+        520,
+        160,
+        640,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• O baralho precisa passar por máquinas certas na ordem certa.",
+      "textPreview": "• O baralho precisa passar por máquinas certas na ordem certa.",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• O baralho precisa passar por máquinas certas na ordem certa."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• O baralho precisa passar por máquinas certas na ordem certa.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• O baralho precisa passar por máquinas certas na ordem certa.",
+              "fontSize": 21,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 56,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/upwb2hwf",
+      "id": "56",
+      "bbox": [
+        520,
+        208,
+        640,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• Verificadora evita erro; classificadora ordena; coladora junta arquivo mestre; tabuladora soma.",
+      "textPreview": "• Verificadora evita erro; classificadora ordena; coladora junta arquivo mestre; tabuladora soma.",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Verificadora evita erro; classificadora ordena; coladora junta arquivo"
+          },
+          {
+            "index": 2,
+            "text": "mestre; tabuladora soma."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• Verificadora evita erro; classificadora ordena; coladora junta arquivo mestre; tabuladora soma.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Verificadora evita erro; classificadora ordena; coladora junta arquivo mestre; tabuladora soma.",
+              "fontSize": 21,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 57,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nap4r65w",
+      "id": "57",
+      "bbox": [
+        520,
+        256,
+        640,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• O desafio é montar o fluxo de processamento, não apenas clicar rápido.",
+      "textPreview": "• O desafio é montar o fluxo de processamento, não apenas clicar rápido.",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• O desafio é montar o fluxo de processamento, não apenas clicar"
+          },
+          {
+            "index": 2,
+            "text": "rápido."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• O desafio é montar o fluxo de processamento, não apenas clicar rápido.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• O desafio é montar o fluxo de processamento, não apenas clicar rápido.",
+              "fontSize": 21,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 58,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c7u54zid",
+      "id": "58",
+      "bbox": [
+        520,
+        304,
+        640,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• Ponto didático: processamento empresarial era uma linha de produção de dados.",
+      "textPreview": "• Ponto didático: processamento empresarial era uma linha de produção de dados.",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Ponto didático: processamento empresarial era uma linha de produção"
+          },
+          {
+            "index": 2,
+            "text": "de dados."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• Ponto didático: processamento empresarial era uma linha de produção de dados.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Ponto didático: processamento empresarial era uma linha de produção de dados.",
+              "fontSize": 21,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 59,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1orytsvu",
+      "id": "59",
+      "bbox": [
+        1160,
+        654,
+        60,
+        28
+      ],
+      "geometry": "rect",
+      "text": "06",
+      "textPreview": "06",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#79716B",
+        "bold": true,
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "06"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "06",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#79716B",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "06",
+              "fontSize": 16,
+              "color": "#79716B",
+              "bold": true,
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

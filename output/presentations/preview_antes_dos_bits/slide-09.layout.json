@@ -1,0 +1,708 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/k539i9",
+    "id": "k539i9",
+    "slide": 9,
+    "layoutId": "2b1e1024-e51d-409d-8372-13a1b7aac27d",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "7ab3a27b-c085-4c7a-922d-2926372af880",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFBEB",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "2b1e1024-e51d-409d-8372-13a1b7aac27d",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "7ab3a27b-c085-4c7a-922d-2926372af880",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "7ab3a27b-c085-4c7a-922d-2926372af880",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k3q5o7qp",
+      "id": "1",
+      "bbox": [
+        72,
+        44,
+        760,
+        30
+      ],
+      "geometry": "rect",
+      "text": "JOGO 6",
+      "textPreview": "JOGO 6",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#00786F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "JOGO 6"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "JOGO 6",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#00786F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "JOGO 6",
+              "fontSize": 16,
+              "color": "#00786F",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vixczed8",
+      "id": "2",
+      "bbox": [
+        72,
+        78,
+        860,
+        72
+      ],
+      "geometry": "rect",
+      "text": "Batalha de Cartões Perfurados",
+      "textPreview": "Batalha de Cartões Perfurados",
+      "resolvedFontSize": 40,
+      "resolvedTextStyle": {
+        "fontSize": 40,
+        "typeface": "+mn-lt",
+        "color": "#020618",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Batalha de Cartões Perfurados"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Batalha de Cartões Perfurados",
+          "resolvedTextStyle": {
+            "fontSize": 40,
+            "color": "#020618",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Batalha de Cartões Perfurados",
+              "fontSize": 40,
+              "color": "#020618",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2x4nap4r",
+      "id": "3",
+      "bbox": [
+        72,
+        165,
+        620,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• Multiplayer online: a rodada mostra uma instrução-alvo.",
+      "textPreview": "• Multiplayer online: a rodada mostra uma instrução-alvo.",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Multiplayer online: a rodada mostra uma instrução-alvo."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• Multiplayer online: a rodada mostra uma instrução-alvo.",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Multiplayer online: a rodada mostra uma instrução-alvo.",
+              "fontSize": 22,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/dcbulwva",
+      "id": "4",
+      "bbox": [
+        72,
+        213,
+        620,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• Cada jogador monta a grade de furos e envia o cartão.",
+      "textPreview": "• Cada jogador monta a grade de furos e envia o cartão.",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Cada jogador monta a grade de furos e envia o cartão."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• Cada jogador monta a grade de furos e envia o cartão.",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Cada jogador monta a grade de furos e envia o cartão.",
+              "fontSize": 22,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kre1w7mp",
+      "id": "5",
+      "bbox": [
+        72,
+        261,
+        620,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• Vence quem acertar melhor; em empate, ganha o menor tempo de envio.",
+      "textPreview": "• Vence quem acertar melhor; em empate, ganha o menor tempo de envio.",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Vence quem acertar melhor; em empate, ganha o menor tempo"
+          },
+          {
+            "index": 2,
+            "text": "de envio."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• Vence quem acertar melhor; em empate, ganha o menor tempo de envio.",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Vence quem acertar melhor; em empate, ganha o menor tempo de envio.",
+              "fontSize": 22,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/val87ed8",
+      "id": "6",
+      "bbox": [
+        72,
+        309,
+        620,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• A IA simula oponente com pequenos erros e tempos variados.",
+      "textPreview": "• A IA simula oponente com pequenos erros e tempos variados.",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• A IA simula oponente com pequenos erros e tempos variados."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• A IA simula oponente com pequenos erros e tempos variados.",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• A IA simula oponente com pequenos erros e tempos variados.",
+              "fontSize": 22,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6psfil0r",
+      "id": "7",
+      "bbox": [
+        760,
+        148,
+        360,
+        350
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FEF3C6",
+      "lineColor": "#BB4D00",
+      "lineWidth": 1
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/d8bat47y",
+      "id": "8",
+      "bbox": [
+        805,
+        188,
+        250,
+        40
+      ],
+      "geometry": "rect",
+      "text": "READ C",
+      "textPreview": "READ C",
+      "resolvedFontSize": 36,
+      "resolvedTextStyle": {
+        "fontSize": 36,
+        "typeface": "+mn-lt",
+        "color": "#020618",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "READ C"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "READ C",
+          "resolvedTextStyle": {
+            "fontSize": 36,
+            "color": "#020618",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "READ C",
+              "fontSize": 36,
+              "color": "#020618",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/knih4byh",
+      "id": "9",
+      "bbox": [
+        805,
+        250,
+        260,
+        32
+      ],
+      "geometry": "rect",
+      "text": "Furos: 2, 15, 26, 39, 50",
+      "textPreview": "Furos: 2, 15, 26, 39, 50",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "fontSize": 20,
+        "typeface": "+mn-lt",
+        "color": "#9F0712",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Furos: 2, 15, 26, 39, 50"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Furos: 2, 15, 26, 39, 50",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#9F0712",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Furos: 2, 15, 26, 39, 50",
+              "fontSize": 20,
+              "color": "#9F0712",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/uxc3ylc7",
+      "id": "10",
+      "bbox": [
+        805,
+        326,
+        260,
+        74
+      ],
+      "geometry": "rect",
+      "text": "Acerto + velocidade = pontuação da rodada",
+      "textPreview": "Acerto + velocidade = pontuação da rodada",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "+mn-lt",
+        "color": "#00786F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Acerto + velocidade ="
+          },
+          {
+            "index": 2,
+            "text": "pontuação da rodada"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Acerto + velocidade = pontuação da rodada",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "color": "#00786F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Acerto + velocidade = pontuação da rodada",
+              "fontSize": 24,
+              "color": "#00786F",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ji5snelo",
+      "id": "11",
+      "bbox": [
+        1160,
+        654,
+        60,
+        28
+      ],
+      "geometry": "rect",
+      "text": "09",
+      "textPreview": "09",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#79716B",
+        "bold": true,
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "09"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "09",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#79716B",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "09",
+              "fontSize": 16,
+              "color": "#79716B",
+              "bold": true,
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

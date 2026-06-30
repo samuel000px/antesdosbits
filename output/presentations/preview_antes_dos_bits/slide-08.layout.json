@@ -1,0 +1,703 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/sg6uta",
+    "id": "sg6uta",
+    "slide": 8,
+    "layoutId": "2b1e1024-e51d-409d-8372-13a1b7aac27d",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "7ab3a27b-c085-4c7a-922d-2926372af880",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFBEB",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "2b1e1024-e51d-409d-8372-13a1b7aac27d",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "7ab3a27b-c085-4c7a-922d-2926372af880",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "7ab3a27b-c085-4c7a-922d-2926372af880",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u54zidon",
+      "id": "1",
+      "bbox": [
+        72,
+        44,
+        760,
+        30
+      ],
+      "geometry": "rect",
+      "text": "JOGO 5",
+      "textPreview": "JOGO 5",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#00786F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "JOGO 5"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "JOGO 5",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#00786F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "JOGO 5",
+              "fontSize": 16,
+              "color": "#00786F",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5sneloj2",
+      "id": "2",
+      "bbox": [
+        72,
+        78,
+        860,
+        72
+      ],
+      "geometry": "rect",
+      "text": "Caça ao Erro",
+      "textPreview": "Caça ao Erro",
+      "resolvedFontSize": 40,
+      "resolvedTextStyle": {
+        "fontSize": 40,
+        "typeface": "+mn-lt",
+        "color": "#020618",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Caça ao Erro"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Caça ao Erro",
+          "resolvedTextStyle": {
+            "fontSize": 40,
+            "color": "#020618",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Caça ao Erro",
+              "fontSize": 40,
+              "color": "#020618",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cbulwval",
+      "id": "3",
+      "bbox": [
+        72,
+        170,
+        640,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• Um cartão no lote tem comportamento suspeito.",
+      "textPreview": "• Um cartão no lote tem comportamento suspeito.",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Um cartão no lote tem comportamento suspeito."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• Um cartão no lote tem comportamento suspeito.",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Um cartão no lote tem comportamento suspeito.",
+              "fontSize": 22,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/neloj2t8",
+      "id": "4",
+      "bbox": [
+        72,
+        218,
+        640,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• O console dá pistas, e o jogador precisa inspecionar cartões antes do tempo acabar.",
+      "textPreview": "• O console dá pistas, e o jogador precisa inspecionar cartões antes do tempo acabar.",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• O console dá pistas, e o jogador precisa inspecionar cartões antes"
+          },
+          {
+            "index": 2,
+            "text": "do tempo acabar."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• O console dá pistas, e o jogador precisa inspecionar cartões antes do tempo acabar.",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• O console dá pistas, e o jogador precisa inspecionar cartões antes do tempo acabar.",
+              "fontSize": 22,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ytsvu9kn",
+      "id": "5",
+      "bbox": [
+        72,
+        266,
+        640,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• A mecânica representa debugging: observar sintomas, formular hipótese e testar.",
+      "textPreview": "• A mecânica representa debugging: observar sintomas, formular hipótese e testar.",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• A mecânica representa debugging: observar sintomas, formular"
+          },
+          {
+            "index": 2,
+            "text": "hipótese e testar."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• A mecânica representa debugging: observar sintomas, formular hipótese e testar.",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• A mecânica representa debugging: observar sintomas, formular hipótese e testar.",
+              "fontSize": 22,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5kb6xkf6",
+      "id": "6",
+      "bbox": [
+        72,
+        314,
+        640,
+        42
+      ],
+      "geometry": "rect",
+      "text": "• Conexão histórica: “bug” vira metáfora para falha que interrompe execução.",
+      "textPreview": "• Conexão histórica: “bug” vira metáfora para falha que interrompe execução.",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#0F172B",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Conexão histórica: “bug” vira metáfora para falha que interrompe"
+          },
+          {
+            "index": 2,
+            "text": "execução."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "• Conexão histórica: “bug” vira metáfora para falha que interrompe execução.",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#0F172B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Conexão histórica: “bug” vira metáfora para falha que interrompe execução.",
+              "fontSize": 22,
+              "color": "#0F172B",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/czed8v6p",
+      "id": "7",
+      "bbox": [
+        790,
+        165,
+        330,
+        330
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#0F172B",
+      "lineColor": "#00786F",
+      "lineWidth": 1
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/n29gr2p8",
+      "id": "8",
+      "bbox": [
+        825,
+        205,
+        260,
+        34
+      ],
+      "geometry": "rect",
+      "text": "Console",
+      "textPreview": "Console",
+      "resolvedFontSize": 30,
+      "resolvedTextStyle": {
+        "fontSize": 30,
+        "typeface": "+mn-lt",
+        "color": "#96F7E4",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Console"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Console",
+          "resolvedTextStyle": {
+            "fontSize": 30,
+            "color": "#96F7E4",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Console",
+              "fontSize": 30,
+              "color": "#96F7E4",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/yhgn29gr",
+      "id": "9",
+      "bbox": [
+        825,
+        275,
+        260,
+        120
+      ],
+      "geometry": "rect",
+      "text": "CHECKSUM OK\nCARD 07: fluxo inesperado\nPROCURE O ERRO",
+      "textPreview": "CHECKSUM OK | CARD 07: fluxo inesperado | PROCURE O ERRO",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "+mn-lt",
+        "color": "#FEF3C6",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "CHECKSUM OK"
+          },
+          {
+            "index": 2,
+            "text": "CARD 07: fluxo"
+          },
+          {
+            "index": 3,
+            "text": "inesperado"
+          },
+          {
+            "index": 4,
+            "text": "PROCURE O ERRO"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "CHECKSUM OK",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "color": "#FEF3C6",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "CHECKSUM OK",
+              "fontSize": 24,
+              "color": "#FEF3C6",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "CARD 07: fluxo inesperado",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "color": "#FEF3C6",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "CARD 07: fluxo inesperado",
+              "fontSize": 24,
+              "color": "#FEF3C6",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "PROCURE O ERRO",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "color": "#FEF3C6",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PROCURE O ERRO",
+              "fontSize": 24,
+              "color": "#FEF3C6",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kb6xkf6d",
+      "id": "10",
+      "bbox": [
+        1160,
+        654,
+        60,
+        28
+      ],
+      "geometry": "rect",
+      "text": "08",
+      "textPreview": "08",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#79716B",
+        "bold": true,
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "08"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "08",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#79716B",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "08",
+              "fontSize": 16,
+              "color": "#79716B",
+              "bold": true,
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

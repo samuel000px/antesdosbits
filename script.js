@@ -220,6 +220,9 @@ phases.forEach(phase => {
 
         title.textContent = phase.dataset.title;
         description.textContent = phase.dataset.desc;
+        if (phase.dataset.image) {
+            document.querySelector(".right-panel").style.setProperty("--detail-image", "url('" + phase.dataset.image + "')");
+        }
 
         currentPage = phase.dataset.page || currentPage;
         currentTutorial = phase.dataset.tutorial || "";

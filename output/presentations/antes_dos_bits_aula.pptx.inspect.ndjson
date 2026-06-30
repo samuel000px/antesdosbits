@@ -1,0 +1,506 @@
+{"kind":"deck","id":"pr/aesu2o","name":"Deck"}
+{"kind":"layout","layoutId":"7ab3a27b-c085-4c7a-922d-2926372af880","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"2b1e1024-e51d-409d-8372-13a1b7aac27d","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/106v81","slide":1,"title":"IBM 5081","textShapes":6}
+{"kind":"shape","id":"sh/w3m94fu1","slide":1,"bbox":[690,80,470,520]}
+{"kind":"textbox","id":"sh/3itgfmlk","slide":1,"text":"IBM 5081","textPreview":"IBM 5081","textChars":8,"textLines":1,"bbox":[718,104,414,26]}
+{"kind":"shape","id":"sh/ex0nuxc3","slide":1,"bbox":[725,150,20,20]}
+{"kind":"shape","id":"sh/lwval87e","slide":1,"bbox":[765,150,20,20]}
+{"kind":"shape","id":"sh/wb2hwfyx","slide":1,"bbox":[805,150,20,20]}
+{"kind":"shape","id":"sh/3q5o7qpg","slide":1,"bbox":[845,150,20,20]}
+{"kind":"shape","id":"sh/e9cvixcz","slide":1,"bbox":[885,150,20,20]}
+{"kind":"shape","id":"sh/l87ed8ba","slide":1,"bbox":[925,150,20,20]}
+{"kind":"shape","id":"sh/sneloj2t","slide":1,"bbox":[965,150,20,20]}
+{"kind":"shape","id":"sh/qd4vmtwr","slide":1,"bbox":[1005,150,20,20]}
+{"kind":"shape","id":"sh/fyxobm58","slide":1,"bbox":[1045,150,20,20]}
+{"kind":"shape","id":"sh/8jqh0fep","slide":1,"bbox":[1085,150,20,20]}
+{"kind":"shape","id":"sh/x4nap4r6","slide":1,"bbox":[725,234,20,20]}
+{"kind":"shape","id":"sh/qpg3ex0n","slide":1,"bbox":[765,234,20,20]}
+{"kind":"shape","id":"sh/fa9w3m94","slide":1,"bbox":[805,234,20,20]}
+{"kind":"shape","id":"sh/8v6psfil","slide":1,"bbox":[845,234,20,20]}
+{"kind":"shape","id":"sh/xczed8v6","slide":1,"bbox":[885,234,20,20]}
+{"kind":"shape","id":"sh/qtcj6tov","slide":1,"bbox":[925,234,20,20]}
+{"kind":"shape","id":"sh/je9cvixc","slide":1,"bbox":[965,234,20,20]}
+{"kind":"shape","id":"sh/rqd4vmtw","slide":1,"bbox":[1005,234,20,20]}
+{"kind":"shape","id":"sh/25kb6xkf","slide":1,"bbox":[1045,234,20,20]}
+{"kind":"shape","id":"sh/9w3m94fu","slide":1,"bbox":[1085,234,20,20]}
+{"kind":"shape","id":"sh/kb6xkf6d","slide":1,"bbox":[725,318,20,20]}
+{"kind":"shape","id":"sh/re1w7mp0","slide":1,"bbox":[765,318,20,20]}
+{"kind":"shape","id":"sh/2t83itgf","slide":1,"bbox":[805,318,20,20]}
+{"kind":"shape","id":"sh/9knih4by","slide":1,"bbox":[845,318,20,20]}
+{"kind":"shape","id":"sh/kzupwb2h","slide":1,"bbox":[885,318,20,20]}
+{"kind":"shape","id":"sh/ra5gbq1o","slide":1,"bbox":[925,318,20,20]}
+{"kind":"shape","id":"sh/2p8nqxs7","slide":1,"bbox":[965,318,20,20]}
+{"kind":"shape","id":"sh/cj6tovah","slide":1,"bbox":[1005,318,20,20]}
+{"kind":"shape","id":"sh/54zidony","slide":1,"bbox":[1045,318,20,20]}
+{"kind":"shape","id":"sh/udg7adsj","slide":1,"bbox":[1085,318,20,20]}
+{"kind":"shape","id":"sh/nyd0z610","slide":1,"bbox":[725,402,20,20]}
+{"kind":"shape","id":"sh/cvixczed","slide":1,"bbox":[765,402,20,20]}
+{"kind":"shape","id":"sh/5gbq1ory","slide":1,"bbox":[805,402,20,20]}
+{"kind":"shape","id":"sh/upwb2hwf","slide":1,"bbox":[845,402,20,20]}
+{"kind":"shape","id":"sh/nap4r65w","slide":1,"bbox":[885,402,20,20]}
+{"kind":"shape","id":"sh/c7u54zid","slide":1,"bbox":[925,402,20,20]}
+{"kind":"shape","id":"sh/1orytsvu","slide":1,"bbox":[965,402,20,20]}
+{"kind":"shape","id":"sh/hcrmhk3q","slide":1,"bbox":[1005,402,20,20]}
+{"kind":"shape","id":"sh/orytsvu9","slide":1,"bbox":[1045,402,20,20]}
+{"kind":"shape","id":"sh/z61032ls","slide":1,"bbox":[1085,402,20,20]}
+{"kind":"shape","id":"sh/al87ed8b","slide":1,"bbox":[725,486,20,20]}
+{"kind":"shape","id":"sh/h0fepkzu","slide":1,"bbox":[765,486,20,20]}
+{"kind":"shape","id":"sh/sfil0rqd","slide":1,"bbox":[805,486,20,20]}
+{"kind":"shape","id":"sh/zupwb2hw","slide":1,"bbox":[845,486,20,20]}
+{"kind":"shape","id":"sh/a9w3m94f","slide":1,"bbox":[885,486,20,20]}
+{"kind":"shape","id":"sh/hwfyxobm","slide":1,"bbox":[925,486,20,20]}
+{"kind":"shape","id":"sh/obm58z25","slide":1,"bbox":[965,486,20,20]}
+{"kind":"shape","id":"sh/il0rqd4v","slide":1,"bbox":[1005,486,20,20]}
+{"kind":"shape","id":"sh/b6xkf6dc","slide":1,"bbox":[1045,486,20,20]}
+{"kind":"shape","id":"sh/0rqd4vmt","slide":1,"bbox":[1085,486,20,20]}
+{"kind":"shape","id":"sh/tcj6tova","slide":1,"bbox":[0,0,1280,720]}
+{"kind":"textbox","id":"sh/idonyd0z","slide":1,"text":"AULA DEMONSTRATIVA","textPreview":"AULA DEMONSTRATIVA","textChars":18,"textLines":1,"bbox":[72,72,520,34]}
+{"kind":"textbox","id":"sh/byhgn29g","slide":1,"text":"Antes dos Bits","textPreview":"Antes dos Bits","textChars":14,"textLines":1,"bbox":[72,150,620,92]}
+{"kind":"textbox","id":"sh/0je9cvix","slide":1,"text":"Um museu jogável sobre cartões perfurados, automação e o nascimento da computação moderna.","textPreview":"Um museu jogável sobre cartões perfurados, automação e o nascimento da computação moderna.","textChars":90,"textLines":1,"bbox":[76,270,560,128]}
+{"kind":"textbox","id":"sh/t47y1kre","slide":1,"text":"Roteiro: jogar, observar e conectar cada mecânica à história.","textPreview":"Roteiro: jogar, observar e conectar cada mecânica à história.","textChars":61,"textLines":1,"bbox":[76,560,540,64]}
+{"kind":"textbox","id":"sh/i9s36hcr","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/106v81","slide":1,"text":""}
+{"kind":"slide","id":"sl/9adik1","slide":2,"title":"VISÃO GERAL","textShapes":8}
+{"kind":"textbox","id":"sh/lc7u54zi","slide":2,"text":"VISÃO GERAL","textPreview":"VISÃO GERAL","textChars":11,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/eloj2t83","slide":2,"text":"A ideia central do jogo","textPreview":"A ideia central do jogo","textChars":23,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"textbox","id":"sh/36hcrmhk","slide":2,"text":"• Cartões perfurados aparecem como linguagem física: furo = instrução, dado ou controle.","textPreview":"• Cartões perfurados aparecem como linguagem física: furo = instrução, dado ou controle.","textChars":88,"textLines":1,"bbox":[72,180,610,42]}
+{"kind":"textbox","id":"sh/wfyxobm5","slide":2,"text":"• Cada fase transforma um momento histórico em uma regra jogável.","textPreview":"• Cada fase transforma um momento histórico em uma regra jogável.","textChars":65,"textLines":1,"bbox":[72,228,610,42]}
+{"kind":"textbox","id":"sh/l0rqd4vm","slide":2,"text":"• O aluno aprende experimentando erro, custo, velocidade, ordem e reconhecimento visual.","textPreview":"• O aluno aprende experimentando erro, custo, velocidade, ordem e reconhecimento visual.","textChars":88,"textLines":1,"bbox":[72,276,610,42]}
+{"kind":"shape","id":"sh/ed8bat47","slide":2,"bbox":[760,132,390,390]}
+{"kind":"textbox","id":"sh/7u54zido","slide":2,"text":"HOLLERITH 1890","textPreview":"HOLLERITH 1890","textChars":14,"textLines":1,"bbox":[788,156,334,26]}
+{"kind":"shape","id":"sh/w7mp0bi9","slide":2,"bbox":[795,202,20,20]}
+{"kind":"shape","id":"sh/psfil0rq","slide":2,"bbox":[827,202,20,20]}
+{"kind":"shape","id":"sh/tsvu9kni","slide":2,"bbox":[859,202,20,20]}
+{"kind":"shape","id":"sh/47y1kre1","slide":2,"bbox":[891,202,20,20]}
+{"kind":"shape","id":"sh/bm58z25k","slide":2,"bbox":[923,202,20,20]}
+{"kind":"shape","id":"sh/m1cfa9w3","slide":2,"bbox":[955,202,20,20]}
+{"kind":"shape","id":"sh/tgfmlkjm","slide":2,"bbox":[987,202,20,20]}
+{"kind":"shape","id":"sh/4vmtwra5","slide":2,"bbox":[1019,202,20,20]}
+{"kind":"shape","id":"sh/bat47y1k","slide":2,"bbox":[1051,202,20,20]}
+{"kind":"shape","id":"sh/mp0bi9s3","slide":2,"bbox":[1083,202,20,20]}
+{"kind":"shape","id":"sh/t83itgfm","slide":2,"bbox":[795,260,20,20]}
+{"kind":"shape","id":"sh/4nap4r65","slide":2,"bbox":[827,260,20,20]}
+{"kind":"shape","id":"sh/0rqd4vmt","slide":2,"bbox":[859,260,20,20]}
+{"kind":"shape","id":"sh/tcj6tova","slide":2,"bbox":[891,260,20,20]}
+{"kind":"shape","id":"sh/il0rqd4v","slide":2,"bbox":[923,260,20,20]}
+{"kind":"shape","id":"sh/b6xkf6dc","slide":2,"bbox":[955,260,20,20]}
+{"kind":"shape","id":"sh/0je9cvix","slide":2,"bbox":[987,260,20,20]}
+{"kind":"shape","id":"sh/t47y1kre","slide":2,"bbox":[1019,260,20,20]}
+{"kind":"shape","id":"sh/idonyd0z","slide":2,"bbox":[1051,260,20,20]}
+{"kind":"shape","id":"sh/byhgn29g","slide":2,"bbox":[1083,260,20,20]}
+{"kind":"shape","id":"sh/0fepkzup","slide":2,"bbox":[795,318,20,20]}
+{"kind":"shape","id":"sh/p0bi9s36","slide":2,"bbox":[827,318,20,20]}
+{"kind":"shape","id":"sh/zed8v6ps","slide":2,"bbox":[859,318,20,20]}
+{"kind":"shape","id":"sh/6xkf6dcb","slide":2,"bbox":[891,318,20,20]}
+{"kind":"shape","id":"sh/hk3q5o7q","slide":2,"bbox":[923,318,20,20]}
+{"kind":"shape","id":"sh/oza1gvy9","slide":2,"bbox":[955,318,20,20]}
+{"kind":"shape","id":"sh/zqtcj6to","slide":2,"bbox":[987,318,20,20]}
+{"kind":"shape","id":"sh/65wjudg7","slide":2,"bbox":[1019,318,20,20]}
+{"kind":"shape","id":"sh/hwfyxobm","slide":2,"bbox":[1051,318,20,20]}
+{"kind":"shape","id":"sh/obm58z25","slide":2,"bbox":[1083,318,20,20]}
+{"kind":"shape","id":"sh/zupwb2hw","slide":2,"bbox":[795,376,20,20]}
+{"kind":"shape","id":"sh/a9w3m94f","slide":2,"bbox":[827,376,20,20]}
+{"kind":"shape","id":"sh/6hcrmhk3","slide":2,"bbox":[859,376,20,20]}
+{"kind":"shape","id":"sh/z25kb6xk","slide":2,"bbox":[891,376,20,20]}
+{"kind":"shape","id":"sh/onyd0z61","slide":2,"bbox":[923,376,20,20]}
+{"kind":"shape","id":"sh/d8v6psfi","slide":2,"bbox":[955,376,20,20]}
+{"kind":"shape","id":"sh/6tovahoz","slide":2,"bbox":[987,376,20,20]}
+{"kind":"shape","id":"sh/vahoza1g","slide":2,"bbox":[1019,376,20,20]}
+{"kind":"shape","id":"sh/ovahoza1","slide":2,"bbox":[1051,376,20,20]}
+{"kind":"shape","id":"sh/dg7adsji","slide":2,"bbox":[1083,376,20,20]}
+{"kind":"shape","id":"sh/61032lsz","slide":2,"bbox":[795,434,20,20]}
+{"kind":"shape","id":"sh/vmtwra5g","slide":2,"bbox":[827,434,20,20]}
+{"kind":"shape","id":"sh/loj2t83i","slide":2,"bbox":[859,434,20,20]}
+{"kind":"shape","id":"sh/w3m94fu1","slide":2,"bbox":[891,434,20,20]}
+{"kind":"shape","id":"sh/3itgfmlk","slide":2,"bbox":[923,434,20,20]}
+{"kind":"shape","id":"sh/ex0nuxc3","slide":2,"bbox":[955,434,20,20]}
+{"kind":"shape","id":"sh/lwval87e","slide":2,"bbox":[987,434,20,20]}
+{"kind":"shape","id":"sh/wb2hwfyx","slide":2,"bbox":[1019,434,20,20]}
+{"kind":"shape","id":"sh/3q5o7qpg","slide":2,"bbox":[1051,434,20,20]}
+{"kind":"shape","id":"sh/e9cvixcz","slide":2,"bbox":[1083,434,20,20]}
+{"kind":"textbox","id":"sh/l87ed8ba","slide":2,"text":"Mensagem para a turma: antes de bits invisíveis, computadores liam marcas materiais.","textPreview":"Mensagem para a turma: antes de bits invisíveis, computadores liam marcas materiais.","textChars":84,"textLines":1,"bbox":[760,545,390,58]}
+{"kind":"textbox","id":"sh/sneloj2t","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/9adik1","slide":2,"text":""}
+{"kind":"slide","id":"sl/o7dxyy","slide":3,"title":"LINHA DO TEMPO","textShapes":22}
+{"kind":"textbox","id":"sh/u18jqh0f","slide":3,"text":"LINHA DO TEMPO","textPreview":"LINHA DO TEMPO","textChars":14,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/1orytsvu","slide":3,"text":"Como apresentar a sequência","textPreview":"Como apresentar a sequência","textChars":27,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"shape","id":"sh/c7u54zid","slide":3,"bbox":[90,230,150,190]}
+{"kind":"textbox","id":"sh/judg7ads","slide":3,"text":"1804","textPreview":"1804","textChars":4,"textLines":1,"bbox":[108,250,110,30]}
+{"kind":"textbox","id":"sh/u9knih4b","slide":3,"text":"Jacquard","textPreview":"Jacquard","textChars":8,"textLines":1,"bbox":[108,292,120,34]}
+{"kind":"textbox","id":"sh/1032lszq","slide":3,"text":"cartões controlam fios","textPreview":"cartões controlam fios","textChars":22,"textLines":1,"bbox":[108,340,118,60]}
+{"kind":"shape","id":"sh/cfa9w3m9","slide":3,"bbox":[275,230,150,190]}
+{"kind":"textbox","id":"sh/nyd0z610","slide":3,"text":"1890","textPreview":"1890","textChars":4,"textLines":1,"bbox":[293,250,110,30]}
+{"kind":"textbox","id":"sh/udg7adsj","slide":3,"text":"Hollerith","textPreview":"Hollerith","textChars":9,"textLines":1,"bbox":[293,292,120,34]}
+{"kind":"textbox","id":"sh/czed8v6p","slide":3,"text":"cartões viram dados","textPreview":"cartões viram dados","textChars":19,"textLines":1,"bbox":[293,340,118,60]}
+{"kind":"shape","id":"sh/5kb6xkf6","slide":3,"bbox":[460,230,150,190]}
+{"kind":"textbox","id":"sh/ytsvu9kn","slide":3,"text":"1924","textPreview":"1924","textChars":4,"textLines":1,"bbox":[478,250,110,30]}
+{"kind":"textbox","id":"sh/neloj2t8","slide":3,"text":"IBM","textPreview":"IBM","textChars":3,"textLines":1,"bbox":[478,292,120,34]}
+{"kind":"textbox","id":"sh/cbulwval","slide":3,"text":"máquinas processam lotes","textPreview":"máquinas processam lotes","textChars":24,"textLines":1,"bbox":[478,340,118,60]}
+{"kind":"shape","id":"sh/5sneloj2","slide":3,"bbox":[645,230,150,190]}
+{"kind":"textbox","id":"sh/u54zidon","slide":3,"text":"1957","textPreview":"1957","textChars":4,"textLines":1,"bbox":[663,250,110,30]}
+{"kind":"textbox","id":"sh/nqxs72x4","slide":3,"text":"FORTRAN","textPreview":"FORTRAN","textChars":7,"textLines":1,"bbox":[663,292,120,34]}
+{"kind":"textbox","id":"sh/gbq1oryt","slide":3,"text":"programas viram pilhas","textPreview":"programas viram pilhas","textChars":22,"textLines":1,"bbox":[663,340,118,60]}
+{"kind":"shape","id":"sh/5wjudg7a","slide":3,"bbox":[830,230,150,190]}
+{"kind":"textbox","id":"sh/t47y1kre","slide":3,"text":"1965","textPreview":"1965","textChars":4,"textLines":1,"bbox":[848,250,110,30]}
+{"kind":"textbox","id":"sh/0je9cvix","slide":3,"text":"Debug","textPreview":"Debug","textChars":5,"textLines":1,"bbox":[848,292,120,34]}
+{"kind":"textbox","id":"sh/byhgn29g","slide":3,"text":"erro físico no lote","textPreview":"erro físico no lote","textChars":19,"textLines":1,"bbox":[848,340,118,60]}
+{"kind":"shape","id":"sh/idonyd0z","slide":3,"bbox":[1015,230,150,190]}
+{"kind":"textbox","id":"sh/tcj6tova","slide":3,"text":"Hoje","textPreview":"Hoje","textChars":4,"textLines":1,"bbox":[1033,250,110,30]}
+{"kind":"textbox","id":"sh/0rqd4vmt","slide":3,"text":"IA/Moderno","textPreview":"IA/Moderno","textChars":10,"textLines":1,"bbox":[1033,292,120,34]}
+{"kind":"textbox","id":"sh/b6xkf6dc","slide":3,"text":"cartões viram objeto digital","textPreview":"cartões viram objeto digital","textChars":28,"textLines":1,"bbox":[1033,340,118,60]}
+{"kind":"textbox","id":"sh/il0rqd4v","slide":3,"text":"Use esta lâmina como mapa: cada jogo responde “o que o cartão fazia nessa época?”.","textPreview":"Use esta lâmina como mapa: cada jogo responde “o que o cartão fazia nessa época?”.","textChars":82,"textLines":1,"bbox":[90,500,980,52]}
+{"kind":"textbox","id":"sh/tovahoza","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/o7dxyy","slide":3,"text":""}
+{"kind":"slide","id":"sl/pk2krs","slide":4,"title":"JOGO 1","textShapes":8}
+{"kind":"textbox","id":"sh/1orytsvu","slide":4,"text":"JOGO 1","textPreview":"JOGO 1","textChars":6,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/u18jqh0f","slide":4,"text":"Tear de Jacquard","textPreview":"Tear de Jacquard","textChars":16,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"shape","id":"sh/jm1cfa9w","slide":4,"bbox":[72,160,430,360]}
+{"kind":"textbox","id":"sh/cfa9w3m9","slide":4,"text":"JACQUARD","textPreview":"JACQUARD","textChars":8,"textLines":1,"bbox":[100,184,374,26]}
+{"kind":"shape","id":"sh/1032lszq","slide":4,"bbox":[107,230,20,20]}
+{"kind":"shape","id":"sh/u9knih4b","slide":4,"bbox":[143,230,20,20]}
+{"kind":"shape","id":"sh/judg7ads","slide":4,"bbox":[179,230,20,20]}
+{"kind":"shape","id":"sh/cj6tovah","slide":4,"bbox":[215,230,20,20]}
+{"kind":"shape","id":"sh/54zidony","slide":4,"bbox":[251,230,20,20]}
+{"kind":"shape","id":"sh/t47y1kre","slide":4,"bbox":[287,230,20,20]}
+{"kind":"shape","id":"sh/0je9cvix","slide":4,"bbox":[323,230,20,20]}
+{"kind":"shape","id":"sh/byhgn29g","slide":4,"bbox":[359,230,20,20]}
+{"kind":"shape","id":"sh/idonyd0z","slide":4,"bbox":[395,230,20,20]}
+{"kind":"shape","id":"sh/tcj6tova","slide":4,"bbox":[431,230,20,20]}
+{"kind":"shape","id":"sh/0rqd4vmt","slide":4,"bbox":[107,282,20,20]}
+{"kind":"shape","id":"sh/b6xkf6dc","slide":4,"bbox":[143,282,20,20]}
+{"kind":"shape","id":"sh/il0rqd4v","slide":4,"bbox":[179,282,20,20]}
+{"kind":"shape","id":"sh/tovahoza","slide":4,"bbox":[215,282,20,20]}
+{"kind":"shape","id":"sh/032lszqt","slide":4,"bbox":[251,282,20,20]}
+{"kind":"shape","id":"sh/czed8v6p","slide":4,"bbox":[287,282,20,20]}
+{"kind":"shape","id":"sh/5kb6xkf6","slide":4,"bbox":[323,282,20,20]}
+{"kind":"shape","id":"sh/ytsvu9kn","slide":4,"bbox":[359,282,20,20]}
+{"kind":"shape","id":"sh/neloj2t8","slide":4,"bbox":[395,282,20,20]}
+{"kind":"shape","id":"sh/cbulwval","slide":4,"bbox":[431,282,20,20]}
+{"kind":"shape","id":"sh/5sneloj2","slide":4,"bbox":[107,334,20,20]}
+{"kind":"shape","id":"sh/u54zidon","slide":4,"bbox":[143,334,20,20]}
+{"kind":"shape","id":"sh/nqxs72x4","slide":4,"bbox":[179,334,20,20]}
+{"kind":"shape","id":"sh/gbq1oryt","slide":4,"bbox":[215,334,20,20]}
+{"kind":"shape","id":"sh/5wjudg7a","slide":4,"bbox":[251,334,20,20]}
+{"kind":"shape","id":"sh/v6psfil0","slide":4,"bbox":[287,334,20,20]}
+{"kind":"shape","id":"sh/2lszqtcj","slide":4,"bbox":[323,334,20,20]}
+{"kind":"shape","id":"sh/d8bat47y","slide":4,"bbox":[359,334,20,20]}
+{"kind":"shape","id":"sh/knih4byh","slide":4,"bbox":[395,334,20,20]}
+{"kind":"shape","id":"sh/vu9knih4","slide":4,"bbox":[431,334,20,20]}
+{"kind":"shape","id":"sh/29gr2p8n","slide":4,"bbox":[107,386,20,20]}
+{"kind":"shape","id":"sh/d0z61032","slide":4,"bbox":[143,386,20,20]}
+{"kind":"shape","id":"sh/kf6dcbul","slide":4,"bbox":[179,386,20,20]}
+{"kind":"shape","id":"sh/vixczed8","slide":4,"bbox":[215,386,20,20]}
+{"kind":"shape","id":"sh/2x4nap4r","slide":4,"bbox":[251,386,20,20]}
+{"kind":"shape","id":"sh/m1cfa9w3","slide":4,"bbox":[287,386,20,20]}
+{"kind":"shape","id":"sh/bm58z25k","slide":4,"bbox":[323,386,20,20]}
+{"kind":"shape","id":"sh/47y1kre1","slide":4,"bbox":[359,386,20,20]}
+{"kind":"shape","id":"sh/tsvu9kni","slide":4,"bbox":[395,386,20,20]}
+{"kind":"shape","id":"sh/mp0bi9s3","slide":4,"bbox":[431,386,20,20]}
+{"kind":"shape","id":"sh/bat47y1k","slide":4,"bbox":[107,438,20,20]}
+{"kind":"shape","id":"sh/4vmtwra5","slide":4,"bbox":[143,438,20,20]}
+{"kind":"shape","id":"sh/tgfmlkjm","slide":4,"bbox":[179,438,20,20]}
+{"kind":"shape","id":"sh/mhk3q5o7","slide":4,"bbox":[215,438,20,20]}
+{"kind":"shape","id":"sh/b2hwfyxo","slide":4,"bbox":[251,438,20,20]}
+{"kind":"shape","id":"sh/18jqh0fe","slide":4,"bbox":[287,438,20,20]}
+{"kind":"shape","id":"sh/8nqxs72x","slide":4,"bbox":[323,438,20,20]}
+{"kind":"shape","id":"sh/j2t83itg","slide":4,"bbox":[359,438,20,20]}
+{"kind":"shape","id":"sh/qh0fepkz","slide":4,"bbox":[395,438,20,20]}
+{"kind":"shape","id":"sh/1w7mp0bi","slide":4,"bbox":[431,438,20,20]}
+{"kind":"textbox","id":"sh/8bat47y1","slide":4,"text":"• O cartão tem 15 furos: 3 linhas de 5 fios.","textPreview":"• O cartão tem 15 furos: 3 linhas de 5 fios.","textChars":44,"textLines":1,"bbox":[550,170,610,42]}
+{"kind":"textbox","id":"sh/jqh0fepk","slide":4,"text":"• Furo marcado levanta o fio correspondente.","textPreview":"• Furo marcado levanta o fio correspondente.","textChars":44,"textLines":1,"bbox":[550,218,610,42]}
+{"kind":"textbox","id":"sh/q5o7qpg3","slide":4,"text":"• O tecido avalia densidade, regularidade, definição do desenho, custo e tamanho.","textPreview":"• O tecido avalia densidade, regularidade, definição do desenho, custo e tamanho.","textChars":81,"textLines":1,"bbox":[550,266,610,42]}
+{"kind":"textbox","id":"sh/1kre1w7m","slide":4,"text":"• Segredo para jogar: linhas com 2 ou 3 fios levantados e pouca repetição colada.","textPreview":"• Segredo para jogar: linhas com 2 ou 3 fios levantados e pouca repetição colada.","textChars":81,"textLines":1,"bbox":[550,314,610,42]}
+{"kind":"textbox","id":"sh/c3ylc7u5","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/pk2krs","slide":4,"text":""}
+{"kind":"slide","id":"sl/g9n0ex","slide":5,"title":"JOGO 2","textShapes":8}
+{"kind":"textbox","id":"sh/neloj2t8","slide":5,"text":"JOGO 2","textPreview":"JOGO 2","textChars":6,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/czed8v6p","slide":5,"text":"Censo de Hollerith","textPreview":"Censo de Hollerith","textChars":18,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"shape","id":"sh/5kb6xkf6","slide":5,"bbox":[760,150,380,300]}
+{"kind":"textbox","id":"sh/u54zidon","slide":5,"text":"CENSO 1890","textPreview":"CENSO 1890","textChars":10,"textLines":1,"bbox":[788,174,324,26]}
+{"kind":"shape","id":"sh/nqxs72x4","slide":5,"bbox":[795,220,20,20]}
+{"kind":"shape","id":"sh/cbulwval","slide":5,"bbox":[826,220,20,20]}
+{"kind":"shape","id":"sh/5sneloj2","slide":5,"bbox":[857,220,20,20]}
+{"kind":"shape","id":"sh/y90je9cv","slide":5,"bbox":[888,220,20,20]}
+{"kind":"shape","id":"sh/nuxc3ylc","slide":5,"bbox":[919,220,20,20]}
+{"kind":"shape","id":"sh/36hcrmhk","slide":5,"bbox":[950,220,20,20]}
+{"kind":"shape","id":"sh/eloj2t83","slide":5,"bbox":[981,220,20,20]}
+{"kind":"shape","id":"sh/lc7u54zi","slide":5,"bbox":[1012,220,20,20]}
+{"kind":"shape","id":"sh/wra5gbq1","slide":5,"bbox":[1043,220,20,20]}
+{"kind":"shape","id":"sh/7u54zido","slide":5,"bbox":[1074,220,20,20]}
+{"kind":"shape","id":"sh/ed8bat47","slide":5,"bbox":[795,260,20,20]}
+{"kind":"shape","id":"sh/l0rqd4vm","slide":5,"bbox":[826,260,20,20]}
+{"kind":"shape","id":"sh/wfyxobm5","slide":5,"bbox":[857,260,20,20]}
+{"kind":"shape","id":"sh/7mp0bi9s","slide":5,"bbox":[888,260,20,20]}
+{"kind":"shape","id":"sh/e1w7mp0b","slide":5,"bbox":[919,260,20,20]}
+{"kind":"shape","id":"sh/qxs72x4n","slide":5,"bbox":[950,260,20,20]}
+{"kind":"shape","id":"sh/fil0rqd4","slide":5,"bbox":[981,260,20,20]}
+{"kind":"shape","id":"sh/83itgfml","slide":5,"bbox":[1012,260,20,20]}
+{"kind":"shape","id":"sh/xobm58z2","slide":5,"bbox":[1043,260,20,20]}
+{"kind":"shape","id":"sh/m94fu18j","slide":5,"bbox":[1074,260,20,20]}
+{"kind":"shape","id":"sh/fu18jqh0","slide":5,"bbox":[795,300,20,20]}
+{"kind":"shape","id":"sh/4fu18jqh","slide":5,"bbox":[826,300,20,20]}
+{"kind":"shape","id":"sh/x0nuxc3y","slide":5,"bbox":[857,300,20,20]}
+{"kind":"shape","id":"sh/mlkjm1cf","slide":5,"bbox":[888,300,20,20]}
+{"kind":"shape","id":"sh/f6dcbulw","slide":5,"bbox":[919,300,20,20]}
+{"kind":"shape","id":"sh/54zidony","slide":5,"bbox":[950,300,20,20]}
+{"kind":"shape","id":"sh/cj6tovah","slide":5,"bbox":[981,300,20,20]}
+{"kind":"shape","id":"sh/nyd0z610","slide":5,"bbox":[1012,300,20,20]}
+{"kind":"shape","id":"sh/udg7adsj","slide":5,"bbox":[1043,300,20,20]}
+{"kind":"shape","id":"sh/5gbq1ory","slide":5,"bbox":[1074,300,20,20]}
+{"kind":"shape","id":"sh/cvixczed","slide":5,"bbox":[795,340,20,20]}
+{"kind":"shape","id":"sh/nap4r65w","slide":5,"bbox":[826,340,20,20]}
+{"kind":"shape","id":"sh/upwb2hwf","slide":5,"bbox":[857,340,20,20]}
+{"kind":"shape","id":"sh/1orytsvu","slide":5,"bbox":[888,340,20,20]}
+{"kind":"shape","id":"sh/c7u54zid","slide":5,"bbox":[919,340,20,20]}
+{"kind":"shape","id":"sh/kb6xkf6d","slide":5,"bbox":[950,340,20,20]}
+{"kind":"shape","id":"sh/9w3m94fu","slide":5,"bbox":[981,340,20,20]}
+{"kind":"shape","id":"sh/25kb6xkf","slide":5,"bbox":[1012,340,20,20]}
+{"kind":"shape","id":"sh/rqd4vmtw","slide":5,"bbox":[1043,340,20,20]}
+{"kind":"shape","id":"sh/kzupwb2h","slide":5,"bbox":[1074,340,20,20]}
+{"kind":"shape","id":"sh/9knih4by","slide":5,"bbox":[795,380,20,20]}
+{"kind":"shape","id":"sh/2t83itgf","slide":5,"bbox":[826,380,20,20]}
+{"kind":"shape","id":"sh/re1w7mp0","slide":5,"bbox":[857,380,20,20]}
+{"kind":"shape","id":"sh/gvy90je9","slide":5,"bbox":[888,380,20,20]}
+{"kind":"shape","id":"sh/9gr2p8nq","slide":5,"bbox":[919,380,20,20]}
+{"kind":"shape","id":"sh/fyxobm58","slide":5,"bbox":[950,380,20,20]}
+{"kind":"shape","id":"sh/qd4vmtwr","slide":5,"bbox":[981,380,20,20]}
+{"kind":"shape","id":"sh/x4nap4r6","slide":5,"bbox":[1012,380,20,20]}
+{"kind":"shape","id":"sh/8jqh0fep","slide":5,"bbox":[1043,380,20,20]}
+{"kind":"shape","id":"sh/fa9w3m94","slide":5,"bbox":[1074,380,20,20]}
+{"kind":"textbox","id":"sh/qpg3ex0n","slide":5,"text":"• O jogador lê um prontuário e perfura categorias: sexo, idade, profissão, nacionalidade etc.","textPreview":"• O jogador lê um prontuário e perfura categorias: sexo, idade, profissão, nacionalidade etc.","textChars":93,"textLines":1,"bbox":[72,175,620,42]}
+{"kind":"textbox","id":"sh/xczed8v6","slide":5,"text":"• A máquina valida se os furos representam corretamente a pessoa do censo.","textPreview":"• A máquina valida se os furos representam corretamente a pessoa do censo.","textChars":74,"textLines":1,"bbox":[72,223,620,42]}
+{"kind":"textbox","id":"sh/8v6psfil","slide":5,"text":"• Conceito histórico: transformar pessoas e informações em dados tabuláveis.","textPreview":"• Conceito histórico: transformar pessoas e informações em dados tabuláveis.","textChars":76,"textLines":1,"bbox":[72,271,620,42]}
+{"kind":"textbox","id":"sh/je9cvixc","slide":5,"text":"• Ponto didático: classificação acelera análise, mas depende de codificação correta.","textPreview":"• Ponto didático: classificação acelera análise, mas depende de codificação correta.","textChars":84,"textLines":1,"bbox":[72,319,620,42]}
+{"kind":"textbox","id":"sh/qtcj6tov","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/g9n0ex","slide":5,"text":""}
+{"kind":"slide","id":"sl/04h7qd","slide":6,"title":"JOGO 3","textShapes":8}
+{"kind":"textbox","id":"sh/e9cvixcz","slide":6,"text":"JOGO 3","textPreview":"JOGO 3","textChars":6,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/lwval87e","slide":6,"text":"Era IBM: sala de cartões","textPreview":"Era IBM: sala de cartões","textChars":24,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"shape","id":"sh/wb2hwfyx","slide":6,"bbox":[72,160,380,330]}
+{"kind":"textbox","id":"sh/3itgfmlk","slide":6,"text":"IBM CARDS","textPreview":"IBM CARDS","textChars":9,"textLines":1,"bbox":[100,184,324,26]}
+{"kind":"shape","id":"sh/ex0nuxc3","slide":6,"bbox":[107,230,20,20]}
+{"kind":"shape","id":"sh/loj2t83i","slide":6,"bbox":[138,230,20,20]}
+{"kind":"shape","id":"sh/w3m94fu1","slide":6,"bbox":[169,230,20,20]}
+{"kind":"shape","id":"sh/3ex0nuxc","slide":6,"bbox":[200,230,20,20]}
+{"kind":"shape","id":"sh/at47y1kr","slide":6,"bbox":[231,230,20,20]}
+{"kind":"shape","id":"sh/knih4byh","slide":6,"bbox":[262,230,20,20]}
+{"kind":"shape","id":"sh/d8bat47y","slide":6,"bbox":[293,230,20,20]}
+{"kind":"shape","id":"sh/2lszqtcj","slide":6,"bbox":[324,230,20,20]}
+{"kind":"shape","id":"sh/v6psfil0","slide":6,"bbox":[355,230,20,20]}
+{"kind":"shape","id":"sh/kf6dcbul","slide":6,"bbox":[386,230,20,20]}
+{"kind":"shape","id":"sh/d0z61032","slide":6,"bbox":[107,276,20,20]}
+{"kind":"shape","id":"sh/29gr2p8n","slide":6,"bbox":[138,276,20,20]}
+{"kind":"shape","id":"sh/vu9knih4","slide":6,"bbox":[169,276,20,20]}
+{"kind":"shape","id":"sh/k3q5o7qp","slide":6,"bbox":[200,276,20,20]}
+{"kind":"shape","id":"sh/donyd0z6","slide":6,"bbox":[231,276,20,20]}
+{"kind":"shape","id":"sh/hcrmhk3q","slide":6,"bbox":[262,276,20,20]}
+{"kind":"shape","id":"sh/orytsvu9","slide":6,"bbox":[293,276,20,20]}
+{"kind":"shape","id":"sh/z61032ls","slide":6,"bbox":[324,276,20,20]}
+{"kind":"shape","id":"sh/al87ed8b","slide":6,"bbox":[355,276,20,20]}
+{"kind":"shape","id":"sh/h0fepkzu","slide":6,"bbox":[386,276,20,20]}
+{"kind":"shape","id":"sh/sfil0rqd","slide":6,"bbox":[107,322,20,20]}
+{"kind":"shape","id":"sh/zupwb2hw","slide":6,"bbox":[138,322,20,20]}
+{"kind":"shape","id":"sh/a9w3m94f","slide":6,"bbox":[169,322,20,20]}
+{"kind":"shape","id":"sh/hwfyxobm","slide":6,"bbox":[200,322,20,20]}
+{"kind":"shape","id":"sh/obm58z25","slide":6,"bbox":[231,322,20,20]}
+{"kind":"shape","id":"sh/il0rqd4v","slide":6,"bbox":[262,322,20,20]}
+{"kind":"shape","id":"sh/b6xkf6dc","slide":6,"bbox":[293,322,20,20]}
+{"kind":"shape","id":"sh/0rqd4vmt","slide":6,"bbox":[324,322,20,20]}
+{"kind":"shape","id":"sh/tcj6tova","slide":6,"bbox":[355,322,20,20]}
+{"kind":"shape","id":"sh/idonyd0z","slide":6,"bbox":[386,322,20,20]}
+{"kind":"shape","id":"sh/byhgn29g","slide":6,"bbox":[107,368,20,20]}
+{"kind":"shape","id":"sh/0je9cvix","slide":6,"bbox":[138,368,20,20]}
+{"kind":"shape","id":"sh/t47y1kre","slide":6,"bbox":[169,368,20,20]}
+{"kind":"shape","id":"sh/i9s36hcr","slide":6,"bbox":[200,368,20,20]}
+{"kind":"shape","id":"sh/bulwval8","slide":6,"bbox":[231,368,20,20]}
+{"kind":"shape","id":"sh/rqd4vmtw","slide":6,"bbox":[262,368,20,20]}
+{"kind":"shape","id":"sh/25kb6xkf","slide":6,"bbox":[293,368,20,20]}
+{"kind":"shape","id":"sh/9w3m94fu","slide":6,"bbox":[324,368,20,20]}
+{"kind":"shape","id":"sh/kb6xkf6d","slide":6,"bbox":[355,368,20,20]}
+{"kind":"shape","id":"sh/re1w7mp0","slide":6,"bbox":[386,368,20,20]}
+{"kind":"shape","id":"sh/2t83itgf","slide":6,"bbox":[107,414,20,20]}
+{"kind":"shape","id":"sh/9knih4by","slide":6,"bbox":[138,414,20,20]}
+{"kind":"shape","id":"sh/kzupwb2h","slide":6,"bbox":[169,414,20,20]}
+{"kind":"shape","id":"sh/ra5gbq1o","slide":6,"bbox":[200,414,20,20]}
+{"kind":"shape","id":"sh/2p8nqxs7","slide":6,"bbox":[231,414,20,20]}
+{"kind":"shape","id":"sh/cj6tovah","slide":6,"bbox":[262,414,20,20]}
+{"kind":"shape","id":"sh/54zidony","slide":6,"bbox":[293,414,20,20]}
+{"kind":"shape","id":"sh/udg7adsj","slide":6,"bbox":[324,414,20,20]}
+{"kind":"shape","id":"sh/nyd0z610","slide":6,"bbox":[355,414,20,20]}
+{"kind":"shape","id":"sh/cvixczed","slide":6,"bbox":[386,414,20,20]}
+{"kind":"textbox","id":"sh/5gbq1ory","slide":6,"text":"• O baralho precisa passar por máquinas certas na ordem certa.","textPreview":"• O baralho precisa passar por máquinas certas na ordem certa.","textChars":62,"textLines":1,"bbox":[520,160,640,42]}
+{"kind":"textbox","id":"sh/upwb2hwf","slide":6,"text":"• Verificadora evita erro; classificadora ordena; coladora junta arquivo mestre; tabuladora soma.","textPreview":"• Verificadora evita erro; classificadora ordena; coladora junta arquivo mestre; tabuladora soma.","textChars":97,"textLines":1,"bbox":[520,208,640,42]}
+{"kind":"textbox","id":"sh/nap4r65w","slide":6,"text":"• O desafio é montar o fluxo de processamento, não apenas clicar rápido.","textPreview":"• O desafio é montar o fluxo de processamento, não apenas clicar rápido.","textChars":72,"textLines":1,"bbox":[520,256,640,42]}
+{"kind":"textbox","id":"sh/c7u54zid","slide":6,"text":"• Ponto didático: processamento empresarial era uma linha de produção de dados.","textPreview":"• Ponto didático: processamento empresarial era uma linha de produção de dados.","textChars":79,"textLines":1,"bbox":[520,304,640,42]}
+{"kind":"textbox","id":"sh/1orytsvu","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/04h7qd","slide":6,"text":""}
+{"kind":"slide","id":"sl/knw7kg","slide":7,"title":"JOGO 4","textShapes":8}
+{"kind":"textbox","id":"sh/xobm58z2","slide":7,"text":"JOGO 4","textPreview":"JOGO 4","textChars":6,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/qxs72x4n","slide":7,"text":"FORTRAN: pilha de cartões","textPreview":"FORTRAN: pilha de cartões","textChars":25,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"shape","id":"sh/fil0rqd4","slide":7,"bbox":[760,150,380,320]}
+{"kind":"textbox","id":"sh/4fu18jqh","slide":7,"text":"PUNCHER","textPreview":"PUNCHER","textChars":7,"textLines":1,"bbox":[788,174,324,26]}
+{"kind":"shape","id":"sh/x0nuxc3y","slide":7,"bbox":[795,220,20,20]}
+{"kind":"shape","id":"sh/m94fu18j","slide":7,"bbox":[826,220,20,20]}
+{"kind":"shape","id":"sh/fu18jqh0","slide":7,"bbox":[857,220,20,20]}
+{"kind":"shape","id":"sh/4r65wjud","slide":7,"bbox":[888,220,20,20]}
+{"kind":"shape","id":"sh/xc3ylc7u","slide":7,"bbox":[919,220,20,20]}
+{"kind":"shape","id":"sh/9cvixcze","slide":7,"bbox":[950,220,20,20]}
+{"kind":"shape","id":"sh/gr2p8nqx","slide":7,"bbox":[981,220,20,20]}
+{"kind":"shape","id":"sh/r65wjudg","slide":7,"bbox":[1012,220,20,20]}
+{"kind":"shape","id":"sh/ylc7u54z","slide":7,"bbox":[1043,220,20,20]}
+{"kind":"shape","id":"sh/5o7qpg3e","slide":7,"bbox":[1074,220,20,20]}
+{"kind":"shape","id":"sh/g3ex0nux","slide":7,"bbox":[795,264,20,20]}
+{"kind":"shape","id":"sh/nih4byhg","slide":7,"bbox":[826,264,20,20]}
+{"kind":"shape","id":"sh/yxobm58z","slide":7,"bbox":[857,264,20,20]}
+{"kind":"shape","id":"sh/9s36hcrm","slide":7,"bbox":[888,264,20,20]}
+{"kind":"shape","id":"sh/g7adsji5","slide":7,"bbox":[919,264,20,20]}
+{"kind":"shape","id":"sh/gbq1oryt","slide":7,"bbox":[950,264,20,20]}
+{"kind":"shape","id":"sh/5wjudg7a","slide":7,"bbox":[981,264,20,20]}
+{"kind":"shape","id":"sh/y90je9cv","slide":7,"bbox":[1012,264,20,20]}
+{"kind":"shape","id":"sh/nuxc3ylc","slide":7,"bbox":[1043,264,20,20]}
+{"kind":"shape","id":"sh/gn29gr2p","slide":7,"bbox":[1074,264,20,20]}
+{"kind":"shape","id":"sh/58z25kb6","slide":7,"bbox":[795,308,20,20]}
+{"kind":"shape","id":"sh/yhgn29gr","slide":7,"bbox":[826,308,20,20]}
+{"kind":"shape","id":"sh/n29gr2p8","slide":7,"bbox":[857,308,20,20]}
+{"kind":"shape","id":"sh/czed8v6p","slide":7,"bbox":[888,308,20,20]}
+{"kind":"shape","id":"sh/5kb6xkf6","slide":7,"bbox":[919,308,20,20]}
+{"kind":"shape","id":"sh/vixczed8","slide":7,"bbox":[950,308,20,20]}
+{"kind":"shape","id":"sh/2x4nap4r","slide":7,"bbox":[981,308,20,20]}
+{"kind":"shape","id":"sh/donyd0z6","slide":7,"bbox":[1012,308,20,20]}
+{"kind":"shape","id":"sh/k3q5o7qp","slide":7,"bbox":[1043,308,20,20]}
+{"kind":"shape","id":"sh/val87ed8","slide":7,"bbox":[1074,308,20,20]}
+{"kind":"shape","id":"sh/6psfil0r","slide":7,"bbox":[795,352,20,20]}
+{"kind":"shape","id":"sh/dcbulwva","slide":7,"bbox":[826,352,20,20]}
+{"kind":"shape","id":"sh/kre1w7mp","slide":7,"bbox":[857,352,20,20]}
+{"kind":"shape","id":"sh/v6psfil0","slide":7,"bbox":[888,352,20,20]}
+{"kind":"shape","id":"sh/2lszqtcj","slide":7,"bbox":[919,352,20,20]}
+{"kind":"shape","id":"sh/mhk3q5o7","slide":7,"bbox":[950,352,20,20]}
+{"kind":"shape","id":"sh/b2hwfyxo","slide":7,"bbox":[981,352,20,20]}
+{"kind":"shape","id":"sh/4nap4r65","slide":7,"bbox":[1012,352,20,20]}
+{"kind":"shape","id":"sh/t83itgfm","slide":7,"bbox":[1043,352,20,20]}
+{"kind":"shape","id":"sh/m58z25kb","slide":7,"bbox":[1074,352,20,20]}
+{"kind":"shape","id":"sh/bq1oryts","slide":7,"bbox":[795,396,20,20]}
+{"kind":"shape","id":"sh/4byhgn29","slide":7,"bbox":[826,396,20,20]}
+{"kind":"shape","id":"sh/twra5gbq","slide":7,"bbox":[857,396,20,20]}
+{"kind":"shape","id":"sh/m1cfa9w3","slide":7,"bbox":[888,396,20,20]}
+{"kind":"shape","id":"sh/bm58z25k","slide":7,"bbox":[919,396,20,20]}
+{"kind":"shape","id":"sh/1kre1w7m","slide":7,"bbox":[950,396,20,20]}
+{"kind":"shape","id":"sh/c3ylc7u5","slide":7,"bbox":[981,396,20,20]}
+{"kind":"shape","id":"sh/ji5snelo","slide":7,"bbox":[1012,396,20,20]}
+{"kind":"shape","id":"sh/uxc3ylc7","slide":7,"bbox":[1043,396,20,20]}
+{"kind":"shape","id":"sh/1cfa9w3m","slide":7,"bbox":[1074,396,20,20]}
+{"kind":"textbox","id":"sh/crmhk3q5","slide":7,"text":"• Cada cartão representa uma linha de programa.","textPreview":"• Cada cartão representa uma linha de programa.","textChars":47,"textLines":1,"bbox":[72,175,610,42]}
+{"kind":"textbox","id":"sh/j6tovaho","slide":7,"text":"• A ordem da pilha altera variáveis, IF, GOTO, DO e PRINT.","textPreview":"• A ordem da pilha altera variáveis, IF, GOTO, DO e PRINT.","textChars":58,"textLines":1,"bbox":[72,223,610,42]}
+{"kind":"textbox","id":"sh/ulwval87","slide":7,"text":"• O aluno monta a sequência e executa no leitor.","textPreview":"• O aluno monta a sequência e executa no leitor.","textChars":48,"textLines":1,"bbox":[72,271,610,42]}
+{"kind":"textbox","id":"sh/18jqh0fe","slide":7,"text":"• Ponto didático: programação também já foi um objeto físico, ordenado e frágil.","textPreview":"• Ponto didático: programação também já foi um objeto físico, ordenado e frágil.","textChars":80,"textLines":1,"bbox":[72,319,610,42]}
+{"kind":"textbox","id":"sh/8nqxs72x","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/knw7kg","slide":7,"text":""}
+{"kind":"slide","id":"sl/sg6uta","slide":8,"title":"JOGO 5","textShapes":9}
+{"kind":"textbox","id":"sh/u54zidon","slide":8,"text":"JOGO 5","textPreview":"JOGO 5","textChars":6,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/5sneloj2","slide":8,"text":"Caça ao Erro","textPreview":"Caça ao Erro","textChars":12,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"textbox","id":"sh/cbulwval","slide":8,"text":"• Um cartão no lote tem comportamento suspeito.","textPreview":"• Um cartão no lote tem comportamento suspeito.","textChars":47,"textLines":1,"bbox":[72,170,640,42]}
+{"kind":"textbox","id":"sh/neloj2t8","slide":8,"text":"• O console dá pistas, e o jogador precisa inspecionar cartões antes do tempo acabar.","textPreview":"• O console dá pistas, e o jogador precisa inspecionar cartões antes do tempo acabar.","textChars":85,"textLines":1,"bbox":[72,218,640,42]}
+{"kind":"textbox","id":"sh/ytsvu9kn","slide":8,"text":"• A mecânica representa debugging: observar sintomas, formular hipótese e testar.","textPreview":"• A mecânica representa debugging: observar sintomas, formular hipótese e testar.","textChars":81,"textLines":1,"bbox":[72,266,640,42]}
+{"kind":"textbox","id":"sh/5kb6xkf6","slide":8,"text":"• Conexão histórica: “bug” vira metáfora para falha que interrompe execução.","textPreview":"• Conexão histórica: “bug” vira metáfora para falha que interrompe execução.","textChars":76,"textLines":1,"bbox":[72,314,640,42]}
+{"kind":"shape","id":"sh/czed8v6p","slide":8,"bbox":[790,165,330,330]}
+{"kind":"textbox","id":"sh/n29gr2p8","slide":8,"text":"Console","textPreview":"Console","textChars":7,"textLines":1,"bbox":[825,205,260,34]}
+{"kind":"textbox","id":"sh/yhgn29gr","slide":8,"text":"CHECKSUM OK\nCARD 07: fluxo inesperado\nPROCURE O ERRO","textPreview":"CHECKSUM OK | CARD 07: fluxo inesperado | PROCURE O ERRO","textChars":52,"textLines":3,"bbox":[825,275,260,120]}
+{"kind":"textbox","id":"sh/kb6xkf6d","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/sg6uta","slide":8,"text":""}
+{"kind":"slide","id":"sl/k539i9","slide":9,"title":"JOGO 6","textShapes":10}
+{"kind":"textbox","id":"sh/k3q5o7qp","slide":9,"text":"JOGO 6","textPreview":"JOGO 6","textChars":6,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/vixczed8","slide":9,"text":"Batalha de Cartões Perfurados","textPreview":"Batalha de Cartões Perfurados","textChars":29,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"textbox","id":"sh/2x4nap4r","slide":9,"text":"• Multiplayer online: a rodada mostra uma instrução-alvo.","textPreview":"• Multiplayer online: a rodada mostra uma instrução-alvo.","textChars":57,"textLines":1,"bbox":[72,165,620,42]}
+{"kind":"textbox","id":"sh/dcbulwva","slide":9,"text":"• Cada jogador monta a grade de furos e envia o cartão.","textPreview":"• Cada jogador monta a grade de furos e envia o cartão.","textChars":55,"textLines":1,"bbox":[72,213,620,42]}
+{"kind":"textbox","id":"sh/kre1w7mp","slide":9,"text":"• Vence quem acertar melhor; em empate, ganha o menor tempo de envio.","textPreview":"• Vence quem acertar melhor; em empate, ganha o menor tempo de envio.","textChars":69,"textLines":1,"bbox":[72,261,620,42]}
+{"kind":"textbox","id":"sh/val87ed8","slide":9,"text":"• A IA simula oponente com pequenos erros e tempos variados.","textPreview":"• A IA simula oponente com pequenos erros e tempos variados.","textChars":60,"textLines":1,"bbox":[72,309,620,42]}
+{"kind":"shape","id":"sh/6psfil0r","slide":9,"bbox":[760,148,360,350]}
+{"kind":"textbox","id":"sh/d8bat47y","slide":9,"text":"READ C","textPreview":"READ C","textChars":6,"textLines":1,"bbox":[805,188,250,40]}
+{"kind":"textbox","id":"sh/knih4byh","slide":9,"text":"Furos: 2, 15, 26, 39, 50","textPreview":"Furos: 2, 15, 26, 39, 50","textChars":24,"textLines":1,"bbox":[805,250,260,32]}
+{"kind":"textbox","id":"sh/uxc3ylc7","slide":9,"text":"Acerto + velocidade = pontuação da rodada","textPreview":"Acerto + velocidade = pontuação da rodada","textChars":41,"textLines":1,"bbox":[805,326,260,74]}
+{"kind":"textbox","id":"sh/ji5snelo","slide":9,"text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/k539i9","slide":9,"text":""}
+{"kind":"slide","id":"sl/6ag5vn","slide":10,"title":"JOGO 7","textShapes":8}
+{"kind":"textbox","id":"sh/1cfa9w3m","slide":10,"text":"JOGO 7","textPreview":"JOGO 7","textChars":6,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/ulwval87","slide":10,"text":"IA Scanner de Cartões","textPreview":"IA Scanner de Cartões","textChars":21,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"textbox","id":"sh/j6tovaho","slide":10,"text":"• O aluno mostra um cartão para a câmera ou carrega uma foto.","textPreview":"• O aluno mostra um cartão para a câmera ou carrega uma foto.","textChars":61,"textLines":1,"bbox":[72,165,660,42]}
+{"kind":"textbox","id":"sh/c3ylc7u5","slide":10,"text":"• O sistema detecta se há cartão na moldura e lê os furos.","textPreview":"• O sistema detecta se há cartão na moldura e lê os furos.","textChars":58,"textLines":1,"bbox":[72,213,660,42]}
+{"kind":"textbox","id":"sh/1kre1w7m","slide":10,"text":"• Fotos rotuladas formam um dataset local; o modelo treina no navegador com TensorFlow.js.","textPreview":"• Fotos rotuladas formam um dataset local; o modelo treina no navegador com TensorFlow.js.","textChars":90,"textLines":1,"bbox":[72,261,660,42]}
+{"kind":"textbox","id":"sh/uxc3ylc7","slide":10,"text":"• Ponto didático: IA depende de exemplos, rótulos e dados bem coletados.","textPreview":"• Ponto didático: IA depende de exemplos, rótulos e dados bem coletados.","textChars":72,"textLines":1,"bbox":[72,309,660,42]}
+{"kind":"shape","id":"sh/ji5snelo","slide":10,"bbox":[800,160,340,330]}
+{"kind":"textbox","id":"sh/8bat47y1","slide":10,"text":"DATASET","textPreview":"DATASET","textChars":7,"textLines":1,"bbox":[828,184,284,26]}
+{"kind":"shape","id":"sh/1w7mp0bi","slide":10,"bbox":[835,230,20,20]}
+{"kind":"shape","id":"sh/d0z61032","slide":10,"bbox":[862,230,20,20]}
+{"kind":"shape","id":"sh/kf6dcbul","slide":10,"bbox":[889,230,20,20]}
+{"kind":"shape","id":"sh/vu9knih4","slide":10,"bbox":[916,230,20,20]}
+{"kind":"shape","id":"sh/29gr2p8n","slide":10,"bbox":[943,230,20,20]}
+{"kind":"shape","id":"sh/d8bat47y","slide":10,"bbox":[970,230,20,20]}
+{"kind":"shape","id":"sh/knih4byh","slide":10,"bbox":[997,230,20,20]}
+{"kind":"shape","id":"sh/v6psfil0","slide":10,"bbox":[1024,230,20,20]}
+{"kind":"shape","id":"sh/2lszqtcj","slide":10,"bbox":[1051,230,20,20]}
+{"kind":"shape","id":"sh/dcbulwva","slide":10,"bbox":[1078,230,20,20]}
+{"kind":"shape","id":"sh/kre1w7mp","slide":10,"bbox":[835,276,20,20]}
+{"kind":"shape","id":"sh/kzupwb2h","slide":10,"bbox":[862,276,20,20]}
+{"kind":"shape","id":"sh/9knih4by","slide":10,"bbox":[889,276,20,20]}
+{"kind":"shape","id":"sh/2t83itgf","slide":10,"bbox":[916,276,20,20]}
+{"kind":"shape","id":"sh/re1w7mp0","slide":10,"bbox":[943,276,20,20]}
+{"kind":"shape","id":"sh/kb6xkf6d","slide":10,"bbox":[970,276,20,20]}
+{"kind":"shape","id":"sh/9w3m94fu","slide":10,"bbox":[997,276,20,20]}
+{"kind":"shape","id":"sh/25kb6xkf","slide":10,"bbox":[1024,276,20,20]}
+{"kind":"shape","id":"sh/rqd4vmtw","slide":10,"bbox":[1051,276,20,20]}
+{"kind":"shape","id":"sh/kjm1cfa9","slide":10,"bbox":[1078,276,20,20]}
+{"kind":"shape","id":"sh/94fu18jq","slide":10,"bbox":[835,322,20,20]}
+{"kind":"shape","id":"sh/fmlkjm1c","slide":10,"bbox":[862,322,20,20]}
+{"kind":"shape","id":"sh/q1orytsv","slide":10,"bbox":[889,322,20,20]}
+{"kind":"shape","id":"sh/xs72x4na","slide":10,"bbox":[916,322,20,20]}
+{"kind":"shape","id":"sh/87ed8bat","slide":10,"bbox":[943,322,20,20]}
+{"kind":"shape","id":"sh/je9cvixc","slide":10,"bbox":[970,322,20,20]}
+{"kind":"shape","id":"sh/qtcj6tov","slide":10,"bbox":[997,322,20,20]}
+{"kind":"shape","id":"sh/1gvy90je","slide":10,"bbox":[1024,322,20,20]}
+{"kind":"shape","id":"sh/8z25kb6x","slide":10,"bbox":[1051,322,20,20]}
+{"kind":"shape","id":"sh/fa9w3m94","slide":10,"bbox":[1078,322,20,20]}
+{"kind":"shape","id":"sh/qpg3ex0n","slide":10,"bbox":[835,368,20,20]}
+{"kind":"shape","id":"sh/al87ed8b","slide":10,"bbox":[862,368,20,20]}
+{"kind":"shape","id":"sh/z61032ls","slide":10,"bbox":[889,368,20,20]}
+{"kind":"shape","id":"sh/orytsvu9","slide":10,"bbox":[916,368,20,20]}
+{"kind":"shape","id":"sh/hcrmhk3q","slide":10,"bbox":[943,368,20,20]}
+{"kind":"shape","id":"sh/a9w3m94f","slide":10,"bbox":[970,368,20,20]}
+{"kind":"shape","id":"sh/zupwb2hw","slide":10,"bbox":[997,368,20,20]}
+{"kind":"shape","id":"sh/sfil0rqd","slide":10,"bbox":[1024,368,20,20]}
+{"kind":"shape","id":"sh/h0fepkzu","slide":10,"bbox":[1051,368,20,20]}
+{"kind":"shape","id":"sh/65wjudg7","slide":10,"bbox":[1078,368,20,20]}
+{"kind":"shape","id":"sh/zqtcj6to","slide":10,"bbox":[835,414,20,20]}
+{"kind":"shape","id":"sh/psfil0rq","slide":10,"bbox":[862,414,20,20]}
+{"kind":"shape","id":"sh/w7mp0bi9","slide":10,"bbox":[889,414,20,20]}
+{"kind":"shape","id":"sh/7mp0bi9s","slide":10,"bbox":[916,414,20,20]}
+{"kind":"shape","id":"sh/e1w7mp0b","slide":10,"bbox":[943,414,20,20]}
+{"kind":"shape","id":"sh/pg3ex0nu","slide":10,"bbox":[970,414,20,20]}
+{"kind":"shape","id":"sh/wval87ed","slide":10,"bbox":[997,414,20,20]}
+{"kind":"shape","id":"sh/7adsji5s","slide":10,"bbox":[1024,414,20,20]}
+{"kind":"shape","id":"sh/epkzupwb","slide":10,"bbox":[1051,414,20,20]}
+{"kind":"shape","id":"sh/lc7u54zi","slide":10,"bbox":[1078,414,20,20]}
+{"kind":"textbox","id":"sh/wra5gbq1","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/6ag5vn","slide":10,"text":""}
+{"kind":"slide","id":"sl/itipjd","slide":11,"title":"ROTEIRO DE AULA","textShapes":9}
+{"kind":"textbox","id":"sh/sji5snel","slide":11,"text":"ROTEIRO DE AULA","textPreview":"ROTEIRO DE AULA","textChars":15,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/3ylc7u54","slide":11,"text":"Como conduzir em 20-30 minutos","textPreview":"Como conduzir em 20-30 minutos","textChars":30,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"textbox","id":"sh/adsji5sn","slide":11,"text":"• 1. Comece com a pergunta: “como um computador lia antes do teclado?”","textPreview":"• 1. Comece com a pergunta: “como um computador lia antes do teclado?”","textChars":70,"textLines":1,"bbox":[72,160,1000,42]}
+{"kind":"textbox","id":"sh/lszqtcj6","slide":11,"text":"• 2. Mostre Jacquard e faça a turma prever quais fios sobem.","textPreview":"• 2. Mostre Jacquard e faça a turma prever quais fios sobem.","textChars":60,"textLines":1,"bbox":[72,208,1000,42]}
+{"kind":"textbox","id":"sh/s72x4nap","slide":11,"text":"• 3. Use Hollerith e IBM para falar de dados em lote.","textPreview":"• 3. Use Hollerith e IBM para falar de dados em lote.","textChars":53,"textLines":1,"bbox":[72,256,1000,42]}
+{"kind":"textbox","id":"sh/3m94fu18","slide":11,"text":"• 4. Use FORTRAN e Debug para mostrar programação como pilha física.","textPreview":"• 4. Use FORTRAN e Debug para mostrar programação como pilha física.","textChars":68,"textLines":1,"bbox":[72,304,1000,42]}
+{"kind":"textbox","id":"sh/a5gbq1or","slide":11,"text":"• 5. Termine com IA/Moderno: o mesmo cartão vira dataset e competição online.","textPreview":"• 5. Termine com IA/Moderno: o mesmo cartão vira dataset e competição online.","textChars":77,"textLines":1,"bbox":[72,352,1000,42]}
+{"kind":"textbox","id":"sh/hoza1gvy","slide":11,"text":"Fechamento: a computação moderna não surgiu do nada; ela herdou ideias de automação, codificação e leitura mecânica.","textPreview":"Fechamento: a computação moderna não surgiu do nada; ela herdou ideias de automação, codificação e leitura mecânica.","textChars":116,"textLines":1,"bbox":[72,555,1040,64]}
+{"kind":"textbox","id":"sh/s36hcrmh","slide":11,"text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/itipjd","slide":11,"text":""}
+{"kind":"slide","id":"sl/tby8ql","slide":12,"title":"FONTES VISUAIS","textShapes":9}
+{"kind":"textbox","id":"sh/8z25kb6x","slide":12,"text":"FONTES VISUAIS","textPreview":"FONTES VISUAIS","textChars":14,"textLines":1,"bbox":[72,44,760,30]}
+{"kind":"textbox","id":"sh/je9cvixc","slide":12,"text":"Imagens históricas usadas","textPreview":"Imagens históricas usadas","textChars":25,"textLines":1,"bbox":[72,78,860,72]}
+{"kind":"textbox","id":"sh/qtcj6tov","slide":12,"text":"• Wikipedia/Wikimedia Commons: artigo “Punched card”.","textPreview":"• Wikipedia/Wikimedia Commons: artigo “Punched card”.","textChars":53,"textLines":1,"bbox":[72,170,1050,42]}
+{"kind":"textbox","id":"sh/xs72x4na","slide":12,"text":"• Imagem do tear de Jacquard: DMM 29263ab Jacquardwebstuhl.","textPreview":"• Imagem do tear de Jacquard: DMM 29263ab Jacquardwebstuhl.","textChars":59,"textLines":1,"bbox":[72,218,1050,42]}
+{"kind":"textbox","id":"sh/87ed8bat","slide":12,"text":"• Cartão Hollerith: Hollerith punched card.","textPreview":"• Cartão Hollerith: Hollerith punched card.","textChars":43,"textLines":1,"bbox":[72,266,1050,42]}
+{"kind":"textbox","id":"sh/fmlkjm1c","slide":12,"text":"• Cartões IBM: 2punchCards-square.","textPreview":"• Cartões IBM: 2punchCards-square.","textChars":34,"textLines":1,"bbox":[72,314,1050,42]}
+{"kind":"textbox","id":"sh/q1orytsv","slide":12,"text":"• Perfuradora de cartões: imagem NARA da card puncher.","textPreview":"• Perfuradora de cartões: imagem NARA da card puncher.","textChars":54,"textLines":1,"bbox":[72,362,1050,42]}
+{"kind":"textbox","id":"sh/x4nap4r6","slide":12,"text":"Todas as regras explicadas no deck foram extraídas da lógica dos arquivos do próprio jogo.","textPreview":"Todas as regras explicadas no deck foram extraídas da lógica dos arquivos do próprio jogo.","textChars":90,"textLines":1,"bbox":[72,560,1000,46]}
+{"kind":"textbox","id":"sh/8jqh0fep","slide":12,"text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1160,654,60,28]}
+{"kind":"notes","id":"nt/tby8ql","slide":12,"text":""}

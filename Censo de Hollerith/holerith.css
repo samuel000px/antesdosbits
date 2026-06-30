@@ -67,7 +67,7 @@ h1 {
 /* O CARTÃO PERFURADO DE CARTOLINA */
 .cartao-perfurado {
     background-color: #d6b37b; /* Cor de papel pardo/cartolina antiga */
-    color: #322d;
+    color:#322d17;
     padding: 15px;
     position: relative;
     border-radius:10px;;
@@ -197,5 +197,14 @@ h1 {
 }
 
 .oculto {display: none !important;}
-.sucesso { color: #52be80; }
-.erro { color: #ec7063; }
+.sucesso{
+    color:#205c3b;
+    background:#e7f4df !important;
+    border:1px solid #5b986e;
+}
+
+.erro{
+    color:#7a2b25;
+    background:#fff1ea !important;
+    border:1px solid #a73f36;
+}
