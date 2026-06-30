@@ -131,8 +131,7 @@ h1 {
     font-family: inherit;
     font-size: 0.85rem;
     font-weight: bold;
-    color: #4a3b2c;
-    color: transparent;
+    color: #3a2b1f;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -147,7 +146,7 @@ h1 {
 /* O FURO PERFURADO (O buraco físico vazado no papel) */
 .furo-circular.perfurado {
     background-color: #1e1e1e; /* Revela a cor do fundo do site */
-    color: transparent; /* Esconde o número impresso, pois o papel sumiu! */
+    color: #f5ecd9;
     border-color: #1e1e1e;
     box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.8);
 }
@@ -157,6 +156,21 @@ h1 {
     font-size: 0.55rem;
     text-transform: uppercase;
     opacity: 0.7;
+    color:#3a2b1f;
+}
+
+.ficha-cidadao,
+#descricao-personagem,
+#tela-final,
+#tela-final h2,
+#resultado-moedas{
+    color:#2f2419 !important;
+}
+
+#feedback:not(.oculto){
+    color:#2f2419;
+    background:#f5ecd9;
+    border-radius:8px;
 }
 
 /* Botão de Processar */
