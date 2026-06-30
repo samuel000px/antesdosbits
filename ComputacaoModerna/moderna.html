@@ -53,6 +53,14 @@
                     </select>
                 </label>
 
+                <label>
+                    Modo do tutorial
+                    <select id="tutorialMode">
+                        <option value="visible" selected>Treino: tutorial visível</option>
+                        <option value="hidden">Desafio: tutorial some</option>
+                    </select>
+                </label>
+
                 <button type="button" id="startBtn" disabled>Iniciar partida</button>
             </div>
 
@@ -82,7 +90,7 @@
             <div>
                 <p class="eyebrow">Instrução da rodada</p>
                 <h2 id="jobTitle">Aguardando lote</h2>
-                <p id="jobDescription">Memorize os modelos antes da partida. Quando o jogo começa, o tutorial some e cada jogador perfura a matriz de cabeça.</p>
+                <p id="jobDescription">Memorize os modelos antes da partida. No modo treino o tutorial continua aberto; no modo desafio ele some quando a rodada começa.</p>
             </div>
             <div class="job-stats">
                 <div>
@@ -106,7 +114,7 @@
                     <p class="eyebrow">Fase de estudo</p>
                     <h2>Decore os modelos da matriz</h2>
                 </div>
-                <span>Quando a partida iniciar, esta área desaparece. Quem lembrar dos furos corretos ganha tempo e pontuação.</span>
+                <span>No modo treino esta área continua visível. No modo desafio ela desaparece e os jogadores perfuram de memória.</span>
             </div>
             <div class="catalog-grid" id="tutorialCards"></div>
         </section>

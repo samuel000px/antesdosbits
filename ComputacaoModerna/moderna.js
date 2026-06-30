@@ -162,6 +162,7 @@ const createRoomBtn = document.getElementById("createRoomBtn");
 const joinRoomBtn = document.getElementById("joinRoomBtn");
 const aiCountInput = document.getElementById("aiCount");
 const roundLimitInput = document.getElementById("roundLimit");
+const tutorialModeInput = document.getElementById("tutorialMode");
 const startBtn = document.getElementById("startBtn");
 const nextRoundBtn = document.getElementById("nextRoundBtn");
 const roomDisplay = document.getElementById("roomDisplay");
@@ -188,6 +189,7 @@ function createEmptyState() {
         status: "lobby",
         round: 0,
         roundLimit: 5,
+        tutorialMode: "visible",
         targetId: INSTRUCTION_CARDS[0].id,
         roundStartedAt: 0,
         players: [],
@@ -226,6 +228,16 @@ function chooseTargetForRound(round) {
 function getPrize() {
     const humans = hostState.players.filter(player => !player.isAI).length;
     return 100 + hostState.roundLimit * 18 + Math.max(0, humans - 1) * 45;
+}
+
+function getTutorialMode() {
+    return hostState.tutorialMode === "hidden" ? "hidden" : "visible";
+}
+
+function getTutorialModeLabel(mode = getTutorialMode()) {
+    return mode === "hidden"
+        ? "Modo desafio: o tutorial some durante as rodadas."
+        : "Modo treino: o tutorial continua visivel durante as rodadas.";
 }
 
 function setLocalName() {
@@ -276,8 +288,9 @@ async function connectRoom(code, hostMode) {
                 hostState = createEmptyState();
                 hostState.roomCode = roomCode;
                 hostState.hostId = playerId;
+                hostState.tutorialMode = tutorialModeInput.value;
                 addOnlinePlayer({ id: playerId, name: playerName });
-                hostState.log = "Sala " + roomCode + " criada. Estudo aberto: decorem a matriz antes de iniciar.";
+                hostState.log = "Sala " + roomCode + " criada. " + getTutorialModeLabel();
                 broadcastState();
             } else {
                 sendEvent("join_request", {
@@ -328,7 +341,7 @@ function applyState(nextState) {
 
     const previousRound = hostState.round;
     const previousStatus = hostState.status;
-    hostState = nextState;
+    hostState = { ...createEmptyState(), ...nextState };
 
     if (previousRound !== hostState.round || previousStatus !== hostState.status && hostState.status === "choosing") {
         resetLocalCard();
@@ -358,6 +371,7 @@ function hostStartGame() {
 
     const aiCount = Number(aiCountInput.value);
     hostState.roundLimit = Number(roundLimitInput.value);
+    hostState.tutorialMode = tutorialModeInput.value;
     hostState.round = 1;
     hostState.targetId = chooseTargetForRound(hostState.round).id;
     hostState.roundStartedAt = Date.now();
@@ -386,7 +400,10 @@ function hostStartGame() {
         player.lastTime = 0;
     });
 
-    hostState.log = "Partida iniciada. Tutorial fechado. Perfure de memoria: " + getTarget().name + ".";
+    hostState.log =
+        "Partida iniciada. " +
+        (getTutorialMode() === "hidden" ? "Tutorial fechado." : "Tutorial continua aberto.") +
+        " Perfure: " + getTarget().name + ".";
     makeAiSubmissions();
     broadcastState();
     tryResolveRound();
@@ -412,7 +429,10 @@ function hostNextRound() {
         player.lastTime = 0;
     });
 
-    hostState.log = "Rodada " + hostState.round + ". Perfure de memoria: " + getTarget().name + ".";
+    hostState.log =
+        "Rodada " + hostState.round + ". " +
+        (getTutorialMode() === "hidden" ? "Perfure de memoria: " : "Use o tutorial se precisar: ") +
+        getTarget().name + ".";
     makeAiSubmissions();
     broadcastState();
     tryResolveRound();
@@ -601,6 +621,14 @@ function requestNextRound() {
     else sendEvent("next_round");
 }
 
+function updateTutorialMode() {
+    if (!isHost || hostState.status !== "lobby") return;
+
+    hostState.tutorialMode = tutorialModeInput.value;
+    hostState.log = getTutorialModeLabel();
+    broadcastState();
+}
+
 function render() {
     updateCoins();
 
@@ -608,10 +636,11 @@ function render() {
     const localPlayer = hostState.players.find(player => player.id === playerId);
     const isMyTurn = hostState.status === "choosing" && localPlayer && !hostState.submissions[playerId] && !localSubmitted;
     const humanCount = hostState.players.filter(player => !player.isAI).length;
-    const showStudy = hostState.status === "lobby";
+    const tutorialVisible = hostState.status === "lobby" || getTutorialMode() === "visible";
 
-    document.body.classList.toggle("study-mode", showStudy);
-    document.body.classList.toggle("match-running", !showStudy);
+    document.body.classList.toggle("study-mode", hostState.status === "lobby");
+    document.body.classList.toggle("match-running", hostState.status !== "lobby");
+    document.body.classList.toggle("tutorial-hidden", !tutorialVisible);
 
     roomDisplay.textContent = roomCode || "Sem sala";
     roundDisplay.textContent = hostState.round + " / " + hostState.roundLimit;
@@ -619,8 +648,10 @@ function render() {
     roundLog.textContent = hostState.log;
     jobTitle.textContent = hostState.round ? target.name : "Sala de estudo aberta";
     jobDescription.textContent = hostState.round
-        ? "O tutorial foi fechado. Use a memoria para preencher a matriz de furos correta."
-        : "Memorize os modelos de cartao. Quando a partida iniciar, estes modelos somem e voce perfura de cabeca.";
+        ? (getTutorialMode() === "hidden"
+            ? "Modo desafio: o tutorial foi fechado. Use a memoria para preencher a matriz de furos correta."
+            : "Modo treino: o tutorial continua aberto para consulta durante a rodada.")
+        : "Escolha o modo antes de iniciar. No treino o tutorial fica aberto; no desafio ele some durante as rodadas.";
     jobFocus.textContent = hostState.round ? target.title : "Memorizacao";
     jobHazard.textContent = hostState.round ? target.difficulty : INSTRUCTION_CARDS.length + " modelos";
     jobMachine.textContent = GRID_ROWS + " x " + GRID_COLS + " furos";
@@ -635,6 +666,8 @@ function render() {
     nextRoundBtn.disabled = !isHost || hostState.status !== "resolved";
     aiCountInput.disabled = !isHost || hostState.status !== "lobby";
     roundLimitInput.disabled = !isHost || hostState.status !== "lobby";
+    tutorialModeInput.value = getTutorialMode();
+    tutorialModeInput.disabled = roomCode ? (!isHost || hostState.status !== "lobby") : false;
 
     renderScoreboard();
     renderTutorialCards();
@@ -681,7 +714,12 @@ function renderPunchBoard(localPlayer, isMyTurn) {
     }
 
     if (hostState.status === "lobby") {
-        cardChoices.innerHTML = "<div class='empty-hand'>Fase de estudo: memorize os padroes acima. Ao iniciar, o tutorial some e a matriz fica em branco.</div>";
+        cardChoices.innerHTML =
+            "<div class='empty-hand'>Fase de estudo: memorize os padroes acima. " +
+            (getTutorialMode() === "hidden"
+                ? "No modo desafio, o tutorial some e a matriz fica em branco quando iniciar."
+                : "No modo treino, o tutorial continua aberto quando iniciar.") +
+            "</div>";
         energyDisplay.textContent = "Modo estudo";
         return;
     }
@@ -698,7 +736,11 @@ function renderPunchBoard(localPlayer, isMyTurn) {
         "<div class='target-card'>" +
             "<span>Instrucao recebida</span>" +
             "<strong>" + target.name + "</strong>" +
-            "<small>" + target.meaning + " O gabarito nao aparece durante a rodada: marque os furos que voce decorou.</small>" +
+            "<small>" + target.meaning + " " +
+                (getTutorialMode() === "hidden"
+                    ? "O gabarito nao aparece durante a rodada: marque os furos que voce decorou."
+                    : "O tutorial segue visivel: consulte a matriz e marque os furos corretos.") +
+            "</small>" +
             "<code>Rodada " + hostState.round + " de " + hostState.roundLimit + " | " + target.title + "</code>" +
         "</div>" +
         "<div class='memory-card-shell'>" +
@@ -802,6 +844,7 @@ createRoomBtn.addEventListener("click", createRoom);
 joinRoomBtn.addEventListener("click", joinRoom);
 startBtn.addEventListener("click", requestStart);
 nextRoundBtn.addEventListener("click", requestNextRound);
+tutorialModeInput.addEventListener("change", updateTutorialMode);
 
 updateCoins();
 render();

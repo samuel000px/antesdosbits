@@ -146,7 +146,7 @@ body.theme-auth::before{
     box-shadow:var(--shadow);
 }
 
-button:not(.furo-circular):not(.program-card):not(.action-card):not(.hole-cell),
+button:not(.furo-circular):not(.program-card):not(.action-card):not(.hole-cell):not(.punch-hole),
 .play-link,
 .auth-area a,
 .auth-area button,
@@ -169,7 +169,7 @@ button:not(.furo-circular):not(.program-card):not(.action-card):not(.hole-cell),
     transition:transform .16s ease, filter .16s ease, box-shadow .16s ease;
 }
 
-button:not(.furo-circular):not(.program-card):not(.action-card):not(.hole-cell):hover:not(:disabled),
+button:not(.furo-circular):not(.program-card):not(.action-card):not(.hole-cell):not(.punch-hole):hover:not(:disabled),
 .play-link:hover,
 .auth-area a:hover,
 .auth-area button:hover,
@@ -183,7 +183,7 @@ button:not(.furo-circular):not(.program-card):not(.action-card):not(.hole-cell):
         0 18px 28px rgba(46,24,18,.2);
 }
 
-button:not(.furo-circular):not(.program-card):not(.action-card):not(.hole-cell):active,
+button:not(.furo-circular):not(.program-card):not(.action-card):not(.hole-cell):not(.punch-hole):active,
 .play-link:active,
 .auth-area a:active,
 .auth-area button:active,

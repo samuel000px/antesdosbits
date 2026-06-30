@@ -124,6 +124,34 @@ h2{
     padding:18px;
 }
 
+.tutorial-title,
+.recipe-board{
+    grid-column:1 / -1;
+}
+
+.tutorial-title{
+    display:grid;
+    gap:8px;
+    padding:16px;
+    border:1px solid #d0b070;
+    border-radius:8px;
+    background:
+        linear-gradient(90deg,rgba(47,95,90,.1) 1px,transparent 1px) 0 0 / 28px 28px,
+        #fff8e8;
+}
+
+.tutorial-title h2{
+    color:#2c2013;
+    font-size:1.35rem;
+}
+
+.tutorial-title p:last-child{
+    max-width:900px;
+    color:#5d4a31;
+    line-height:1.55;
+    font-weight:800;
+}
+
 .manual article{
     padding:14px;
     border:1px solid #d0b070;
@@ -139,6 +167,45 @@ h2{
 
 .manual span{
     color:#5d4a31;
+    line-height:1.45;
+}
+
+.recipe-board{
+    display:grid;
+    gap:10px;
+    padding:16px;
+    border:1px solid #d0b070;
+    border-radius:8px;
+    background:#f8ead0;
+}
+
+.recipe-board h3{
+    color:#2f5f5a;
+    font-size:.9rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+}
+
+.recipe{
+    display:grid;
+    grid-template-columns:170px 1fr;
+    gap:10px;
+    align-items:start;
+    padding:11px 12px;
+    border:1px solid rgba(168,132,75,.62);
+    border-radius:8px;
+    background:#fff8e8;
+}
+
+.recipe b{
+    color:#2c2013;
+}
+
+.recipe span{
+    color:#5d4a31;
+    font-family:"Courier New",monospace;
+    font-size:.9rem;
+    font-weight:900;
     line-height:1.45;
 }
 
@@ -370,6 +437,10 @@ select{
     .mission,
     .workbench,
     .reports{
+        grid-template-columns:1fr;
+    }
+
+    .recipe{
         grid-template-columns:1fr;
     }
 }

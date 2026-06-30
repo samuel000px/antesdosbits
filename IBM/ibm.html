@@ -37,23 +37,45 @@
             </div>
         </section>
 
-        <section class="manual">
+        <section class="manual tutorial-guide">
+            <div class="tutorial-title">
+                <p class="eyebrow">Tutorial rapido</p>
+                <h2>Como jogar a sala IBM</h2>
+                <p>Monte uma receita de maquinas. O baralho entra bruto, passa pelas maquinas na ordem que voce escolheu e precisa sair como o relatorio esperado.</p>
+            </div>
+
             <article>
-                <strong>Verificadora</strong>
-                <span>Remove cartões com perfuração inválida antes de travar a linha.</span>
+                <strong>1. Leia a ordem</strong>
+                <span>Veja qual campo precisa virar relatorio: salario por departamento, compra por produto ou venda por regiao.</span>
             </article>
             <article>
-                <strong>Classificadora</strong>
-                <span>Ordena por uma coluna: departamento, produto, cliente ou região.</span>
+                <strong>2. Prepare o baralho</strong>
+                <span>Use verificadora para remover erro, reprodutora para criar campos calculados e coladora quando precisar do arquivo mestre.</span>
             </article>
             <article>
-                <strong>Coladora</strong>
-                <span>Combina o baralho principal com um arquivo mestre pelo mesmo código.</span>
+                <strong>3. Ordene antes de agrupar</strong>
+                <span>A tabuladora so funciona direito se a classificadora ordenar pelo mesmo campo usado em "por".</span>
             </article>
             <article>
-                <strong>Tabuladora</strong>
-                <span>Soma ou conta cartões agrupados. Exige baralho ordenado pelo grupo.</span>
+                <strong>4. Tabule e imprima</strong>
+                <span>A tabuladora gera o relatorio. A impressora apenas entrega o resultado final para comparacao.</span>
             </article>
+
+            <div class="recipe-board">
+                <h3>Receitas para entender as ordens</h3>
+                <div class="recipe">
+                    <b>Folha de pagamento</b>
+                    <span>Verificadora -> Classificadora por dept -> Tabuladora sum salary por dept -> Impressora</span>
+                </div>
+                <div class="recipe">
+                    <b>Estoque IBM</b>
+                    <span>Reprodutora shortage -> Selecionadora shortage > 0 -> Reprodutora orderValue -> Classificadora por sku -> Tabuladora sum orderValue por sku -> Impressora</span>
+                </div>
+                <div class="recipe">
+                    <b>Vendas por regiao</b>
+                    <span>Classificadora por customer -> Coladora customer -> Selecionadora segment = IND -> Classificadora por region -> Tabuladora sum amount por region -> Impressora</span>
+                </div>
+            </div>
         </section>
 
         <section class="workbench">
