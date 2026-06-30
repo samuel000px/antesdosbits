@@ -10,6 +10,7 @@ const resultModal = document.getElementById("resultModal");
 const resultTitle = document.getElementById("resultTitle");
 const resultText = document.getElementById("resultText");
 const playAgainBtn = document.getElementById("playAgainBtn");
+const bugScare = document.getElementById("bugScare");
 
 const modules = [
     "LEITURA", "MEMORIA", "SALTO", "PILHA",
@@ -85,6 +86,7 @@ function renderCards() {
         button.className = "bug-card";
         button.type = "button";
         button.disabled = !roundActive;
+        button.dataset.index = index;
 
         if (card.inspected) button.classList.add("inspected");
         if (card.found) button.classList.add("found");
@@ -151,6 +153,7 @@ function startRound() {
     }));
 
     resultModal.hidden = true;
+    bugScare.classList.remove("active");
     hintBtn.disabled = false;
     writeConsole("Lote carregado. O besouro esta escondido em um dos cartoes.");
     updateHud();
@@ -250,8 +253,16 @@ async function inspectCard(index) {
         const reward = rewardValue();
         coins += reward;
         localStorage.setItem("coins", coins);
-        await saveRanking();
-        endRound(true, `Voce capturou o besouro e ganhou ${reward} moedas.`);
+        roundActive = false;
+        clearInterval(timerId);
+        updateHud();
+        renderCards();
+        triggerBugScare(index);
+        saveRanking().catch(error => console.warn("Ranking nao salvo:", error));
+
+        setTimeout(() => {
+            endRound(true, `Voce capturou o besouro e ganhou ${reward} moedas.`);
+        }, 1250);
         return;
     }
 
@@ -285,6 +296,25 @@ function endRound(success, message) {
     resultTitle.textContent = success ? "Erro depurado" : "Execucao interrompida";
     resultText.textContent = message;
     resultModal.hidden = false;
+}
+
+function triggerBugScare(index) {
+    if (!bugScare) return;
+
+    const card = document.querySelector(`.bug-card[data-index="${index}"]`);
+    const rect = card ? card.getBoundingClientRect() : null;
+    const startX = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+    const startY = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
+
+    bugScare.style.setProperty("--start-x", `${startX}px`);
+    bugScare.style.setProperty("--start-y", `${startY}px`);
+    bugScare.classList.remove("active");
+    void bugScare.offsetWidth;
+    bugScare.classList.add("active");
+
+    setTimeout(() => {
+        bugScare.classList.remove("active");
+    }, 1450);
 }
 
 newRoundBtn.addEventListener("click", startRound);
