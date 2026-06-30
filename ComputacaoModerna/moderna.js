@@ -1,84 +1,138 @@
+const GRID_ROWS = 5;
+const GRID_COLS = 12;
+const GRID_SIZE = GRID_ROWS * GRID_COLS;
+
 const INSTRUCTION_CARDS = [
     {
-        id: "read",
+        id: "read-c",
         name: "READ C",
         title: "Entrada de dado",
-        meaning: "O programa precisa ler um valor de entrada chamado C.",
-        tutorial: "Cartao de entrada: traz dados do lote para dentro do programa.",
+        meaning: "O programa precisa ler o valor C antes de calcular.",
+        tutorial: "Entrada: traz um valor externo para dentro do programa.",
         holes: [1, 14, 25, 38, 49],
         difficulty: "basico"
     },
     {
-        id: "calc",
+        id: "read-n",
+        name: "READ N",
+        title: "Entrada numerica",
+        meaning: "O programa precisa ler N para decidir uma repeticao.",
+        tutorial: "Entrada numerica: prepara uma variavel de controle.",
+        holes: [0, 12, 19, 31, 43, 55],
+        difficulty: "basico"
+    },
+    {
+        id: "calc-temp",
         name: "F = C * 9 / 5 + 32",
         title: "Calculo FORTRAN",
-        meaning: "O programa precisa converter Celsius em Fahrenheit.",
-        tutorial: "Cartao de calculo: manda a maquina executar uma formula.",
+        meaning: "Converta Celsius para Fahrenheit.",
+        tutorial: "Calculo: executa uma formula aritmetica longa.",
         holes: [0, 5, 13, 18, 29, 34, 47, 58],
+        difficulty: "medio"
+    },
+    {
+        id: "add-total",
+        name: "TOTAL = TOTAL + V",
+        title: "Acumulador",
+        meaning: "Some V ao total acumulado.",
+        tutorial: "Acumulador: guarda uma soma parcial a cada rodada.",
+        holes: [4, 11, 20, 24, 33, 40, 52],
         difficulty: "medio"
     },
     {
         id: "ifgoto",
         name: "IF (N) 10,20,30",
         title: "Desvio condicional",
-        meaning: "O programa precisa decidir para qual linha pular conforme o valor de N.",
-        tutorial: "Cartao de decisao: escolhe o proximo caminho do programa.",
+        meaning: "Escolha a proxima linha conforme o valor de N.",
+        tutorial: "Decisao: muda o caminho do programa.",
         holes: [3, 9, 12, 21, 30, 42, 51, 57],
         difficulty: "medio"
     },
     {
-        id: "print",
+        id: "if-positive",
+        name: "IF (X .GT. 0) GOTO 40",
+        title: "Teste positivo",
+        meaning: "Pule para a linha 40 se X for maior que zero.",
+        tutorial: "Comparacao: testa uma condicao antes de seguir.",
+        holes: [6, 15, 22, 27, 36, 45, 54, 59],
+        difficulty: "dificil"
+    },
+    {
+        id: "print-result",
         name: "PRINT RESULT",
         title: "Saida impressa",
-        meaning: "O programa precisa mandar o resultado para a impressora.",
-        tutorial: "Cartao de saida: transforma o resultado em relatorio impresso.",
+        meaning: "Envie o resultado para impressao.",
+        tutorial: "Saida: transforma o resultado em relatorio.",
         holes: [2, 16, 23, 31, 36, 44, 55],
         difficulty: "basico"
     },
     {
-        id: "loop",
+        id: "print-line",
+        name: "PRINT *, TOTAL",
+        title: "Relatorio parcial",
+        meaning: "Imprima o total calculado ate agora.",
+        tutorial: "Relatorio: mostra um valor sem encerrar o programa.",
+        holes: [7, 10, 18, 26, 32, 41, 50],
+        difficulty: "medio"
+    },
+    {
+        id: "loop-do",
         name: "DO 20 I = 1,10",
         title: "Laco numerico",
-        meaning: "O programa precisa repetir uma rotina de I = 1 ate 10.",
-        tutorial: "Cartao de repeticao: faz a maquina voltar e repetir uma sequencia.",
+        meaning: "Repita uma rotina de I igual a 1 ate 10.",
+        tutorial: "Repeticao: faz a maquina executar o mesmo trecho varias vezes.",
         holes: [4, 7, 15, 20, 26, 33, 41, 52, 59],
+        difficulty: "dificil"
+    },
+    {
+        id: "continue",
+        name: "CONTINUE",
+        title: "Marcador de laco",
+        meaning: "Marque o ponto onde uma repeticao continua.",
+        tutorial: "Marcador: serve como destino de lacos e desvios.",
+        holes: [8, 17, 28, 35, 39, 46, 53],
+        difficulty: "medio"
+    },
+    {
+        id: "store",
+        name: "STORE RESULT",
+        title: "Gravar resultado",
+        meaning: "Guarde o resultado na memoria ou em outro lote.",
+        tutorial: "Armazenamento: preserva um resultado para a proxima etapa.",
+        holes: [5, 14, 21, 29, 37, 48, 56],
+        difficulty: "medio"
+    },
+    {
+        id: "rewind",
+        name: "REWIND TAPE",
+        title: "Controle de fita",
+        meaning: "Volte a fita para o inicio.",
+        tutorial: "Periferico: controla um dispositivo de armazenamento.",
+        holes: [8, 11, 19, 27, 35, 43, 54],
+        difficulty: "medio"
+    },
+    {
+        id: "sort",
+        name: "SORT FILE",
+        title: "Ordenacao",
+        meaning: "Organize registros por uma chave.",
+        tutorial: "Rotina de dados: coloca registros em ordem.",
+        holes: [10, 24, 32, 37, 45, 48, 56],
         difficulty: "dificil"
     },
     {
         id: "stop",
         name: "STOP",
         title: "Fim do programa",
-        meaning: "O programa precisa encerrar o lote com seguranca.",
-        tutorial: "Cartao de parada: avisa que o programa terminou.",
+        meaning: "Encerre o lote com seguranca.",
+        tutorial: "Parada: avisa que o programa acabou.",
         holes: [6, 17, 22, 28, 39, 46, 53],
         difficulty: "basico"
-    },
-    {
-        id: "rewind",
-        name: "REWIND TAPE",
-        title: "Controle de fita",
-        meaning: "O operador precisa voltar a fita para o inicio.",
-        tutorial: "Cartao de periferico: controla um dispositivo de armazenamento.",
-        holes: [8, 11, 19, 27, 35, 43, 54],
-        difficulty: "medio",
-        decoy: true
-    },
-    {
-        id: "sort",
-        name: "SORT FILE",
-        title: "Ordenacao",
-        meaning: "O lote precisa organizar registros por uma chave.",
-        tutorial: "Cartao de rotina: chama uma etapa de organizacao de dados.",
-        holes: [10, 24, 32, 37, 45, 48, 56],
-        difficulty: "medio",
-        decoy: true
     }
 ];
 
-const GRID_SIZE = 60;
 const ROOM_CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const MAX_PLAYERS = 6;
-const ROUND_BASE_POINTS = 120;
 
 function createPlayerId() {
     if (window.crypto && typeof window.crypto.randomUUID === "function") {
@@ -94,7 +148,7 @@ let roomCode = "";
 let isHost = false;
 let playerId = localStorage.getItem("modernPlayerId") || createPlayerId();
 let playerName = localStorage.getItem("playerName") || "";
-let selectedCardId = "";
+let selectedHoles = new Set();
 let localSubmitted = false;
 let roundStartedAt = 0;
 let hostState = createEmptyState();
@@ -138,7 +192,7 @@ function createEmptyState() {
         roundStartedAt: 0,
         players: [],
         submissions: {},
-        log: "Crie ou entre em uma sala para comecar.",
+        log: "Crie ou entre em uma sala para abrir o estudo dos cartoes.",
         winners: [],
         matchWinnerIds: []
     };
@@ -164,14 +218,9 @@ function getTarget(targetId = hostState.targetId) {
     return INSTRUCTION_CARDS.find(card => card.id === targetId) || INSTRUCTION_CARDS[0];
 }
 
-function getCard(cardId) {
-    return INSTRUCTION_CARDS.find(card => card.id === cardId) || null;
-}
-
 function chooseTargetForRound(round) {
     const seed = roomCode.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
-    const playable = INSTRUCTION_CARDS.filter(card => !card.decoy);
-    return playable[(seed + round * 2) % playable.length];
+    return INSTRUCTION_CARDS[(seed + round * 3) % INSTRUCTION_CARDS.length];
 }
 
 function getPrize() {
@@ -186,7 +235,7 @@ function setLocalName() {
 
 async function connectRoom(code, hostMode) {
     if (!window.supabaseClient) {
-        roundLog.textContent = "Supabase nao carregou. Abra por servidor local ou internet para jogar online.";
+        roundLog.textContent = "Supabase nao carregou. Abra pelo GitHub Pages ou por servidor local para jogar online.";
         return;
     }
 
@@ -228,7 +277,7 @@ async function connectRoom(code, hostMode) {
                 hostState.roomCode = roomCode;
                 hostState.hostId = playerId;
                 addOnlinePlayer({ id: playerId, name: playerName });
-                hostState.log = "Sala " + roomCode + " criada. Compartilhe o codigo.";
+                hostState.log = "Sala " + roomCode + " criada. Estudo aberto: decorem a matriz antes de iniciar.";
                 broadcastState();
             } else {
                 sendEvent("join_request", {
@@ -270,7 +319,7 @@ function addOnlinePlayer(player) {
         ready: false
     });
 
-    hostState.log = cleanName(player.name) + " entrou na sala.";
+    hostState.log = cleanName(player.name) + " entrou na sala. O tutorial ainda esta visivel para estudo.";
     broadcastState();
 }
 
@@ -321,7 +370,7 @@ function hostStartGame() {
     for (let i = 1; i <= aiCount && hostState.players.length < MAX_PLAYERS; i++) {
         hostState.players.push({
             id: "ai-" + i,
-            name: "IA Perfuradora " + i,
+            name: "IA Memorizadora " + i,
             isAI: true,
             score: 0,
             wins: 0,
@@ -337,7 +386,7 @@ function hostStartGame() {
         player.lastTime = 0;
     });
 
-    hostState.log = "Partida iniciada. Instrucao alvo: " + getTarget().name + ".";
+    hostState.log = "Partida iniciada. Tutorial fechado. Perfure de memoria: " + getTarget().name + ".";
     makeAiSubmissions();
     broadcastState();
     tryResolveRound();
@@ -363,7 +412,7 @@ function hostNextRound() {
         player.lastTime = 0;
     });
 
-    hostState.log = "Rodada " + hostState.round + ". Instrucao alvo: " + getTarget().name + ".";
+    hostState.log = "Rodada " + hostState.round + ". Perfure de memoria: " + getTarget().name + ".";
     makeAiSubmissions();
     broadcastState();
     tryResolveRound();
@@ -393,19 +442,27 @@ function receiveSubmission(payload) {
 function makeAiSubmissions() {
     const target = getTarget();
     hostState.players.filter(player => player.isAI).forEach(player => {
-        const holes = chooseAiCard(target, player.score).holes;
-        const elapsed = Math.round(2200 + Math.random() * 4300 - Math.min(player.score, 50) * 18);
+        const holes = mutatePattern(target.holes, player.score, target.difficulty);
+        const elapsed = Math.round(2600 + Math.random() * 5200 - Math.min(player.score, 70) * 16);
         hostState.submissions[player.id] = { holes, elapsed, submittedAt: Date.now() + elapsed };
         player.ready = true;
     });
 }
 
-function chooseAiCard(target, score) {
-    const precision = Math.min(0.86, 0.58 + score / 900);
-    if (Math.random() < precision) return target;
+function mutatePattern(holes, score, difficulty) {
+    const output = new Set(holes);
+    const difficultyPenalty = difficulty === "dificil" ? 0.08 : difficulty === "medio" ? 0.04 : 0;
+    const missChance = Math.max(0.04, 0.22 + difficultyPenalty - Math.min(score, 160) / 900);
 
-    const alternatives = INSTRUCTION_CARDS.filter(card => card.id !== target.id);
-    return alternatives[Math.floor(Math.random() * alternatives.length)];
+    holes.forEach(hole => {
+        if (Math.random() < missChance) output.delete(hole);
+    });
+
+    if (Math.random() < missChance * 2.1) {
+        output.add(Math.floor(Math.random() * GRID_SIZE));
+    }
+
+    return [...output].sort((a, b) => a - b);
 }
 
 function tryResolveRound() {
@@ -462,7 +519,8 @@ function resolveRound() {
 
     hostState.status = "resolved";
     hostState.log =
-        "Instrucao alvo: " + target.name + "\n\n" +
+        "Instrucao alvo: " + target.name + "\n" +
+        "Gabarito: " + target.holes.map(index => index + 1).join(", ") + "\n\n" +
         results
             .sort((a, b) => b.score - a.score)
             .map(result =>
@@ -490,7 +548,7 @@ function finishMatch() {
     hostState.matchWinnerIds = champions.map(player => player.id);
     hostState.log +=
         "\n\nFim da batalha." +
-        "\nCampeao da perfuracao: " + champions.map(player => player.name).join(", ") +
+        "\nCampeao da memoria perfurada: " + champions.map(player => player.name).join(", ") +
         "\nPremio para campeao humano: " + getPrize() + " moedas.";
 
     broadcastState();
@@ -502,25 +560,19 @@ function formatTime(milliseconds) {
 
 function submitPattern() {
     if (!roomCode || hostState.status !== "choosing" || localSubmitted) return;
-    const selectedCard = getCard(selectedCardId);
-    if (!selectedCard) {
-        roundLog.textContent = hostState.log + "\n\nEscolha um cartao antes de enviar.";
-        return;
-    }
 
     localSubmitted = true;
     const elapsed = Date.now() - (roundStartedAt || hostState.roundStartedAt || Date.now());
     sendEvent("submit_pattern", {
         playerId,
-        cardId: selectedCard.id,
-        holes: selectedCard.holes.slice().sort((a, b) => a - b),
+        holes: [...selectedHoles].sort((a, b) => a - b),
         elapsed
     });
     render();
 }
 
 function resetLocalCard() {
-    selectedCardId = "";
+    selectedHoles = new Set();
     localSubmitted = false;
     roundStartedAt = hostState.roundStartedAt || Date.now();
 }
@@ -553,25 +605,29 @@ function render() {
     updateCoins();
 
     const target = getTarget();
+    const localPlayer = hostState.players.find(player => player.id === playerId);
+    const isMyTurn = hostState.status === "choosing" && localPlayer && !hostState.submissions[playerId] && !localSubmitted;
+    const humanCount = hostState.players.filter(player => !player.isAI).length;
+    const showStudy = hostState.status === "lobby";
+
+    document.body.classList.toggle("study-mode", showStudy);
+    document.body.classList.toggle("match-running", !showStudy);
+
     roomDisplay.textContent = roomCode || "Sem sala";
     roundDisplay.textContent = hostState.round + " / " + hostState.roundLimit;
     prizeDisplay.textContent = getPrize() + " moedas";
     roundLog.textContent = hostState.log;
-    jobTitle.textContent = hostState.round ? target.name : "Aguardando instrucao";
+    jobTitle.textContent = hostState.round ? target.name : "Sala de estudo aberta";
     jobDescription.textContent = hostState.round
-        ? target.meaning
-        : "A rodada mostra uma instrucao. Monte o cartao perfurado correto e envie antes dos oponentes.";
-    jobFocus.textContent = hostState.round ? target.title : "--";
-    jobHazard.textContent = hostState.round ? target.difficulty : "--";
-    jobMachine.textContent = "Perfuradora 80 colunas";
-
-    const localPlayer = hostState.players.find(player => player.id === playerId);
-    const isMyTurn = hostState.status === "choosing" && localPlayer && !hostState.submissions[playerId] && !localSubmitted;
-    const humanCount = hostState.players.filter(player => !player.isAI).length;
+        ? "O tutorial foi fechado. Use a memoria para preencher a matriz de furos correta."
+        : "Memorize os modelos de cartao. Quando a partida iniciar, estes modelos somem e voce perfura de cabeca.";
+    jobFocus.textContent = hostState.round ? target.title : "Memorizacao";
+    jobHazard.textContent = hostState.round ? target.difficulty : INSTRUCTION_CARDS.length + " modelos";
+    jobMachine.textContent = GRID_ROWS + " x " + GRID_COLS + " furos";
 
     if (!roomCode) turnDisplay.textContent = "Entre em uma sala";
-    else if (hostState.status === "lobby") turnDisplay.textContent = isHost ? "Aguardando jogadores" : "Na sala";
-    else if (hostState.status === "choosing") turnDisplay.textContent = isMyTurn ? "Monte e envie" : "Aguardando mesa";
+    else if (hostState.status === "lobby") turnDisplay.textContent = isHost ? "Estudo aberto" : "Decorando";
+    else if (hostState.status === "choosing") turnDisplay.textContent = isMyTurn ? "Perfure e envie" : "Aguardando mesa";
     else if (hostState.status === "resolved") turnDisplay.textContent = isHost ? "Avance a rodada" : "Rodada conferida";
     else turnDisplay.textContent = "Fim da batalha";
 
@@ -602,11 +658,11 @@ function renderScoreboard() {
         }
 
         const readyText = hostState.status === "choosing"
-            ? (hostState.submissions[player.id] ? "Cartao enviado" : "Perfurando")
+            ? (hostState.submissions[player.id] ? "Cartao enviado" : "Perfurando de memoria")
             : (player.lastTime ? player.lastAccuracy + "% em " + formatTime(player.lastTime) : "Sem envio");
 
         article.innerHTML =
-            "<span>" + (player.isAI ? "IA perfuradora" : (player.id === hostState.hostId ? "Host" : "Jogador")) + "</span>" +
+            "<span>" + (player.isAI ? "IA memorizadora" : (player.id === hostState.hostId ? "Host" : "Jogador")) + "</span>" +
             "<strong>" + player.name + "</strong>" +
             "<p>" + player.score + " pts | " + player.wins + " rodadas</p>" +
             "<small>" + readyText + "</small>";
@@ -617,11 +673,16 @@ function renderScoreboard() {
 
 function renderPunchBoard(localPlayer, isMyTurn) {
     cardChoices.innerHTML = "";
-    const selectedCard = getCard(selectedCardId);
-    energyDisplay.textContent = selectedCard ? "Selecionado: " + selectedCard.name : "Nenhum cartão selecionado";
+    energyDisplay.textContent = "Furos marcados: " + selectedHoles.size;
 
     if (!localPlayer) {
-        cardChoices.innerHTML = "<div class='empty-hand'>Entre em uma sala para receber o cartao em branco.</div>";
+        cardChoices.innerHTML = "<div class='empty-hand'>Entre em uma sala para estudar e jogar.</div>";
+        return;
+    }
+
+    if (hostState.status === "lobby") {
+        cardChoices.innerHTML = "<div class='empty-hand'>Fase de estudo: memorize os padroes acima. Ao iniciar, o tutorial some e a matriz fica em branco.</div>";
+        energyDisplay.textContent = "Modo estudo";
         return;
     }
 
@@ -632,58 +693,49 @@ function renderPunchBoard(localPlayer, isMyTurn) {
 
     const target = getTarget();
     const panel = document.createElement("div");
-    panel.className = "choice-workbench";
+    panel.className = "memory-workbench";
     panel.innerHTML =
         "<div class='target-card'>" +
-            "<span>Ordem recebida pela equipe</span>" +
-            "<strong>" + target.title + "</strong>" +
-            "<small>" + target.meaning + " Compare com o tutorial, escolha o cartao perfurado correto e envie. Voce pode trocar a escolha antes do envio final.</small>" +
-            "<code>Rodada " + hostState.round + " de " + hostState.roundLimit + " | empate: menor tempo vence</code>" +
+            "<span>Instrucao recebida</span>" +
+            "<strong>" + target.name + "</strong>" +
+            "<small>" + target.meaning + " O gabarito nao aparece durante a rodada: marque os furos que voce decorou.</small>" +
+            "<code>Rodada " + hostState.round + " de " + hostState.roundLimit + " | " + target.title + "</code>" +
         "</div>" +
-        "<div class='choice-grid' id='choiceGrid'></div>" +
+        "<div class='matrix-labels'>" +
+            Array.from({ length: GRID_COLS }, (_, index) => "<span>" + (index + 1) + "</span>").join("") +
+        "</div>" +
+        "<div class='punch-grid memory-grid' id='punchGrid'></div>" +
         "<div class='submit-row'>" +
-            "<button type='button' id='clearPunchBtn'>Trocar / limpar escolha</button>" +
-            "<button type='button' id='submitPunchBtn'>Enviar cartão final</button>" +
+            "<button type='button' id='clearPunchBtn'>Limpar matriz</button>" +
+            "<button type='button' id='submitPunchBtn'>Enviar perfuração</button>" +
         "</div>";
 
     cardChoices.appendChild(panel);
 
-    const grid = document.getElementById("choiceGrid");
-    getRoundOptions(target).forEach(card => {
+    const grid = document.getElementById("punchGrid");
+    for (let index = 0; index < GRID_SIZE; index++) {
         const button = document.createElement("button");
         button.type = "button";
-        button.className = "card-option" + (selectedCardId === card.id ? " selected" : "");
+        button.className = "punch-hole" + (selectedHoles.has(index) ? " active" : "");
+        button.textContent = index + 1;
         button.disabled = !isMyTurn;
-        button.innerHTML = renderMiniCard(card, false);
         button.addEventListener("click", () => {
-            selectedCardId = card.id;
+            if (selectedHoles.has(index)) selectedHoles.delete(index);
+            else selectedHoles.add(index);
             render();
         });
         grid.appendChild(button);
-    });
+    }
 
     const clearBtn = document.getElementById("clearPunchBtn");
     const submitBtn = document.getElementById("submitPunchBtn");
     clearBtn.disabled = !isMyTurn;
-    submitBtn.disabled = !isMyTurn || !selectedCardId;
+    submitBtn.disabled = !isMyTurn;
     clearBtn.addEventListener("click", () => {
-        selectedCardId = "";
+        selectedHoles.clear();
         render();
     });
     submitBtn.addEventListener("click", submitPattern);
-}
-
-function getRoundOptions(target) {
-    const seed = roomCode.split("").reduce((sum, char) => sum + char.charCodeAt(0), hostState.round * 13);
-    const others = INSTRUCTION_CARDS.filter(card => card.id !== target.id);
-    const picked = [target];
-
-    for (let i = 0; picked.length < 4 && i < others.length * 2; i++) {
-        const card = others[(seed + i * 3) % others.length];
-        if (!picked.some(existing => existing.id === card.id)) picked.push(card);
-    }
-
-    return picked.sort((a, b) => ((a.id.charCodeAt(0) + seed) % 17) - ((b.id.charCodeAt(0) + seed) % 17));
 }
 
 function renderTutorialCards() {
@@ -692,27 +744,26 @@ function renderTutorialCards() {
 
     INSTRUCTION_CARDS.forEach(card => {
         const article = document.createElement("article");
-        article.className = "tutorial-card" + (card.decoy ? " decoy" : "");
-        article.innerHTML = renderMiniCard(card, true);
+        article.className = "tutorial-card";
+        article.innerHTML =
+            "<div class='tutorial-card-head'>" +
+                "<div><span>" + card.title + "</span><strong>" + card.name + "</strong></div>" +
+                "<em>" + card.difficulty + "</em>" +
+            "</div>" +
+            "<p>" + card.tutorial + "</p>" +
+            "<div class='tutorial-matrix'>" + renderMatrixDots(card.holes) + "</div>" +
+            "<div class='matrix-labels'>" +
+                Array.from({ length: GRID_COLS }, (_, index) => "<span>" + (index + 1) + "</span>").join("") +
+            "</div>";
         tutorialCards.appendChild(article);
     });
 }
 
-function renderMiniCard(card, showTutorial) {
-    const holes = new Set(card.holes);
-    let punch = "";
-    for (let index = 0; index < 24; index++) {
-        punch += "<i class='" + (holes.has(Math.floor(index * GRID_SIZE / 24)) ? "open" : "") + "'></i>";
-    }
-
-    return "" +
-        "<div class='mini-punch'>" + punch + "</div>" +
-        "<div class='mini-card-copy'>" +
-            "<span>" + card.title + "</span>" +
-            "<strong>" + card.name + "</strong>" +
-            "<small>" + (showTutorial ? card.tutorial : "Padrao de furos: " + card.holes.map(index => index + 1).join(", ")) + "</small>" +
-            (card.decoy ? "<em>cartao extra</em>" : "<em>" + card.difficulty + "</em>") +
-        "</div>";
+function renderMatrixDots(holes) {
+    const active = new Set(holes);
+    return Array.from({ length: GRID_SIZE }, (_, index) =>
+        "<span class='matrix-dot" + (active.has(index) ? " on" : "") + "'>" + (index + 1) + "</span>"
+    ).join("");
 }
 
 createRoomBtn.addEventListener("click", createRoom);
