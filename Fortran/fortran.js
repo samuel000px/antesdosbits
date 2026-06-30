@@ -138,6 +138,171 @@ const missions = [
                 log.push("PRINT A(I)  -> " + state.output);
             }
         }
+    },
+    {
+        title: "Media de medicoes",
+        text: "O laboratorio recebeu as medicoes 6, 7 e 8. Some os valores, calcule a media e imprima MEDIA = 7.",
+        input: { VALUES: [6, 7, 8] },
+        reward: 155,
+        expectedOutput: "MEDIA = 7",
+        answer: ["readMedidas", "zeroSoma", "doMedia", "addMedida", "endMedia", "calcMedia", "printMedia", "end"],
+        cards: [
+            { id: "readMedidas", code: "READ M(1), M(2), M(3)" },
+            { id: "zeroSoma", code: "SOMA = 0" },
+            { id: "doMedia", code: "DO 40 I = 1, 3" },
+            { id: "addMedida", code: "SOMA = SOMA + M(I)" },
+            { id: "endMedia", code: "40 CONTINUE" },
+            { id: "calcMedia", code: "MEDIA = SOMA / 3" },
+            { id: "printMedia", code: "PRINT MEDIA" },
+            { id: "printSoma", code: "PRINT SOMA" },
+            { id: "calcWrongMedia", code: "MEDIA = SOMA / 2" },
+            { id: "end", code: "END" }
+        ],
+        execute(state, cardId, log) {
+            if (cardId === "readMedidas") {
+                state.M = [...this.input.VALUES];
+                log.push("READ M(1),M(2),M(3)  -> M = [6,7,8]");
+            }
+            if (cardId === "zeroSoma") {
+                state.SOMA = 0;
+                log.push("SOMA = 0");
+            }
+            if (cardId === "doMedia") {
+                state.loopReady = true;
+                log.push("DO 40 I = 1,3  -> prepara 3 repeticoes");
+            }
+            if (cardId === "addMedida") {
+                if (state.loopReady && state.M) {
+                    state.M.forEach((value, index) => {
+                        state.SOMA += value;
+                        log.push("I = " + (index + 1) + "  SOMA = SOMA + " + value + "  -> " + state.SOMA);
+                    });
+                } else {
+                    state.SOMA += state.M?.[0] || 0;
+                    log.push("SOMA = SOMA + M(I)  -> laco nao preparado");
+                }
+            }
+            if (cardId === "endMedia") {
+                log.push("40 CONTINUE  -> fim do laco");
+            }
+            if (cardId === "calcMedia") {
+                state.MEDIA = state.SOMA / 3;
+                log.push("MEDIA = SOMA / 3  -> MEDIA = " + state.MEDIA);
+            }
+            if (cardId === "calcWrongMedia") {
+                state.MEDIA = state.SOMA / 2;
+                log.push("MEDIA = SOMA / 2  -> MEDIA = " + state.MEDIA);
+            }
+            if (cardId === "printMedia") {
+                state.output = "MEDIA = " + state.MEDIA;
+                log.push("PRINT MEDIA  -> " + state.output);
+            }
+            if (cardId === "printSoma") {
+                state.output = "SOMA = " + state.SOMA;
+                log.push("PRINT SOMA  -> " + state.output);
+            }
+        }
+    },
+    {
+        title: "Maior valor da fita",
+        text: "A fita trouxe X = 14 e Y = 9. Use o IF aritmetico para imprimir MAIOR = 14.",
+        input: { X: 14, Y: 9 },
+        reward: 165,
+        expectedOutput: "MAIOR = 14",
+        answer: ["readXY", "ifMaior", "labelX", "printX", "end"],
+        cards: [
+            { id: "readXY", code: "READ X, Y" },
+            { id: "ifMaior", code: "IF (X - Y) 50, 60, 70" },
+            { id: "wrongIfMaior", code: "IF (Y - X) 50, 60, 70" },
+            { id: "labelX", code: "70 CONTINUE" },
+            { id: "labelY", code: "50 CONTINUE" },
+            { id: "printX", code: "PRINT X" },
+            { id: "printY", code: "PRINT Y" },
+            { id: "printDiff", code: "PRINT X - Y" },
+            { id: "end", code: "END" }
+        ],
+        execute(state, cardId, log) {
+            if (cardId === "readXY") {
+                state.X = this.input.X;
+                state.Y = this.input.Y;
+                log.push("READ X,Y  -> X = " + state.X + "  Y = " + state.Y);
+            }
+            if (cardId === "ifMaior") {
+                state.chooseX = state.X - state.Y > 0;
+                log.push("IF (X - Y) 50,60,70  -> " + (state.chooseX ? "vai para 70" : "vai para 50"));
+            }
+            if (cardId === "wrongIfMaior") {
+                state.chooseX = false;
+                log.push("IF (Y - X) 50,60,70  -> desvio errado");
+            }
+            if (cardId === "labelX") {
+                log.push("70 CONTINUE");
+            }
+            if (cardId === "labelY") {
+                log.push("50 CONTINUE");
+            }
+            if (cardId === "printX") {
+                state.output = state.chooseX ? "MAIOR = " + state.X : "MAIOR = " + state.X + " (fora de contexto)";
+                log.push("PRINT X  -> " + state.output);
+            }
+            if (cardId === "printY") {
+                state.output = "MAIOR = " + state.Y;
+                log.push("PRINT Y  -> " + state.output);
+            }
+            if (cardId === "printDiff") {
+                state.output = "DIF = " + (state.X - state.Y);
+                log.push("PRINT X - Y  -> " + state.output);
+            }
+        }
+    },
+    {
+        title: "Pedido com imposto",
+        text: "Um pedido tem BASE = 200 e TAXA = 20. Calcule o total com imposto e imprima TOTAL = 240.",
+        input: { BASE: 200, TAXA: 20 },
+        reward: 175,
+        expectedOutput: "TOTAL = 240",
+        answer: ["readPedido", "calcImposto", "calcTotal", "printTotalPedido", "end"],
+        cards: [
+            { id: "readPedido", code: "READ BASE, TAXA" },
+            { id: "calcImposto", code: "IMPOSTO = BASE * TAXA / 100" },
+            { id: "calcTotal", code: "TOTAL = BASE + IMPOSTO" },
+            { id: "printTotalPedido", code: "PRINT TOTAL" },
+            { id: "printBase", code: "PRINT BASE" },
+            { id: "wrongTotal", code: "TOTAL = BASE + TAXA" },
+            { id: "wrongTax", code: "IMPOSTO = BASE / TAXA" },
+            { id: "end", code: "END" }
+        ],
+        execute(state, cardId, log) {
+            if (cardId === "readPedido") {
+                state.BASE = this.input.BASE;
+                state.TAXA = this.input.TAXA;
+                log.push("READ BASE,TAXA  -> BASE = " + state.BASE + "  TAXA = " + state.TAXA);
+            }
+            if (cardId === "calcImposto") {
+                state.IMPOSTO = state.BASE * state.TAXA / 100;
+                log.push("IMPOSTO = BASE * TAXA / 100  -> IMPOSTO = " + state.IMPOSTO);
+            }
+            if (cardId === "wrongTax") {
+                state.IMPOSTO = state.BASE / state.TAXA;
+                log.push("IMPOSTO = BASE / TAXA  -> IMPOSTO = " + state.IMPOSTO);
+            }
+            if (cardId === "calcTotal") {
+                state.TOTAL = state.BASE + state.IMPOSTO;
+                log.push("TOTAL = BASE + IMPOSTO  -> TOTAL = " + state.TOTAL);
+            }
+            if (cardId === "wrongTotal") {
+                state.TOTAL = state.BASE + state.TAXA;
+                log.push("TOTAL = BASE + TAXA  -> TOTAL = " + state.TOTAL);
+            }
+            if (cardId === "printTotalPedido") {
+                state.output = "TOTAL = " + state.TOTAL;
+                log.push("PRINT TOTAL  -> " + state.output);
+            }
+            if (cardId === "printBase") {
+                state.output = "BASE = " + state.BASE;
+                log.push("PRINT BASE  -> " + state.output);
+            }
+        }
     }
 ];
 

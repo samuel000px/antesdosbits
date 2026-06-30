@@ -64,6 +64,73 @@ const missions = [
             { group: "SUL", value: 180 }
         ],
         expectedTitle: "SOMA amount POR region"
+    },
+    {
+        title: "Auditoria de cartões válidos",
+        text: "A chefia quer saber quantos cartões válidos existem em cada departamento. Há um cartão inválido misturado ao lote.",
+        reward: 190,
+        maxSteps: 4,
+        deck: [
+            { id: "A01", employee: "Mia", dept: "A", salary: 120, valid: true },
+            { id: "A02", employee: "Leo", dept: "A", salary: 145, valid: true },
+            { id: "A03", employee: "Bia", dept: "B", salary: 180, valid: true },
+            { id: "A04", employee: "Gil", dept: "C", salary: 130, valid: true },
+            { id: "A05", employee: "Eva", dept: "C", salary: 155, valid: true },
+            { id: "A06", employee: "R-ERR", dept: "C", salary: 999, valid: false }
+        ],
+        expected: [
+            { group: "A", value: 2 },
+            { group: "B", value: 1 },
+            { group: "C", value: 2 }
+        ],
+        expectedTitle: "CONTA cartões POR dept"
+    },
+    {
+        title: "Faltas por produto",
+        text: "O depósito não quer o valor de compra, só a quantidade faltando em cada SKU. Calcule a falta, filtre o que precisa de reposição e gere total por produto.",
+        reward: 250,
+        maxSteps: 6,
+        deck: [
+            { id: "F01", sku: "A-10", stock: 3, minimum: 8, unitCost: 5, valid: true },
+            { id: "F02", sku: "R-12", stock: 12, minimum: 12, unitCost: 6, valid: true },
+            { id: "F03", sku: "M-22", stock: 1, minimum: 4, unitCost: 8, valid: true },
+            { id: "F04", sku: "Z-90", stock: 6, minimum: 9, unitCost: 7, valid: true },
+            { id: "F05", sku: "B-31", stock: 10, minimum: 7, unitCost: 11, valid: true }
+        ],
+        expected: [
+            { group: "A-10", value: 5 },
+            { group: "M-22", value: 3 },
+            { group: "Z-90", value: 3 }
+        ],
+        expectedTitle: "SOMA shortage POR sku"
+    },
+    {
+        title: "Varejo por região",
+        text: "Cartões de vendas chegaram com códigos de cliente. Use o arquivo mestre, filtre o segmento VAREJO e imprima o total vendido por região.",
+        reward: 320,
+        maxSteps: 6,
+        deck: [
+            { id: "R01", customer: "C02", amount: 100, valid: true },
+            { id: "R02", customer: "C06", amount: 90, valid: true },
+            { id: "R03", customer: "C01", amount: 120, valid: true },
+            { id: "R04", customer: "C05", amount: 70, valid: true },
+            { id: "R05", customer: "C02", amount: 40, valid: true },
+            { id: "R06", customer: "C03", amount: 180, valid: true }
+        ],
+        masterKey: "customer",
+        master: {
+            C01: { region: "NORTE", segment: "IND" },
+            C02: { region: "SUL", segment: "VAREJO" },
+            C03: { region: "SUL", segment: "IND" },
+            C05: { region: "LESTE", segment: "VAREJO" },
+            C06: { region: "NORTE", segment: "VAREJO" }
+        },
+        expected: [
+            { group: "LESTE", value: 70 },
+            { group: "NORTE", value: 90 },
+            { group: "SUL", value: 140 }
+        ],
+        expectedTitle: "SOMA amount POR region"
     }
 ];
 

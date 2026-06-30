@@ -186,6 +186,13 @@ h2{
     text-transform:uppercase;
 }
 
+.recipe-board > p{
+    max-width:920px;
+    color:#5d4a31;
+    line-height:1.5;
+    font-weight:800;
+}
+
 .recipe{
     display:grid;
     grid-template-columns:170px 1fr;
