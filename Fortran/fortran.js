@@ -7,12 +7,12 @@ const missions = [
         expectedOutput: "F = 77",
         answer: ["readC", "calcF", "printF", "end"],
         cards: [
-            { id: "readC", label: "Entrada", code: "READ C", help: "Lê o valor perfurado para a variável C." },
-            { id: "calcF", label: "Cálculo", code: "F = C * 9 / 5 + 32", help: "Fórmula clássica de conversão." },
-            { id: "printF", label: "Saída", code: "PRINT F", help: "Imprime o resultado final." },
-            { id: "printC", label: "Armadilha", code: "PRINT C", help: "Imprime a entrada, não a conversão." },
-            { id: "calcWrong", label: "Armadilha", code: "F = C + 32", help: "Parece certo, mas não multiplica por 9/5." },
-            { id: "end", label: "Fim", code: "END", help: "Encerra a pilha do programa." }
+            { id: "readC", code: "READ C" },
+            { id: "calcF", code: "F = C * 9 / 5 + 32" },
+            { id: "printF", code: "PRINT F" },
+            { id: "printC", code: "PRINT C" },
+            { id: "calcWrong", code: "F = C + 32" },
+            { id: "end", code: "END" }
         ],
         execute(state, cardId, log) {
             if (cardId === "readC") {
@@ -45,14 +45,14 @@ const missions = [
         expectedOutput: "REABASTECER",
         answer: ["readEstoque", "ifLow", "gotoOk", "labelLow", "printRepor", "end"],
         cards: [
-            { id: "readEstoque", label: "Entrada", code: "READ ESTOQUE", help: "Lê a quantidade atual." },
-            { id: "ifLow", label: "Desvio", code: "IF (ESTOQUE - 10) 40, 50, 50", help: "Se for negativo, pula para o cartão 40." },
-            { id: "gotoOk", label: "Desvio", code: "GOTO 50", help: "Evita cair no bloco de reabastecimento por acidente." },
-            { id: "labelLow", label: "Rótulo 40", code: "40 CONTINUE", help: "Marca o bloco para estoque baixo." },
-            { id: "printRepor", label: "Saída", code: "PRINT 'REABASTECER'", help: "Avisa que precisa repor." },
-            { id: "printOk", label: "Armadilha", code: "PRINT 'ESTOQUE OK'", help: "Seria usado se o estoque fosse suficiente." },
-            { id: "wrongIf", label: "Armadilha", code: "IF (ESTOQUE - 10) 50, 40, 40", help: "Inverte o teste." },
-            { id: "end", label: "Fim", code: "50 END", help: "Encerra o programa." }
+            { id: "readEstoque", code: "READ ESTOQUE" },
+            { id: "ifLow", code: "IF (ESTOQUE - 10) 40, 50, 50" },
+            { id: "gotoOk", code: "GOTO 50" },
+            { id: "labelLow", code: "40 CONTINUE" },
+            { id: "printRepor", code: "PRINT 'REABASTECER'" },
+            { id: "printOk", code: "PRINT 'ESTOQUE OK'" },
+            { id: "wrongIf", code: "IF (ESTOQUE - 10) 50, 40, 40" },
+            { id: "end", code: "50 END" }
         ],
         execute(state, cardId, log) {
             if (cardId === "readEstoque") {
@@ -88,15 +88,15 @@ const missions = [
         expectedOutput: "TOTAL = 12",
         answer: ["readValues", "zeroTotal", "doLoop", "addValue", "endLoop", "printTotal", "end"],
         cards: [
-            { id: "readValues", label: "Entrada", code: "READ A(1), A(2), A(3)", help: "Carrega os três números." },
-            { id: "zeroTotal", label: "Inicialização", code: "TOTAL = 0", help: "Zera o acumulador antes do laço." },
-            { id: "doLoop", label: "Laço", code: "DO 30 I = 1, 3", help: "Repete os cartões até o rótulo 30." },
-            { id: "addValue", label: "Acúmulo", code: "TOTAL = TOTAL + A(I)", help: "Soma cada posição." },
-            { id: "endLoop", label: "Rótulo 30", code: "30 CONTINUE", help: "Marca o fim do laço." },
-            { id: "printTotal", label: "Saída", code: "PRINT TOTAL", help: "Imprime o acumulado." },
-            { id: "printA", label: "Armadilha", code: "PRINT A(I)", help: "Imprime só um item." },
-            { id: "noZero", label: "Armadilha", code: "TOTAL = 1", help: "Começa o acumulador errado." },
-            { id: "end", label: "Fim", code: "END", help: "Finaliza o programa." }
+            { id: "readValues", code: "READ A(1), A(2), A(3)" },
+            { id: "zeroTotal", code: "TOTAL = 0" },
+            { id: "doLoop", code: "DO 30 I = 1, 3" },
+            { id: "addValue", code: "TOTAL = TOTAL + A(I)" },
+            { id: "endLoop", code: "30 CONTINUE" },
+            { id: "printTotal", code: "PRINT TOTAL" },
+            { id: "printA", code: "PRINT A(I)" },
+            { id: "noZero", code: "TOTAL = 1" },
+            { id: "end", code: "END" }
         ],
         execute(state, cardId, log) {
             if (cardId === "readValues") {
@@ -265,9 +265,9 @@ function createCardElement(card, used) {
     button.type = "button";
     button.className = "program-card";
     button.innerHTML =
-        "<strong>" + card.label + "</strong>" +
+        "<strong>Cartão FORTRAN</strong>" +
         "<code>" + card.code + "</code>" +
-        "<small>" + card.help + (used ? " Já está na pilha." : "") + "</small>";
+        (used ? "<small>Já está na pilha.</small>" : "");
     return button;
 }
 
