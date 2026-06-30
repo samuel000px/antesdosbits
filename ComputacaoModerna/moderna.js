@@ -701,10 +701,17 @@ function renderPunchBoard(localPlayer, isMyTurn) {
             "<small>" + target.meaning + " O gabarito nao aparece durante a rodada: marque os furos que voce decorou.</small>" +
             "<code>Rodada " + hostState.round + " de " + hostState.roundLimit + " | " + target.title + "</code>" +
         "</div>" +
-        "<div class='matrix-labels'>" +
-            Array.from({ length: GRID_COLS }, (_, index) => "<span>" + (index + 1) + "</span>").join("") +
+        "<div class='memory-card-shell'>" +
+            "<div class='memory-card-head'>" +
+                "<div><span>Cartao de execucao</span><strong>" + target.name + "</strong></div>" +
+                "<em>Marque os furos</em>" +
+            "</div>" +
+            "<div class='card-column-track'>" +
+                Array.from({ length: GRID_COLS }, (_, index) => "<span>" + String(index + 1).padStart(2, "0") + "</span>").join("") +
+            "</div>" +
+            "<div class='punch-grid memory-grid' id='punchGrid'></div>" +
+            "<div class='card-footer-strip'>ANTES DOS BITS // PERFURACAO MANUAL // BOLINHA PRETA = FURO MARCADO</div>" +
         "</div>" +
-        "<div class='punch-grid memory-grid' id='punchGrid'></div>" +
         "<div class='submit-row'>" +
             "<button type='button' id='clearPunchBtn'>Limpar matriz</button>" +
             "<button type='button' id='submitPunchBtn'>Enviar perfuração</button>" +
@@ -718,6 +725,7 @@ function renderPunchBoard(localPlayer, isMyTurn) {
         button.type = "button";
         button.className = "punch-hole" + (selectedHoles.has(index) ? " active" : "");
         button.textContent = index + 1;
+        button.setAttribute("aria-label", "Furo " + (index + 1));
         button.disabled = !isMyTurn;
         button.addEventListener("click", () => {
             if (selectedHoles.has(index)) selectedHoles.delete(index);
