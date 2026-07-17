@@ -60,3 +60,17 @@ Connected features such as login, ranking, online rooms, and AI sample storage r
 ├── MachineLearningCartoes/
 ├── assets/
 └── output/
+```
+## Database
+
+This project uses Supabase for authentication, player ranking, online rooms, and AI training data.
+
+The AI stage uses a `card_ml_samples` table. The SQL script for creating this table is available in:
+
+```text
+supabase_card_ml_samples.sql
+
+```
+## Educational Goal
+
+The goal of this project is to turn historical computing concepts into practical, accessible experiences, showing how ideas such as programming, data processing, debugging, and artificial intelligence evolved from technologies that came before modern computers.
